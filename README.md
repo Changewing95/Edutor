@@ -1,2 +1,2 @@
 # Edutor
-Edutor Full Stack Project Assignment by - Jeremy, Ruri, Dylan, Clara and Yong lin
+Edutor Full Stack Project Assignment by - JeremyGod, Ruri, Dylan, Clara and Yong lin
