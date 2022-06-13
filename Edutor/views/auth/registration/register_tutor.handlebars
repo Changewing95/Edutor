@@ -1,0 +1,40 @@
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<div class="container">
+
+    <div style="margin-top: 5%;" class="register-center">
+        <h1>Tutor Registration</h1>
+        <h2 style="font-size: 20px;">If you already have an account registered, you can <span style="color:red;">Login
+                here!</span></h2>
+
+    </div>
+
+        <form action="" method="post">
+        <div class="form-group">
+            <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+            <input type="email" name="email" class="form-control form-control-lg border border-dark" id="register-tutor-email"
+                aria-describedby="emailHelp" placeholder="Email">
+            {{!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                else.</small> --}}
+        </div>
+        <div class="form-group">
+            <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i> Username</label>
+            <input type="username" name="name" class="form-control form-control-lg border border-dark" id="register-tutor-username"
+                placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="register-tutor-password"> <i class="fa fa-key" aria-hidden="true"></i> Password</label>
+            <input type="password" name="password" class="form-control form-control-lg border border-dark" id="register-tutor-password"
+                placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="register-tutor-confirm-password"><i class="fa fa-key" aria-hidden="true"></i> Confirm Password</label>
+            <input type="password" name="confirm_password" class="form-control form-control-lg border border-dark" id="register-tutor-confirm-password"
+                placeholder="Confirm Password">
+        </div>
+
+        <button type="submit" class="form-control form-control-lg register-submit btn btn-success">Register</button>
+    </form>
+</div>
