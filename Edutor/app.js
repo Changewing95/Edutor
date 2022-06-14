@@ -19,11 +19,14 @@ const app = express();
 // 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 // 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
 // }));
+const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
+	helpers: helpers,
 	defaultLayout: 'main',
 	extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
+
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
