@@ -15,11 +15,20 @@ passportConfig.localStrategy(passport);
 const app = express();
 
 
-app.engine('handlebars', engine({
+// app.engine('handlebars', engine({
+// 	handlebars: allowInsecurePrototypeAccess(Handlebars),
+// 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
+// }));
+const helpers = require('./helpers/handlebars');
+app.engine('hbs', engine({
+	helpers: helpers,
+	defaultLayout: 'main',
+	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
-	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+
 }));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
+
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -64,12 +73,12 @@ const DBConnection = require('./config/DBConnection');
 app.use(passport.initialize());
 app.use(passport.session())
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
 	// res.locals.users = req.session;
 	// console.log(res.users)
 	res.locals.messages = req.flash('message');
 	res.locals.errors = req.flash('error');
-    res.locals.success = req.flash("success");
+	res.locals.success = req.flash("success");
 	res.locals.user = req.user || null
 	// console.log(req.user.email)
 	next()
@@ -89,11 +98,15 @@ DBConnection.setUpDB(false); // To set up database with new tables
 // mainRoute is declared to point to routes/main.js
 const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
+const bookingRoute = require('./routes/tutorConsultation');
+const dashboardRoute = require('./routes/dashboard');
+
+
 
 app.use('/', mainRoute);
-app.use('/auth', authRoute)
-
-
+app.use('/auth', authRoute);
+app.use('/tutor/consultation', bookingRoute);
+app.use('/dashboard', dashboardRoute);
 
 
 
