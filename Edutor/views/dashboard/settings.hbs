@@ -1,19 +1,23 @@
 <head>
     <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="common.js"></script>
 </head>
 
 <div class="container-fluid dashboard">
     <div class="container mt-5">
         <h1 style="font-weight: 700; font-size: 20px;   text-transform: uppercase;">{{user.name}} | Settings</h1>
-        <form>
-            <div class="row">
-                <div class="col">
-                    <img src="/profile/{{user.profile_pic}}" width="200px" height="200px" alt="...">
-                </div>
+        <div class="row">
+            <div class="col">
+                <img src="/dashboard/display" width="200px" height="200px" alt="...">
+                <form action="/dashboard/profilePictureUpload" enctype="multipart/form-data" method="POST">
+                    <input type="file" name="profilePictureUpload" >
+                    <input type="submit" value="UPLOAD">
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+
 <section id="contact">
     <div class="container">
         <form action="" method="post">
@@ -27,16 +31,18 @@
                     <div class="form-group">
                         <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i>
                             Email</label>
-                        <input type="email" name="email" value="{{email}}" class="form-control form-control-lg border border-dark"
-                            id="register-tutor-email" aria-describedby="emailHelp" placeholder="Email">
+                        <input type="email" name="email" value="{{email}}"
+                            class="form-control form-control-lg border border-dark" id="register-tutor-email"
+                            aria-describedby="emailHelp" placeholder="Email">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i>
                             Username</label>
-                        <input type="username" name="name" value="{{name}}" class="form-control form-control-lg border border-dark"
-                            id="register-tutor-username" placeholder="Username">
+                        <input type="username" name="name" value="{{name}}"
+                            class="form-control form-control-lg border border-dark" id="register-tutor-username"
+                            placeholder="Username">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -58,16 +64,38 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <button type="submit" style=" font-size: 18px;"
-                        class=" btn btn-success btn-lg  button_save" role="button" aria-pressed="true">SAVE ACCOUNT</a>
+                    <button type="submit" style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save"
+                        role="button" aria-pressed="true">SAVE ACCOUNT</a>
                 </div>
         </form>
 
         <div class="col-lg-6">
-            <a href="settings/delete_student" style=" font-size: 18px;" class=" btn btn-danger btn-lg  button_delete"
-                role="button" aria-pressed="true">DELETE
+            <button type="button" style=" font-size: 18px;" data-toggle="modal" data-target="#exampleModal"
+                class=" btn btn-danger btn-lg  button_delete" role="button" aria-pressed="true">DELETE
                 ACCOUNT</a>
 
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Deletion of account confirmation
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                        <a href="settings/delete_student" class=" btn btn-danger" role="button"
+                            aria-pressed="true">Yes</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>

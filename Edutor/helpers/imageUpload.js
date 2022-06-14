@@ -44,20 +44,24 @@ const path = require('path');
 
 //profilepicture
 const storageForUploads = multer.diskStorage({
-    destination: '/images/profilepictures',
+    destination: './images/profilepictures',
     filename: function(req, file, cb) { //cb is a callback function (null, destination string)
-        cb(null,req.user.id +'-'+ file.fieldname + '-' + Date.now() + path.extname(file.originalname))//callback(err, ) we dont want error so we just put null
+        console.log(file);
+        cb(null,req.user.id +'-'+ file.fieldname + '-' + Date.now() + path.extname(file.originalname))
     }
 });
 
 //Init upload
-const upload  = multer({
+const upload = multer({
     storage: storageForUploads,
-    limits: {fileSize:  10000000},
+    limits: {fileSize:  100000000},
     fileFilter: function(req,file,cb){
         checkFileType(file, cb);
     }
 }).single('profilePictureUpload')
+
+
+
 
 function checkFileType(file, cb){
     //Allowed ext
