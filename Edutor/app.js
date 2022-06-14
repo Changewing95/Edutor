@@ -19,13 +19,14 @@ const app = express();
 // 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 // 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
 // }));
+const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
+	helpers: helpers,
 	defaultLayout: 'main',
-	extname: '.hbs',
-	handlebars: allowInsecurePrototypeAccess(Handlebars),
-
+	extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
+
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -96,10 +97,15 @@ DBConnection.setUpDB(false); // To set up database with new tables
 const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
+const dashboardRoute = require('./routes/dashboard');
+
+
 
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
+app.use('/dashboard', dashboardRoute);
+
 
 
 const port = 5000;
