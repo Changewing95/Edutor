@@ -21,7 +21,9 @@ const app = express();
 // }));
 app.engine('hbs', engine({
 	defaultLayout: 'main',
-	extname: '.hbs'
+	extname: '.hbs',
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
+
 }));
 app.set('view engine', 'hbs');
 
@@ -97,8 +99,7 @@ const bookingRoute = require('./routes/tutorConsultation');
 
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
-app.use('/consultation', bookingRoute);
-
+app.use('/tutor/consultation', bookingRoute);
 
 
 const port = 5000;
