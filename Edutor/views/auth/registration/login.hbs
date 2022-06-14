@@ -1,4 +1,4 @@
-<head>
+{{!-- <head>
  <link rel="stylesheet" href="/css/style.css">
 
   
@@ -54,8 +54,44 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
 
 {{!-- <form method="post" action="/flash">
 <button type="submit" class="btn btn-primary">Send Flash</button>
 </form> --}}
+
+
+<head>
+ <link rel="stylesheet" href="/css/style.css">
+
+  
+</head>
+
+
+<div class="container">
+
+    <div style="margin-top: 5%;" class="register-center">
+        <h1>Login</h1>
+        <h2 style="font-size: 20px;">Do you have a registered account? If not You can <span style="color:red;">Register Here!</span></h2>
+
+    </div>
+
+        <form action="" method="post">
+        <div class="form-group">
+            <label for="login-email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+            <input type="email" name="email" class="form-control form-control-lg border border-dark" id="register-tutor-email"
+                aria-describedby="emailHelp" placeholder="Email">
+            {{!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                else.</small> --}}
+        </div>
+        <div class="form-group">
+            <label for="login-password"> <i class="fa fa-key" aria-hidden="true"></i> Password</label>
+            <input type="password" name="password" class="form-control form-control-lg border border-dark" id="register-tutor-password"
+                placeholder="Password">
+        </div>
+
+
+        <button type="submit" class="form-control form-control-lg register-submit btn btn-success">Register</button>
+    </form>
+</div>
