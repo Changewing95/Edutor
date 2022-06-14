@@ -23,7 +23,9 @@ const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
 	helpers: helpers,
 	defaultLayout: 'main',
-	extname: '.hbs'
+	extname: '.hbs',
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
+
 }));
 app.set('view engine', 'hbs');
 
