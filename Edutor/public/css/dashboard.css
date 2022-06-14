@@ -269,3 +269,11 @@
     flex-direction: row;
 }
 
+
+.button_save {
+  width: 219px; height: 49px; background: #5CBF8F; color: white;
+}
+
+.button_delete {
+  width: 219px; height: 49px; background: red; color: white;
+}

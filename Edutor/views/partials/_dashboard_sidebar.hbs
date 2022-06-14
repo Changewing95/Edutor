@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/dashboard.css">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -12,7 +11,7 @@
 
     <div class="sidebar">
         <div class="logo-details">
-            <i class='bx bxl-c-plus-plus icon'></i>
+            <i class='bx  icon'></i>
             <div class="logo_name">Edutor</div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
@@ -25,8 +24,8 @@
                 </a>
                 <span class="tooltip">Home</span>
             </li>
-                <li class="active">
-                <a href="#">
+                <li class="{{#if currentpage.overview}}active{{/if}}">
+                <a href="/dashboard/overview">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Overview</span>
                 </a>
@@ -53,8 +52,8 @@
                 </a>
                 <span class="tooltip">Consultation Slot</span>
             </li>
-            <li>
-                <a href="#">
+            <li class="{{#if currentpage.settings}}active{{/if}}">
+                <a href="/dashboard/settings">
                     <i class='bx bx-cog'></i>
                     <span class="links_name">Setting</span>
                 </a>
