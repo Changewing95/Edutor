@@ -15,11 +15,15 @@ passportConfig.localStrategy(passport);
 const app = express();
 
 
-app.engine('handlebars', engine({
-	handlebars: allowInsecurePrototypeAccess(Handlebars),
-	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+// app.engine('handlebars', engine({
+// 	handlebars: allowInsecurePrototypeAccess(Handlebars),
+// 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
+// }));
+app.engine('hbs', engine({
+	defaultLayout: 'main',
+	extname: '.hbs'
 }));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
