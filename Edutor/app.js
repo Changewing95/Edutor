@@ -100,6 +100,9 @@ const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
+const tutorialRoute = require('./routes/tutorTutorial');
+
+
 
 
 
@@ -107,6 +110,7 @@ app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
+app.use('/tutor/tutorial', tutorialRoute);
 
 
 
