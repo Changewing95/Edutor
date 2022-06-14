@@ -65,7 +65,7 @@ router.post('/create', async function (req, res) {
 
 
     res.redirect('/');
-=======
+
     res.redirect('main');
 });
 
