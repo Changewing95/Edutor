@@ -99,7 +99,8 @@ const bookingRoute = require('./routes/tutorConsultation');
 
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
-app.use('/tutor/consultation', bookingRoute);
+app.use('/consultation', bookingRoute);
+
 
 
 const port = 5000;
