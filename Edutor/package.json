@@ -29,6 +29,7 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "sequelize": "^6.19.0",
+    "slug": "^5.3.0",
     "uuid": "^8.3.2"
   }
 }

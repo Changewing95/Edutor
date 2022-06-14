@@ -1,0 +1,53 @@
+<div class="container">
+	{{#if products}}
+	<div class="card card-body">
+		<h3 class="text-primary">Products</h3>
+		{{#each products}}
+		<div class="card border-primary mb-2 w-100 mx-auto">
+			<div class="card-header">
+				<h5 class="card-title">{{name}}</h5>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-12 col-md-12 col-lg-3">
+						<p class="font-italic">Price</p>
+						<p class="text-info">
+							{{price}}
+						</p>
+					</div>
+                    <form>
+                            <form action="product/edit/{{id}}" method="POST">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                            &nbsp;
+
+                            <form action="product/delete/{{id}}" method="POST">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                            &nbsp;
+
+                        
+                            <form action="product/add-to-cart" method="POST">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn btn-primary">Add to cart</button>
+                            </form>
+                    </form>
+				</div>
+			</div>
+
+		</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+<h3>No products available</h3>
+{{/if}}
+
+<script>
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+	});
+</script>
