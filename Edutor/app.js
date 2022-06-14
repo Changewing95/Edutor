@@ -100,7 +100,7 @@ const bookingRoute = require('./routes/tutorConsultation');
 
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
-app.use('/consultation', bookingRoute);
+app.use('/tutor/consultation', bookingRoute);
 
 
 
