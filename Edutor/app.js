@@ -21,7 +21,9 @@ const app = express();
 // }));
 app.engine('hbs', engine({
 	defaultLayout: 'main',
-	extname: '.hbs'
+	extname: '.hbs',
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
+
 }));
 app.set('view engine', 'hbs');
 
