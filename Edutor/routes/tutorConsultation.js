@@ -3,6 +3,9 @@ const router = express.Router();
 // const fs = require('fs');
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
+const fs = require('fs');
+const upload = require('../helpers/imageUpload');
+
 // const upload = require('../helpers/imageUpload');
 // const ensureAuthenticated = require('../helpers/auth');
 
@@ -29,6 +32,8 @@ router.get('/create', (req, res) => {
 
 
 
+// CODING LOGIC (CRUD)
+// to-do: add in 'ensure 
 // CODING LOGIC (CUD)
 // CREATE
 // to-do: add in 
@@ -59,6 +64,8 @@ router.post('/create', async function (req, res) {
     // });
 
 
+    res.redirect('/');
+=======
     res.redirect('main');
 });
 
