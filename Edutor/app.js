@@ -101,7 +101,7 @@ const dashboardRoute = require('./routes/dashboard');
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/consultation', bookingRoute);
-app.use('/dashboard', bookingRoute);
+app.use('/dashboard', dashboardRoute);
 
 
 
