@@ -271,9 +271,9 @@
 
 
 .button_save {
-  width: 219px; height: 49px; background: #5CBF8F; color: white;
+  width: 219px; height: 49px; background: #5CBF8F; color: white; border: 1px solid black;
 }
 
 .button_delete {
-  width: 219px; height: 49px; background: red; color: white;
-}
+  width: 219px; height: 49px; background: red; color: white; border: 1px solid black;
+} 
