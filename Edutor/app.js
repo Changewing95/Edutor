@@ -15,11 +15,11 @@ passportConfig.localStrategy(passport);
 const app = express();
 
 
-app.engine('handlebars', engine({
-	handlebars: allowInsecurePrototypeAccess(Handlebars),
-	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+app.engine('hbs', engine({
+	defaultLayout: 'main',
+	extname: '.hbs'
 }));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -90,10 +90,12 @@ DBConnection.setUpDB(false); // To set up database with new tables
 const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
+const dashboardRoute = require('./routes/dashboard');
 
 app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/consultation', bookingRoute);
+app.use('/dashboard', dashboardRoute);
 
 
 
