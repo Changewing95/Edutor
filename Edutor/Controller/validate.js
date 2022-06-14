@@ -23,8 +23,8 @@ exports.validate = (method) => {
 }
 
 exports.AuthoriseUser = async (req, res, next) => {
-    var fullPath = req.baseUrl + req.path;
-    console.log(fullPath)
+    // var fullPath = req.baseUrl + req.path;
+    // console.log(fullPath)
     try {
         const errors = validationResult(req); // FInds the validation
         if (!errors.isEmpty()) {
@@ -34,20 +34,13 @@ exports.AuthoriseUser = async (req, res, next) => {
                 flashMessage(res, 'error', error.msg)
             })
             return res.render(`auth/registration${req.path}`);
-        } else {
-            next()
         }
+        next()
         // Calling the next middlware function which is "Createuser"
     } catch (err) {
         return next(err)
     }
 }
-
-
-
-
-
-
 
 
 exports.CheckIfVerified = async (req, res, next) => {
@@ -107,11 +100,6 @@ exports.CreateTutor = async (req, res) => {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             let user = await User.create({ name, email, password: hash, confirm_password, roles: tutor })
-            Email.sendMail(email, user.verification_code).then((result) => {
-                console.log(result)
-            }).catch((error) => {
-                console.log(error)
-            });
             flashMessage(res, 'success', "Tutor Successfully Registered! Please proceed to verify your email")
             return res.render('auth/registration/register_tutor');
         }
