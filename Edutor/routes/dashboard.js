@@ -39,6 +39,7 @@ router.post('/profilePictureUpload', (req, res) => {
             console.log("error1")
             res.json({ file: '/img/no-image.jpg', err: err });
         } else {
+            console.log(req.file);
             if (req.file === undefined) {
                 console.log("error2")
                 res.json({ file: '/img/no-image.jpg', err: err });
@@ -63,7 +64,7 @@ router.get('/display', async (req,res) => {
     let user = await User.findOne({ where: { id: req.user.id } });
     if(user) {
         console.log(user);
-        res.sendFile(resolve(`./images/profilepictures/${user.profile_pic}`))
+        res.sendFile(resolve(`./public/images/profilepictures/${user.profile_pic}`))
     } else {
         res.send("no access");
     }
