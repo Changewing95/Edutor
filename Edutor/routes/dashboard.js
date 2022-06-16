@@ -62,20 +62,18 @@ router.put('/profilePictureUpload', async (req, res) => {
     //         }
     //     }
     // });
-    // var id = uuid.v4();
-    // User.update({
-    //     profile_pic: id
-    // }, { where: { id: req.user.id } }).then(() => {
-    //     res.redirect('settings');
-    // }).catch((errors) => {
-    //     console.log(errors);
-    // })
-    // req.pipe(fs.createWriteStream(resolve(`./public/images/profilepictures/${req.user.id}.png`)))
-    pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${req.user.id}.png`)), (error) => {
+    var profile_id = uuid.v1();
+    User.update({
+        profile_pic: profile_id
+    }, { where: { id: req.user.id } }).then(() => {
+        res.redirect('settings');
+    }).catch((errors) => {
+        console.log(errors);
+    })
+
+    pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
         if(!error) {
-            res.send("success")
-        } else {
-            res.send(error);
+            res.send("succaess");
         }
     });
 })
@@ -83,13 +81,19 @@ router.put('/profilePictureUpload', async (req, res) => {
 
 
 router.get('/display', async (req, res) => {
-    let user = await User.findOne({ where: { id: req.user.id } });
-    if (user) {
-        console.log(user);
-        res.sendFile(resolve(`./public/images/profilepictures/${req.user.id}.png`))
-    } else {
-        res.send("no access");
-    }
+    // await User.findOne({ where: { id: req.user.id } }).then((user) => {
+    //     if (user) {
+    //         console.log(user.profile_pic);
+    //         res.sendFile(resolve(`./public/images/profilepictures/${user.profile_pic}.png`))
+    //     } else {
+    //         res.send("no access");
+    //     }
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
+    res.sendFile(resolve(`./public/images/profilepictures/${req.user.profile_pic}.png`))
+
+
 });
 
 
