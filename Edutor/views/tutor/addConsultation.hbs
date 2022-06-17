@@ -12,6 +12,16 @@
     <div class="container">
         <div class="title">Consultation Slots</div>
         <div class="content">
+            {{!-- <div class="row">
+                <div class="col">
+                    <img src="/dashboard/display" width="200px" height="200px" alt="...">
+                    <input type="file" name="profilePictureUpload" id="insert_image" class='hidden' />
+                    <label style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save"
+                        for="insert_image">CHANGE
+                        PROFILE</label>
+                </div>
+            </div> --}}
+
             <form method="POST" action="">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
@@ -20,15 +30,18 @@
                             required>
                     </div>
                     <div class="input-box mb-3">
+                        <div class="alert alert-danger alert-dismissible collapse" id="InvalidImage" role="alert">
+                            <strong>Invalid Image type!</strong> Please make sure that the uploaded image is a valid
+                            image
+                        </div>
                         <span class="details">Image</span>
-                        <input type="file" placeholder="Enter Consultation Slot name" name="image" class="form-control"
-                            accept="image/png, image/jpeg, image/jpg" required>
+                        <input type="file" placeholder="Enter Consultation Slot name" name="consultationImage"
+                            class="form-control" accept="image/png, image/jpeg, image/jpg" required>
                     </div>
                     <div class="text-danger small mb-2" id="cover" style="display:none"></div>
                     <div class="input-box mb-3">
-                        <span class="details">Description</span>
-                        <input type="text" class="form-control" placeholder="Enter description of course"
-                            name="description" required>
+                        <span class="details">Enter Price of course</span>
+                        <input type='number' name="price" step='0.05' value='10.00' class="form-control" required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Date</span>
@@ -36,16 +49,17 @@
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Start time</span>
-                        {{!-- <input type="time" class="form-control" id="start_time" min="09:00" max="19:00" required>
-                        --}}
                         <input type="text" class="form-control" name="start_time" required>
-
-
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">End time</span>
                         <input type="text" class="form-control" name="end_time" required>
                     </div>
+                </div>
+                <div class="input-box mb-3">
+                    <span class="details">Description</span>
+                    <input type="text" class="form-control" placeholder="Enter description of course" name="description"
+                        required>
                 </div>
                 <div class="button">
                     <input type="submit">

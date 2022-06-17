@@ -5,7 +5,7 @@ const formatDate = function (date, targetFormat) {
 };
 
 const replaceCommas = function (value) {
-    return value ? value.replace(/,/g, ' | ') : 'None';
+    return value ? (value.toString()).replace(/,/g, ' | ') : 'None';
 }
 
 module.exports = { formatDate, replaceCommas };
