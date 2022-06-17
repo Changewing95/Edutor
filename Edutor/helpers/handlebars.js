@@ -8,4 +8,12 @@ const replaceCommas = function (value) {
     return value ? value.replace(/,/g, ' | ') : 'None';
 }
 
-module.exports = { formatDate, replaceCommas };
+const isEqualHelperHandlerbar = function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this) 
+    } else { 
+        return opts.inverse(this) 
+    } 
+}
+
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar };

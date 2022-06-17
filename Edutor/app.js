@@ -21,7 +21,10 @@ const app = express();
 // }));
 const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
-	helpers: helpers,
+	helpers: {
+		helpers,
+		if_equal: helpers.isEqualHelperHandlerbar
+	},
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
