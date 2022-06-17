@@ -4,14 +4,26 @@ const router = express.Router();
 const Tutorial = require('../models/Tutorial');
 // const ensureAuthenticated = require('../helpers/auth');
 
+//TO DO:
+//1. Retrieve only the tutorials with the current userID (under findall, retrieve when.....- refer to practical)
 router.get('/main', (req, res) => {
-    res.render('tutor/tutorial');
+    Tutorial.findAll({
+        raw: true
+        })
+        .then((tutorials) => {
+        // pass object to listVideos.handlebar
+        res.render('tutor/tutorial', { tutorials });
+        })
+        .catch(err => console.log(err));
 });
 
 router.get('/create', (req, res) => {
     res.render('tutor/addTutorial');
 });
-
+// TO DO:
+//1. SAVE THE USER ID TGT WITH THE INFO SO CAN RETRIEVE ACCORDING TO CORRECT USER
+//2. fixx image display
+//3. Fix video display
 router.post('/create', async function (req, res) {
     let { title, description, author, date, category, price, thumbnail, video } = req.body;
 
@@ -44,4 +56,18 @@ router.post('/create', async function (req, res) {
     res.redirect('/tutor/tutorial/main');
 });
 
+
+//NEED TO DO:
+//1. Retrieve the specific Tutorial ID that the user clicks (under findall, retrieve when.....- refer to practical)
+router.get('/display', (req, res) => {
+    Tutorial.findAll({
+        raw: true
+        })
+        .then((tutorials) => {
+        // pass object to listVideos.handlebar
+        res.render('tutor/detailedTutorial', { tutorials });
+        })
+        .catch(err => console.log(err));
+    
+});
 module.exports = router;

@@ -1,0 +1,27 @@
+<head>
+    <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/singleTutorial.css">
+</head>
+
+<body>
+    <div class="container">
+        {{!-- {{#each tutorials}} --}}
+        <div class="title">TITLE BRUH</div>
+        <div class="content">
+            <div>
+                <img  class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg">
+            </div>
+            <div>
+                <h4>Author</h4>
+            {{!-- Will display None because dunno display which tutorial info so need to retroeve according to tutorial ID first--}}
+                <p>{{replaceCommas author}}</p>
+                <h4>Description</h4>
+                <p>{{replaceCommas description}}</p>
+            </div>
+        </div>
+        {{!-- {{/each}} --}}
+    </div>  
+
+</body>
+
+</html>
