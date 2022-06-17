@@ -47,7 +47,10 @@ exports.CheckIfVerified = async (req, res, next) => {
     let { email } = req.body;
     try {
         let user = await User.findOne({ where: { email: email } });
-        if(user.verified == "yes") {
+        if(!user) {
+            next()
+        }
+        else if(user.verified == "yes") {
             console.log(user.verified);
             next()
         } else {

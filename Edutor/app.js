@@ -101,8 +101,7 @@ const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
-
-
+const cartRoute = require('./routes/cart');
 
 
 
@@ -111,6 +110,8 @@ app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
+app.use('/cart', cartRoute);
+
 
 
 

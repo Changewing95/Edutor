@@ -1,0 +1,74 @@
+<head>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<div class="container-fluid dashboard">
+    <div class="container mt-5">
+        <h1 style="font-weight: 700; font-size: 20px;   text-transform: uppercase;">{{user.name}} | Settings</h1>
+        <form>
+            <div class="row">
+                <div class="col">
+                    <img src="/profile/{{user.profile_pic}}" width="200px" height="200px" alt="...">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<section id="contact">
+    <div class="container">
+        <form action="" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style="font-size: 20px"><b>General Information</b></h2>
+                    <hr width="30%">
+                    <p>Want to change your information? Change below!</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i>
+                            Email</label>
+                        <input type="email" name="email" value="{{email}}" class="form-control form-control-lg border border-dark"
+                            id="register-tutor-email" aria-describedby="emailHelp" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i>
+                            Username</label>
+                        <input type="username" name="name" value="{{name}}" class="form-control form-control-lg border border-dark"
+                            id="register-tutor-username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="register-tutor-password"> <i class="fa fa-key" aria-hidden="true"></i>
+                            Password</label>
+                        <input type="password" name="password" class="form-control form-control-lg border border-dark"
+                            id="register-tutor-password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="register-tutor-confirm-password"><i class="fa fa-key" aria-hidden="true"></i>
+                            Confirm
+                            Password</label>
+                        <input type="password" name="confirm_password"
+                            class="form-control form-control-lg border border-dark" id="register-tutor-confirm-password"
+                            placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <button type="submit" style=" font-size: 18px;"
+                        class=" btn btn-success btn-lg  button_save" role="button" aria-pressed="true">SAVE ACCOUNT</a>
+                </div>
+        </form>
+
+        <div class="col-lg-6">
+            <a href="settings/delete_student" style=" font-size: 18px;" class=" btn btn-danger btn-lg  button_delete"
+                role="button" aria-pressed="true">DELETE
+                ACCOUNT</a>
+
+        </div>
+    </div>
+    </div>
+</section>
