@@ -1,0 +1,72 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">EDITTTTTT</div>
+        <div class="content">
+            <form method="POST" action="#">
+                <div class="user-details mb-3">
+                    <div class="input-box mb-3">
+                        {{!-- <span class="details">Title</span> --}}
+                        {{!-- <input type="text" name="title" placeholder="Enter Title of course" class="form-control"
+                            required> --}}
+                        <label class="details" class="font-italic" for="title">Title</label>
+                        <textarea class="form-control" id="title" name="title" rows="1" maxlength="100">{{tutorials.title}}</textarea>
+                    </div>
+                    <div class="input-box mb-3">
+                        <label class="details" class="font-italic" for="author">Author</label>
+                        <textarea class="form-control" id="author" name="author" rows="1" maxlength="100">{{tutorials.author}}</textarea>
+                    </div>
+                    <div class="input-box mb-3">
+                       
+                        <label class="details" class="font-italic" for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="1" maxlength="3000">{{tutorials.description}}</textarea>
+                    </div>
+                    
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Date</span>
+                        <input type="date" name="date" class="form-control" required>
+                        {{!-- <label class="font-italic">Date of release</label>
+						<input id="datepicker" width="200" name="dateRelease" value="{{formatDate video.dateRelease 'DD/MM/YYYY'}}" readonly /> 
+                    </div> --}}
+
+                    <div class="input-box mb-3">
+                        {{!-- <span class="details">Category</span>
+                        <input type="text" name="category" list="categories" class="form-control"
+                            placeholder="Enter category of course" required> --}}
+                            <label class="details" class="font-italic" for="category">Category</label>
+                        <textarea class="form-control" id="category" name="category" rows="1" maxlength="20">{{tutorials.category}}</textarea>
+                        <datalist id="categories">
+                            <option value="Beginner Level">
+                            <option value="Intermediate Level">
+                            <option value="Advance Level">
+                        </datalist>
+
+                    </div>
+
+                    <div class="input-box mb-3">
+                        <label class="details">Enter Price Of Course</label>
+                        <textarea class="form-control" id="price" name="price" rows="1" maxlength="1000">{{tutorials.price}}</textarea>
+                    </div>
+                </div>
+                <div class="input-box mb-3">
+                    <span class="details">Upload Thumbnail</span>
+                    <input type="file" name="thumbnail" accept="image/*" class="form-control" required>
+                </div>
+                <div class="input-box mb-3">
+                    <span class="details">Upload Tutorial Video</span>
+                    <input type="file" name="video" accept="video/*" class="form-control" required>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Update">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

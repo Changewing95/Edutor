@@ -9,10 +9,10 @@ const Tutorial = require('../models/Tutorial');
 router.get('/main', (req, res) => {
     Tutorial.findAll({
         raw: true
-        })
+    })
         .then((tutorials) => {
-        // pass object to listVideos.handlebar
-        res.render('tutor/tutorial', { tutorials });
+            // pass object to listVideos.handlebar
+            res.render('tutor/tutorial', { tutorials });
         })
         .catch(err => console.log(err));
 });
@@ -25,10 +25,28 @@ router.get('/create', (req, res) => {
 //2. fixx image display
 //3. Fix video display
 router.post('/create', async function (req, res) {
+    //     let title = req.body.title;
+    //     let description = req.body.description;
+    //     let author = req.body.author;
+    //     // let date = moment(req.body.date, 'DD/MM/YYYY');
+    //     let category = req.body.category;
+    //     let price = req.body.price;
+    //     let thumbnail = req.body.thumbnail;
+    //     let video = req.body.video;
+
+    //     Tutorial.create(
+    //         { title, description, author, category, price, thumbnail, video }
+    //         )
+    //         .then((tutorials) => {
+    //         console.log(tutorials.toJSON());
+    //         res.redirect('/tutor/tutorial/main');
+    //         })
+    //         .catch(err => console.log(err))
+    //         });
     let { title, description, author, date, category, price, thumbnail, video } = req.body;
 
     // let userId = req.user.id;
-   
+
     // const message = 'Tutorial slot successfully submitted';
     // flashMessage(res, 'success', message);
 
@@ -51,23 +69,66 @@ router.post('/create', async function (req, res) {
     //         res.json({ file: `/uploads/$req.user.id/${req.file.filename}` });
     //     }
     // });
-
-
     res.redirect('/tutor/tutorial/main');
 });
 
 
 //NEED TO DO:
 //1. Retrieve the specific Tutorial ID that the user clicks (under findall, retrieve when.....- refer to practical)
-router.get('/display', (req, res) => {
-    Tutorial.findAll({
-        raw: true
-        })
+router.get('/display/:id', (req, res) => {
+
+    Tutorial.findByPk(req.params.id)
         .then((tutorials) => {
-        // pass object to listVideos.handlebar
-        res.render('tutor/detailedTutorial', { tutorials });
+            res.render('tutor/detailedTutorial', { tutorials });
         })
         .catch(err => console.log(err));
-    
+});
+
+//EDIT
+router.get('/editTutorial/:id', (req, res) => {
+    Tutorial.findByPk(req.params.id)
+        .then((tutorials) => {
+            res.render('tutor/editTutorial', { tutorials });
+        })
+        .catch(err => console.log(err));
+});
+
+
+router.post('/editTutorial/:id', (req, res) => {
+    let { title, description, author, date, category, price, thumbnail, video } = req.body;
+    Tutorial.update(
+        { title, description, author, date, category, price, thumbnail, video },
+        { where: { id: req.params.id } }
+    )
+        .then((result) => {
+            console.log(result[0] + ' video updated');
+            res.redirect('/tutor/tutorial/main');
+        })
+        .catch(err => console.log(err));
+});
+
+
+router.get('/deleteTutorial/:id', async function
+    (req, res) {
+    try {
+        let tutorials = await Tutorial.findByPk(req.params.id);
+        // if (!video) {
+        //     flashMessage(res, 'error', 'Video not found');
+        //     res.redirect('/video/listVideos');
+        //     return;
+        // }
+        // if (req.user.id != video.userId) {
+        //     flashMessage(res, 'error', 'Unauthorised access');
+        //     res.redirect('/video/listVideos');
+        //     return;
+        // }
+        let result = await Tutorial.destroy({ where: { id: tutorials.id } });
+        console.log(result + ' video deleted');
+        res.redirect('/tutor/tutorial/main');
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 module.exports = router;
+

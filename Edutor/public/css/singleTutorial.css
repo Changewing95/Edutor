@@ -8,6 +8,16 @@
     margin-left: auto;
     margin-right: auto;
   }
+.button{
+    margin-top:20px;
+}
+.buyButton{
+    width:150px;
+    margin-left:680px;
+}
+.cartButton{
+    width:150px;
+}
 .container .title {
     font-size: 30px;
     font-weight: 500;

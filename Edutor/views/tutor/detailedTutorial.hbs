@@ -6,17 +6,21 @@
 <body>
     <div class="container">
         {{!-- {{#each tutorials}} --}}
-        <div class="title">TITLE BRUH</div>
+        <div class="title">{{tutorials.title}}</div>
         <div class="content">
             <div>
                 <img  class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg">
             </div>
+            <div class="button">
+                    <input type="button" class="buyButton" value="Buy now">
+                    <input type="button" class="cartButton" value="Add to cart">
+                </div>
             <div>
                 <h4>Author</h4>
             {{!-- Will display None because dunno display which tutorial info so need to retroeve according to tutorial ID first--}}
-                <p>{{replaceCommas author}}</p>
+                <p>{{tutorials.author}}</p>
                 <h4>Description</h4>
-                <p>{{replaceCommas description}}</p>
+                <p>{{tutorials.description}}</p>
             </div>
         </div>
         {{!-- {{/each}} --}}
