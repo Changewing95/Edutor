@@ -1,27 +1,18 @@
 const multer = require('multer');
 const path = require('path');
-
 // Set Storage Engine
 const storage = multer.diskStorage({
+    /* change 1 to req.user.id */
     destination: (req, file, cb) => {
-        cb(null, './uploads/consultationImage/');
+        cb(null, './public/uploads/' + 1 + '/');
     },
-    filename: function (req, file, cb) {
-        console.log(file);
-        cb(null, 1 + '-' + file.filename + "-" + Date.now() +
+    /* change 1 to req.user.id */
+    filename: (req, file, cb) => {
+        cb(null, 1 + '-' + Date.now() +
             path.extname(file.originalname));
     }
 });
-// Define Upload Function
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 1000000 }, // 1MB
-    fileFilter: (req, file, cb) => {
-        checkFileType(file, cb);
-    }
-}).single('consultationImage'); // Must be the name as the HTML file upload input
-
-// Check File Type -- Image (for consultation slot)
+// Check File Type
 function checkFileType(file, cb) {
     // Allowed file extensions
     const filetypes = /jpeg|jpg|png|gif/;
@@ -37,6 +28,13 @@ function checkFileType(file, cb) {
         cb({ message: 'Images Only' });
     }
 }
-
+// Define Upload Function
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 }, // 1MB
+    fileFilter: (req, file, cb) => {
+        checkFileType(file, cb);
+    }
+}).single('consultationUpload'); // Must be the name as the HTML file upload input
 
 module.exports = upload;

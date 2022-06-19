@@ -45,7 +45,7 @@
                             <h4>Description: </h4>
                             <p class="product-description">{{replaceCommas description}}</p>
                             <h4>Date: </h4>
-                            <p class="product-date">{{date}}</p>
+                            <p class="product-date">{{ formatDate date 'DD MMM YYYY'}}</p>
                             <h4>Time</h4>
                             <p class="product-starttime">{{replaceCommas start_time}} to {{replaceCommas end_time}}
                             </p>
