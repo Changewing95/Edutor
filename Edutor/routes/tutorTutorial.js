@@ -3,6 +3,8 @@ const router = express.Router();
 // const moment = require('moment');
 const Tutorial = require('../models/Tutorial');
 // const ensureAuthenticated = require('../helpers/auth');
+const fs = require('fs');
+const upload = require('../helpers/imageUpload');
 
 //TO DO:
 //1. Retrieve only the tutorials with the current userID (under findall, retrieve when.....- refer to practical)
@@ -43,14 +45,14 @@ router.post('/create', async function (req, res) {
     //         })
     //         .catch(err => console.log(err))
     //         });
-    let { title, description, author, date, category, price, thumbnail, video } = req.body;
+    let { title, description, author, category, price, image, video } = req.body;
 
     // let userId = req.user.id;
 
     // const message = 'Tutorial slot successfully submitted';
     // flashMessage(res, 'success', message);
 
-    let tutorial = await Tutorial.create({ title, description, author, date, category, price, thumbnail, video });
+    let tutorial = await Tutorial.create({ title, description, author, category, price, image, video });
 
     // IMAGE UPLOAD: TO-FIX
     // Creates user id directory for upload if not exist
@@ -71,6 +73,8 @@ router.post('/create', async function (req, res) {
     // });
     res.redirect('/tutor/tutorial/main');
 });
+
+
 
 
 //NEED TO DO:
@@ -95,9 +99,9 @@ router.get('/editTutorial/:id', (req, res) => {
 
 
 router.post('/editTutorial/:id', (req, res) => {
-    let { title, description, author, date, category, price, thumbnail, video } = req.body;
+    let { title, description, author, category, price, image, video } = req.body;
     Tutorial.update(
-        { title, description, author, date, category, price, thumbnail, video },
+        { title, description, author, category, price, image, video },
         { where: { id: req.params.id } }
     )
         .then((result) => {
