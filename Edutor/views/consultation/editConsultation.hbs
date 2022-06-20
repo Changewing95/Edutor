@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Edit Consultation Slot Detail </div>
+        <div class="content">
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="user-details mb-3">
+                    {{!-- title --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Title</span>
+                        <input type="text" placeholder="Enter Consultation Slot name" value="{{consultations.title}}"
+                            name="title" class="form-control" required>
+
+                    </div>
+
+
+                    {{!-- file upload ;; todo: fix css for this --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Image</span>
+                        <div class="custom-file mb-2">
+                            <input type="file" class="form-control custom-file-input" id="consultationUpload"
+                                name="consultationUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+
+                        </div>
+                        <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
+                        <img id="consultation" src="{{consultations.consultationURL}}" height="100" width="100"
+                            alt="Consulation" class="border img-thumbnail img-fluid">
+                        {{!—- Hidden field to submit URL of poster to the server --}}
+                        <input id="consultationURL" name="consultationURL" value="">
+                    </div>
+
+
+                    {{!-- price --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Enter Price of course</span>
+                        <input type='number' name="price" value="{{consultations.price}}" step='0.05' value='10.00'
+                            class="form-control" required>
+                    </div>
+
+                    {{!-- date --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Date</span>
+                        <input class="form-control" name="consultDate" id="datepicker"
+                            value="{{ formatDate consultations.date 'DD/MM/YYYY'}}" required>
+
+                    </div>
+
+                    {{!-- start time --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Start time</span>
+                        <input type="time" name="start_time" class="form-control" name="end_time" min="09:00"
+                            max="21:00" value="{{ formatDate consultations.start_time 'HH:mm'}}" required>
+                    </div>
+                    {{!-- end time --}}
+                    <div class="input-box mb-3">
+                        <span class="details">End time</span>
+                        <input type="time" name="end_time" class="form-control" name="end_time" min="09:00" max="21:00"
+                            value="{{ formatDate consultations.end_time 'HH:mm'}}" required>
+                    </div>
+                </div>
+                {{!-- description --}}
+                <div class="input-box mb-3">
+                    <span class="details">Description</span>
+                    <input type="text" class="form-control" placeholder="Enter description of course"
+                        value="{{consultations.description}}" name="description" maxlength="3000" required>
+                </div>
+                <div class="button">
+                    <input type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+
+        });
+    </script>
+</body>
+
+</html>
