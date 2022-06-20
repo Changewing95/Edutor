@@ -2,6 +2,18 @@
 
 <head>
     <link rel="stylesheet" href="/css/catalogue.css">
+    <style>
+        .section-products #product- {
+                {
+                id
+            }
+        }
+
+        .part-1::before {
+            background: url("../uploads/${consultation.consultationURL}.png") no-repeat center;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,7 +39,7 @@
                 {{#each consultations}}
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     {{!-- change the image via the css thr --}}
-                    <div id="product-2" class="single-product">
+                    <div id="product-{{id}}" class="single-product">
                         <div class="part-1">
                             <ul>
                                 {{!-- <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li> --}}
@@ -50,7 +62,8 @@
                             <h4>Date: </h4>
                             <p class="product-date">{{ formatDate date 'DD MMM YYYY'}}</p>
                             <h4>Time</h4>
-                            <p class="product-starttime">{{replaceCommas start_time}} to {{replaceCommas end_time}}
+                            <p class="product-starttime">{{formatDate start_time 'HH:mm'}} to {{formatDate end_time
+                                'HH:mm'}}
                             </p>
                         </div>
                     </div>

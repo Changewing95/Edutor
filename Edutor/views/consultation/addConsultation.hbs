@@ -24,8 +24,8 @@
 
                     {{!-- file upload ;; todo: fix css for this --}}
                     <div class="input-box mb-3">
+                        <span class="details">Image</span>
                         <div class="custom-file mb-2">
-                            <span class="details">Image</span>
                             <input type="file" class="form-control custom-file-input" id="consultationUpload"
                                 name="consultationUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
                             <label class="custom-file-label" for="customFile">Choose File</label>
@@ -35,12 +35,8 @@
                         <img id="consultation" src="/profile/profile.png" height="100" width="100" alt="Consulation"
                             class="border img-thumbnail img-fluid">
                         {{!—- Hidden field to submit URL of poster to the server --}}
-                        <input id="consultationURL" name="consultationURL">
+                        <input id="consultationURL" type="hidden" name="consultationURL">
                     </div>
-
-
-
-
 
 
                     {{!-- price --}}
@@ -49,7 +45,7 @@
                         <input type='number' name="price" step='0.05' value='10.00' class="form-control" required>
                     </div>
 
-                    {{!-- date ;; to-do: add moment --}}
+                    {{!-- date --}}
                     <div class="input-box mb-3">
                         <span class="details">Date</span>
                         <input class="form-control" name="consultDate" id="datepicker" required>
@@ -58,19 +54,21 @@
                     {{!-- start time --}}
                     <div class="input-box mb-3">
                         <span class="details">Start time</span>
-                        <input type="text" class="form-control" name="start_time" required>
+                        <input type="time" id="start_time" name="start_time" class="form-control" name="end_time"
+                            min="09:00" max="21:00" value="09:00" required>
                     </div>
                     {{!-- end time --}}
                     <div class="input-box mb-3">
                         <span class="details">End time</span>
-                        <input type="text" class="form-control" name="end_time" required>
+                        <input type="time" id="end_time" name="end_time" class="form-control" name="end_time"
+                            min="09:00" max="21:00" value="09:00" required>
                     </div>
                 </div>
                 {{!-- description --}}
                 <div class="input-box mb-3">
                     <span class="details">Description</span>
-                    <input type="text" class="form-control" placeholder="Enter description of course" name="description"
-                        required>
+                    <textarea class="form-control" placeholder="Enter description of course" name="description"
+                        required></textarea>
                 </div>
                 <div class="button">
                     <input type="submit">
@@ -84,6 +82,7 @@
             format: "dd/mm/yyyy",
             value: moment().format('DD/MM/YYYY')
         });
+
     </script>
 </body>
 

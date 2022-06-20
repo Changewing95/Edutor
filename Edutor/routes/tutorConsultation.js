@@ -125,8 +125,10 @@ router.post('/create', async function (req, res) {
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
     let description = req.body.description;
-    let start_time = req.body.start_time;
-    let end_time = req.body.end_time;
+    let start_time = moment(req.body.start_time, 'HH:mm:ss');
+    let end_time = moment(req.body.end_time, 'HH:mm:ss');
+
+
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
 
     const message = 'Consultation slot successfully submitted';

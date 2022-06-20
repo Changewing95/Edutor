@@ -11,8 +11,8 @@ const Consultation = db.define('consultations',
         price: { type: Sequelize.FLOAT },
         description: { type: Sequelize.STRING },
         date: { type: Sequelize.DATE },
-        start_time: { type: Sequelize.STRING },
-        end_time: { type: Sequelize.STRING },
+        start_time: { type: Sequelize.DATE },
+        end_time: { type: Sequelize.DATE },
     });
 
 module.exports = Consultation;
