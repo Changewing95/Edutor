@@ -1,8 +1,8 @@
 const express = require('express');
+const ensureAuthenticated = require('../helpers/auth');
 const router = express.Router();
 // const moment = require('moment');
 const Tutorial = require('../models/Tutorial');
-const ensureAuthenticated = require('../helpers/auth');
 // const fs = require('fs');
 // const upload = require('../helpers/imageUpload');
 
