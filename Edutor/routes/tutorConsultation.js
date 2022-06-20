@@ -20,7 +20,7 @@ router.get('/main', (req, res) => {
     })
         .then((consultations) => {
             // pass object to consultation.hbs
-            res.render('tutor/consultation', { consultations });
+            res.render('consultation/consultation', { consultations });
         })
         .catch(err => console.log(err));
     // res.render('tutor/consultation');
@@ -28,7 +28,7 @@ router.get('/main', (req, res) => {
 
 // route to form field -- add slot
 router.get('/create', (req, res) => {
-    res.render('tutor/addConsultation');
+    res.render('consultation/addConsultation');
 });
 
 
@@ -75,7 +75,7 @@ router.post('/upload', (req, res) => {
         else {
             /* change 1 to req.user.id */
             res.json({
-                file: `/uploads/1}/${req.file.filename}`
+                file: `/uploads/1/${req.file.filename}`
             });
         }
     });
