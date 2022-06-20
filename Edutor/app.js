@@ -102,6 +102,7 @@ const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
 const cartRoute = require('./routes/cart');
+const studbookingRoute = require('./routes/studentConsultation');
 
 
 
@@ -111,6 +112,7 @@ app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
+app.use('/student/consultation', studbookingRoute);
 
 
 

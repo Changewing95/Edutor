@@ -3,9 +3,10 @@ const express = require('express');
 const router = express.Router();
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
+// for file upload
 const fs = require('fs');
 const upload = require('../helpers/imageUpload');
-
+// for validation
 // const ensureAuthenticated = require('../helpers/auth');
 
 // ROUTING: 
@@ -29,38 +30,11 @@ router.get('/create', (req, res) => {
     res.render('consultation/addConsultation');
 });
 
-// route to form field -- edit slot
-router.get('/editConsultation/:id', (req, res) => {
-    Consultation.findByPk(req.params.id)
-        .then((consultations) => {
-            res.render('consultation/editConsultation', { consultations });
-        })
-        .catch(err => console.log(err));
-    /*
-    Video.findByPk(req.params.id)
-        .then((video) => {
-            if (!video) {
-                flashMessage(res, 'error', 'Video not found');
-                res.redirect('/video/listVideos');
-                return;
-            }
-            if (req.user.id != video.userId) {
-                flashMessage(res, 'error', 'Unauthorised access');
-                res.redirect('/video/listVideos');
-                return;
-            }
-
-            res.render('video/editVideo', { video });
-        })
-        .catch(err => console.log(err));
-        */
-});
-
 
 
 // CODING LOGIC (CRUD)
 // CREATE
-router.post('/create', async function (req, res) {
+router.post('/editConsultation/:id', (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
@@ -72,7 +46,7 @@ router.post('/create', async function (req, res) {
     const message = 'Consultation slot successfully submitted';
     flashMessage(res, 'success', message);
 
-    let consultation = await Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
+    Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
         .then((consultation) => {
             console.log(consultation.toJSON());
             res.redirect('/tutor/consultation/main');
@@ -80,16 +54,32 @@ router.post('/create', async function (req, res) {
         .catch(err => console.log(err));
 });
 
+
+
+
+
+
 // EDIT
+// route to form field -- edit slot
+router.get('/editConsultation/:id', (req, res) => {
+    Consultation.findByPk(req.params.id)
+        .then((consultations) => {
+            res.render('consultation/editConsultation', { consultations });
+        })
+        .catch(err => console.log(err));
+});
+
+
+
 router.post('/editConsultation/:id', (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
     let description = req.body.description;
+    console.log('hello');
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
-
 
 
     Consultation.update(

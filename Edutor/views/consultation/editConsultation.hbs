@@ -36,7 +36,8 @@
                         <img id="consultation" src="{{consultations.consultationURL}}" height="100" width="100"
                             alt="Consulation" class="border img-thumbnail img-fluid">
                         {{!—- Hidden field to submit URL of poster to the server --}}
-                        <input id="consultationURL" name="consultationURL" value="">
+                        <input id="consultationURL" type="" name="consultationURL"
+                            value="{{consultations.consultationURL}}">
                     </div>
 
 
@@ -50,21 +51,21 @@
                     {{!-- date --}}
                     <div class="input-box mb-3">
                         <span class="details">Date</span>
-                        <input class="form-control" name="consultDate" id="datepicker"
-                            value="{{ formatDate consultations.date 'DD/MM/YYYY'}}" required>
+                        <input id="datepicker" class="form-control" name="consultDate"
+                            value="{{ formatDate consultations.date 'DD/MM/YYYY'}}" required />
 
                     </div>
 
                     {{!-- start time --}}
                     <div class="input-box mb-3">
                         <span class="details">Start time</span>
-                        <input type="time" name="start_time" class="form-control" name="end_time" min="09:00"
-                            max="21:00" value="{{ formatDate consultations.start_time 'HH:mm'}}" required>
+                        <input type="time" name="start_time" class="form-control" min="09:00" max="21:00"
+                            value="{{ formatDate consultations.start_time 'HH:mm'}}" required>
                     </div>
                     {{!-- end time --}}
                     <div class="input-box mb-3">
                         <span class="details">End time</span>
-                        <input type="time" name="end_time" class="form-control" name="end_time" min="09:00" max="21:00"
+                        <input type="time" name="end_time" class="form-control" min="09:00" max="21:00"
                             value="{{ formatDate consultations.end_time 'HH:mm'}}" required>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
                         value="{{consultations.description}}" name="description" maxlength="3000" required>
                 </div>
                 <div class="button">
-                    <input type="submit">
+                    <input type="submit" value="Update">
                 </div>
             </form>
         </div>
