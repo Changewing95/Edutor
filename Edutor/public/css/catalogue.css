@@ -63,7 +63,7 @@ a:hover {
 }
 
 .section-products #product-2 .part-1::before {
-    background: url("../uploads/consultationImage/telegram.png") no-repeat center;
+    background: url("../profile/profile.png") no-repeat center;
     background-size: cover;
 }
 
