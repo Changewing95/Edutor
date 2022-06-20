@@ -12,7 +12,7 @@
     <div class="container">
         <div class="title">Consultation Slots</div>
         <div class="content">
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="user-details mb-3">
                     {{!-- title --}}
                     <div class="input-box mb-3">
@@ -28,20 +28,8 @@
                         <input type="file" class="form-control" id="consultationUpload" name="consultationUpload"
                             accept="image/png,image/jpeg,image/jpg,image/gif">
 
-
-
-
-                        {{!-- <span class="details">Image</span>
-                        <input type="file" class="custom-file-input" id="consultationUpload" name="consultationUpload"
-                            accept="image/png,image/jpeg,image/jpg,image/gif">
-                        <label class="custom-file-label" for="customFile">Choose File</label> --}}
                     </div>
                     <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
-                    {{!-- <img id="consultation" src="/public/uploads/consultationImage/telegram.png" alt="Consultation"
-                        class="border img-thumbnail img-fluid">
-                    {{!—- Hidden field to submit URL of poster to the server --}}
-                    {{!-- <input id="consultationURL" type="hidden" name="consultationURL"> --}}
-
 
 
                     {{!-- price --}}
