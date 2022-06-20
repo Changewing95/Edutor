@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 // const moment = require('moment');
 const Tutorial = require('../models/Tutorial');
-// const ensureAuthenticated = require('../helpers/auth');
-const fs = require('fs');
-const upload = require('../helpers/imageUpload');
+const ensureAuthenticated = require('../helpers/auth');
+// const fs = require('fs');
+// const upload = require('../helpers/imageUpload');
 
 //TO DO:
 //1. Retrieve only the tutorials with the current userID (under findall, retrieve when.....- refer to practical)
-router.get('/main', (req, res) => {
+router.get('/main', ensureAuthenticated, (req, res) => {
     Tutorial.findAll({
+        where: { userId: req.user.id },
         raw: true
     })
         .then((tutorials) => {
@@ -19,6 +20,7 @@ router.get('/main', (req, res) => {
         .catch(err => console.log(err));
 });
 
+
 router.get('/create', (req, res) => {
     res.render('tutor/addTutorial');
 });
@@ -27,14 +29,24 @@ router.get('/create', (req, res) => {
 //2. fixx image display
 //3. Fix video display
 router.post('/create', async function (req, res) {
-    //     let title = req.body.title;
-    //     let description = req.body.description;
-    //     let author = req.body.author;
-    //     // let date = moment(req.body.date, 'DD/MM/YYYY');
-    //     let category = req.body.category;
-    //     let price = req.body.price;
-    //     let thumbnail = req.body.thumbnail;
-    //     let video = req.body.video;
+    let title = req.body.title;
+    let description = req.body.description;
+    let author = req.body.author;
+    // let date = moment(req.body.date, 'DD/MM/YYYY');
+    let category = req.body.category;
+    let price = req.body.price;
+    let image = req.body.image;
+    let video = req.body.video;
+    let userId = req.user.id;
+    Tutorial.create(
+        { title, description, author, category, price, image, video, userId }
+        )
+        .then((tutorials) => {
+        console.log(tutorials.toJSON());
+        res.redirect('/tutor/tutorial/main');
+        })
+        .catch(err => console.log(err))
+        });
 
     //     Tutorial.create(
     //         { title, description, author, category, price, thumbnail, video }
@@ -45,14 +57,14 @@ router.post('/create', async function (req, res) {
     //         })
     //         .catch(err => console.log(err))
     //         });
-    let { title, description, author, category, price, image, video } = req.body;
+    // let { title, description, author, category, price, image, video } = req.body;
 
     // let userId = req.user.id;
 
     // const message = 'Tutorial slot successfully submitted';
     // flashMessage(res, 'success', message);
 
-    let tutorial = await Tutorial.create({ title, description, author, category, price, image, video });
+    // let tutorial = await Tutorial.create({ title, description, author, category, price, image, video });
 
     // IMAGE UPLOAD: TO-FIX
     // Creates user id directory for upload if not exist
@@ -71,8 +83,8 @@ router.post('/create', async function (req, res) {
     //         res.json({ file: `/uploads/$req.user.id/${req.file.filename}` });
     //     }
     // });
-    res.redirect('/tutor/tutorial/main');
-});
+//     res.redirect('/tutor/tutorial/main');
+// });
 
 
 
