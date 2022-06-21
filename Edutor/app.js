@@ -120,7 +120,6 @@ app.use('/student/consultation', studbookingRoute);
 
 
 
-
 const port = 5000;
 
 // Starts the server and listen to port

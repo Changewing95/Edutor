@@ -7,7 +7,7 @@
     <div class="container">
         <div class="title">Avaliable Courses</div>
         <div class="content">
-            <form action="#">
+            <form method="POST" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
@@ -21,10 +21,10 @@
                         <span class="details">Description</span>
                         <input type="text" name="description" class="form-control" placeholder="Enter description of course" required>
                     </div>
-                    <div class="input-box mb-3">
+                    {{!-- <div class="input-box mb-3">
                         <span class="details">Date</span>
                         <input type="date" name="date" class="form-control" required>
-                    </div>
+                    </div> --}}
                     <div class="input-box mb-3">
                         <span class="details">Category</span>
                         <input type="text" name="category" list="categories" class="form-control"
@@ -43,7 +43,7 @@
                 </div>
                 <div class="input-box mb-3">
                     <span class="details">Upload Thumbnail</span>
-                    <input type="file" name="thumbnail"  accept="image/*" class="form-control"
+                    <input type="file" name="image"  accept="image/*" class="form-control"
                         required>
                 </div>
                 <div class="input-box mb-3">
