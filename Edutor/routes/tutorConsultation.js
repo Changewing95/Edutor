@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
+// for recaptcha
+const fetch = require('isomorphic-fetch')
 // for file upload
 const fs = require('fs');
 const upload = require('../helpers/imageUpload');
@@ -10,7 +12,6 @@ const upload = require('../helpers/imageUpload');
 // const ensureAuthenticated = require('../helpers/auth');
 
 // ROUTING: 
-// route to catalogue for consultation
 router.get('/main', (req, res) => {
     Consultation.findAll({
         // where: { userId: req.user.id },
@@ -25,9 +26,16 @@ router.get('/main', (req, res) => {
     // res.render('tutor/consultation');
 });
 
-// route to form field -- add slot
 router.get('/create', (req, res) => {
     res.render('consultation/addConsultation');
+});
+
+router.get('/editConsultation/:id', (req, res) => {
+    Consultation.findByPk(req.params.id)
+        .then((consultation) => {
+            res.render('consultation/editConsultation', { consultation });
+        })
+        .catch(err => console.log(err));
 });
 
 
@@ -43,9 +51,30 @@ router.post('/create/', (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
 
+    // mysql
+    const resKey = req.body['g-recaptcha-response'];
+    const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${resKey}`
+
+    fetch(url, { method: 'post', })
+        .then((response) => response.json())
+        .then((google_response) => {
+            if (google_response.success == true) {
+                console.log({ response: 'Successful' })
+            } else {
+                console.log({ response: 'Failed' })
+            }
+        })
+        .catch((error) => {
+            console.log({ error })
+        })
+
+    // flash
     const message = 'Consultation slot successfully submitted';
     flashMessage(res, 'success', message);
 
+
+    // saving to mysql
     Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
         .then((consultation) => {
             console.log(consultation.toJSON());
@@ -55,19 +84,7 @@ router.post('/create/', (req, res) => {
 });
 
 
-
-
-
-
 // EDIT
-router.get('/editConsultation/:id', (req, res) => {
-    Consultation.findByPk(req.params.id)
-        .then((consultation) => {
-            res.render('consultation/editConsultation', { consultation });
-        })
-        .catch(err => console.log(err));
-});
-
 router.post('/editConsultation/:id', (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
@@ -88,8 +105,6 @@ router.post('/editConsultation/:id', (req, res) => {
         })
         .catch(err => console.log(err));
 });
-
-
 
 
 
