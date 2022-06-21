@@ -3,11 +3,10 @@ const express = require('express');
 const router = express.Router();
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
-// for recaptcha
 const fetch = require('isomorphic-fetch')
-// for file upload
 const fs = require('fs');
 const upload = require('../helpers/imageUpload');
+const { stringify } = require('querystring');
 // for validation
 // const ensureAuthenticated = require('../helpers/auth');
 
@@ -42,7 +41,6 @@ router.get('/editConsultation/:id', (req, res) => {
 
 // CODING LOGIC (CRUD)
 // CREATE
-// CREATE
 router.post('/create', async (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
@@ -52,7 +50,51 @@ router.post('/create', async (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
 
-    // recaptcha
+    // recaptcha -- advanced feature
+    const resKey = req.body['g-recaptcha-response'];
+    const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
+    const query = stringify({
+        secret: secretKey,
+        response: resKey,
+        remoteip: req.connection.remoteAddress
+    })
+
+    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
+
+    const body = await fetch(verifyURL).then(res => res.json());
+
+    // if not successful
+    if (body.success !== undefined && !body.success) {
+        flashMessage(res, 'error', 'Please click recaptcha!');
+        res.redirect('/tutor/consultation/create');
+    }
+
+    // if successful
+    if (body.success) {
+        const message = 'Consultation slot successfully submitted';
+        flashMessage(res, 'success', message);
+
+        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
+            .then((consultation) => {
+                console.log(consultation.toJSON());
+                res.redirect('/tutor/consultation/main');
+            })
+            .catch(err => console.log(err));
+    }
+});
+
+
+// EDIT
+router.post('/editConsultation/:id', async (req, res) => {
+    let title = req.body.title;
+    let consultationURL = req.body.consultationURL;
+    let price = req.body.price;
+    let description = req.body.description;
+    let start_time = moment(req.body.start_time, 'HH:mm');
+    let end_time = moment(req.body.end_time, 'HH:mm');
+    let date = moment(req.body.consultDate, 'DD/MM/YYYYs');
+
+    // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
     const query = stringify({
@@ -68,51 +110,25 @@ router.post('/create', async (req, res) => {
 
     // if not successful
     if (body.success !== undefined && !body.success) {
-        // console.log(res, { success: false, msg: 'Failed captcha verification' });
         flashMessage(res, 'error', 'Please click recaptcha!');
         res.redirect('/tutor/consultation/create');
     }
-    // console.log({ success: false, msg: 'Failed captcha verification' });
 
     // if successful
     if (body.success) {
-        // flash
         const message = 'Consultation slot successfully submitted';
         flashMessage(res, 'success', message);
 
-
-        // saving to mysql
-        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
-            .then((consultation) => {
-                console.log(consultation.toJSON());
+        Consultation.update(
+            { title, consultationURL, price, description, date, start_time, end_time },
+            { where: { id: req.params.id } }
+        )
+            .then((result) => {
+                console.log(result[0] + ' consultation updated');
                 res.redirect('/tutor/consultation/main');
             })
             .catch(err => console.log(err));
-
     }
-});
-
-
-// EDIT
-router.post('/editConsultation/:id', (req, res) => {
-    let title = req.body.title;
-    let consultationURL = req.body.consultationURL;
-    let price = req.body.price;
-    let description = req.body.description;
-
-    let start_time = moment(req.body.start_time, 'HH:mm');
-    let end_time = moment(req.body.end_time, 'HH:mm');
-    let date = moment(req.body.consultDate, 'DD/MM/YYYYs');
-
-    Consultation.update(
-        { title, consultationURL, price, description, date, start_time, end_time },
-        { where: { id: req.params.id } }
-    )
-        .then((result) => {
-            console.log(result[0] + ' consultation updated');
-            res.redirect('/tutor/consultation/main');
-        })
-        .catch(err => console.log(err));
 });
 
 
