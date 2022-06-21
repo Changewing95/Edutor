@@ -7,13 +7,23 @@
     }
 </style>
 
-<nav class="mb-4 navbar navbar-expand-lg navbar-dark">
+<nav style="background-color: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+    class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="#" id="smallfont">All Courses <span
-            class="sr-only">(current)</span></a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="#" id="smallfont">All Courses<span class="sr-only">(current)</span></a>
+    {{#if_equal user.roles "tutor"}}
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Consultation Slot</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Events</a>
+    {{else}}
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/consultation/main">Book
+        Tutors</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/consultation/main">Book Tutors</a>
+        href="/tutor/consultation/main">Consultation Slot</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Book Events</a>
+
+
+    {{/if_equal}}
+
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,8 +34,8 @@
             {{#if user}}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="/profile/{{user.profile_pic}}" width="50"
-                        height="50"> {{user.name}} | Profile </a>
+                    aria-haspopup="true" aria-expanded="false"><img src="/dashboard/display" width="50" height="50">
+                    {{user.name}} | Profile </a>
                 {{else}}
             <li class="nav-item {{#if currentpage.register}}active{{/if}}">
                 <a class="nav-link" id="smallfont" href="/auth/register"><i class="fa fa-envelope"></i> Register </a>
