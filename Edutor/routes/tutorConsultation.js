@@ -34,7 +34,7 @@ router.get('/create', (req, res) => {
 
 // CODING LOGIC (CRUD)
 // CREATE
-router.post('/editConsultation/:id', (req, res) => {
+router.post('/create/', (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
@@ -60,27 +60,23 @@ router.post('/editConsultation/:id', (req, res) => {
 
 
 // EDIT
-// route to form field -- edit slot
 router.get('/editConsultation/:id', (req, res) => {
     Consultation.findByPk(req.params.id)
-        .then((consultations) => {
-            res.render('consultation/editConsultation', { consultations });
+        .then((consultation) => {
+            res.render('consultation/editConsultation', { consultation });
         })
         .catch(err => console.log(err));
 });
-
-
 
 router.post('/editConsultation/:id', (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
     let description = req.body.description;
-    console.log('hello');
-    let start_time = moment(req.body.start_time, 'HH:mm:ss');
-    let end_time = moment(req.body.end_time, 'HH:mm:ss');
-    let date = moment(req.body.consultDate, 'DD/MM/YYYY');
 
+    let start_time = moment(req.body.start_time, 'HH:mm');
+    let end_time = moment(req.body.end_time, 'HH:mm');
+    let date = moment(req.body.consultDate, 'DD/MM/YYYYs');
 
     Consultation.update(
         { title, consultationURL, price, description, date, start_time, end_time },
@@ -94,6 +90,9 @@ router.post('/editConsultation/:id', (req, res) => {
 });
 
 
+
+
+
 // DELETE
 router.get('/deleteConsultation/:id', async function (req, res) {
     try {
@@ -104,9 +103,9 @@ router.get('/deleteConsultation/:id', async function (req, res) {
             return;
         }
         /*
-        if (req.user.id != video.userId) {
+        if (req.user.id != consultation.userId) {
             flashMessage(res, 'error', 'Unauthorised access');
-            res.redirect('/video/listVideos');
+            res.redirect('/consultation/listConsultations');
             return;
         }
         */
