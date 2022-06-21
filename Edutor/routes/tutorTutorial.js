@@ -147,4 +147,3 @@ router.get('/deleteTutorial/:id', async function
     }
 });
 module.exports = router;
-

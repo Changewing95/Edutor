@@ -21,7 +21,10 @@ const app = express();
 // }));
 const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
-	helpers: helpers,
+	helpers: {
+		helpers,
+		if_equal: helpers.isEqualHelperHandlerbar
+	},
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
@@ -101,8 +104,8 @@ const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
-
-
+const cartRoute = require('./routes/cart');
+const studbookingRoute = require('./routes/studentConsultation');
 
 
 
@@ -111,6 +114,8 @@ app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
+app.use('/cart', cartRoute);
+app.use('/student/consultation', studbookingRoute);
 
 
 

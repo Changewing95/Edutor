@@ -1,0 +1,82 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">EDITTTTTT</div>
+        <div class="content">
+            <form method="POST" action="#">
+                <div class="user-details mb-3">
+                    <div class="input-box mb-3">
+                        <label class="details" class="font-italic" for="title">Title</label>
+                        <input class="form-control" id="title" name="title" rows="1" maxlength="100"
+                            value="{{consultation.title}}"></input>
+                    </div>
+                    {{!-- file upload ;; todo: fix css for this --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Image</span>
+                        <div class="custom-file mb-2">
+                            <input type="file" class="form-control custom-file-input" id="consultationUpload"
+                                name="consultationUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+
+                        </div>
+                        <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
+                        <img id="consultation" src="{{ consultation.consultationURL }}" height="100" width="100"
+                            alt="Consulation" class="border img-thumbnail img-fluid">
+                        {{!—- Hidden field to submit URL of poster to the server --}}
+                        <input id="consultationURL" type="hidden" name="consultationURL"
+                            value="{{ consultation.consultationURL}}">
+                    </div>
+
+
+                    <div class="input-box mb-3">
+                        <label class="details">Enter Price Of Course</label>
+                        <input class="form-control" id="price" name="price" rows="1" maxlength="1000"
+                            value="{{consultation.price}}"></input>
+                    </div>
+                    {{!-- date --}}
+                    <div class="input-box mb-3">
+                        <label class="details">Date of release</label>
+                        <input id="datepicker" name="consultDate" class="form-control"
+                            value="{{formatDate consultation.date 'DD/MM/YYYY'}}" required />
+                    </div>
+                    {{!-- start time --}}
+                    <div class="input-box mb-3">
+                        <label class="details">Start time</label>
+                        <input type="time" id="start_time" name="start_time" class="form-control" min="09:00"
+                            max="21:00" value="{{formatDate consultation.start_time 'HH:mm'}}" required>
+                    </div>
+                    {{!-- end time --}}
+                    <div class="input-box mb-3">
+                        <label class="details">End time</label>
+                        <input type="time" id="end_time" name="end_time" class="form-control" min="09:00" max="21:00"
+                            value="{{formatDate consultation.start_time 'HH:mm'}}" required>
+                    </div>
+
+                </div>
+                <div class="input-box mb-3">
+
+                    <label class="details" class="font-italic" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="1"
+                        maxlength="3000">{{consultation.description}}</textarea>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Update">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $('#datepicker').datepicker({
+            format: "dd/mm/yyyy",
+        });
+
+    </script>
+
+</body>
+
+</html>

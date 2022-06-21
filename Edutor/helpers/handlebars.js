@@ -5,7 +5,16 @@ const formatDate = function (date, targetFormat) {
 };
 
 const replaceCommas = function (value) {
-    return value ? value.replace(/,/g, ' | ') : 'None';
+    return value ? (value.toString()).replace(/,/g, ' | ') : 'None';
+};
+
+
+const isEqualHelperHandlerbar = function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this) 
+    } else { 
+        return opts.inverse(this) 
+    } 
 }
 
-module.exports = { formatDate, replaceCommas };
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar };
