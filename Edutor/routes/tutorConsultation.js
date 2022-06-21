@@ -42,7 +42,8 @@ router.get('/editConsultation/:id', (req, res) => {
 
 // CODING LOGIC (CRUD)
 // CREATE
-router.post('/create/', (req, res) => {
+// CREATE
+router.post('/create', async (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
@@ -51,36 +52,44 @@ router.post('/create/', (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
 
-    // mysql
+    // recaptcha
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${resKey}`
+    const query = stringify({
+        secret: secretKey,
+        response: resKey,
+        remoteip: req.connection.remoteAddress
+    })
 
-    fetch(url, { method: 'post', })
-        .then((response) => response.json())
-        .then((google_response) => {
-            if (google_response.success == true) {
-                console.log({ response: 'Successful' })
-            } else {
-                console.log({ response: 'Failed' })
-            }
-        })
-        .catch((error) => {
-            console.log({ error })
-        })
+    // verify url
+    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
 
-    // flash
-    const message = 'Consultation slot successfully submitted';
-    flashMessage(res, 'success', message);
+    const body = await fetch(verifyURL).then(res => res.json());
+
+    // if not successful
+    if (body.success !== undefined && !body.success) {
+        // console.log(res, { success: false, msg: 'Failed captcha verification' });
+        flashMessage(res, 'error', 'Please click recaptcha!');
+        res.redirect('/tutor/consultation/create');
+    }
+    // console.log({ success: false, msg: 'Failed captcha verification' });
+
+    // if successful
+    if (body.success) {
+        // flash
+        const message = 'Consultation slot successfully submitted';
+        flashMessage(res, 'success', message);
 
 
-    // saving to mysql
-    Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
-        .then((consultation) => {
-            console.log(consultation.toJSON());
-            res.redirect('/tutor/consultation/main');
-        })
-        .catch(err => console.log(err));
+        // saving to mysql
+        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
+            .then((consultation) => {
+                console.log(consultation.toJSON());
+                res.redirect('/tutor/consultation/main');
+            })
+            .catch(err => console.log(err));
+
+    }
 });
 
 
