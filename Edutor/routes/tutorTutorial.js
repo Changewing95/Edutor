@@ -35,19 +35,37 @@ router.post('/create', async function (req, res) {
     // let date = moment(req.body.date, 'DD/MM/YYYY');
     let category = req.body.category;
     let price = req.body.price;
-    let tutorialImageURL = req.body.tutorialImageURL;
+    // let tutorialImageURL = req.body.tutorialImageURL;
     let video = req.body.video;
     let userId = req.user.id;
-    Tutorial.create(
-        { title, description, author, category, price, tutorialImageURL, video, userId }
-    )
-        .then((tutorials) => {
-            console.log(tutorials.toJSON());
-            res.redirect('/tutor/tutorial/main');
-        })
-        .catch(err => console.log(err))
-});
 
+    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/' + req.user.id, {
+            recursive:
+                true
+        });
+    }
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
+        else {
+            res.json({
+                file: `/uploads/${req.user.id}/${req.file.filename}`});
+            Tutorial.create(
+                { title, description, author, category, price, tutorialImageURL: req.file.filename , video, userId }
+            )
+                .then((tutorials) => {
+                    console.log(tutorials.toJSON());
+                    res.redirect('/tutor/tutorial/main');
+                })
+                .catch(err => console.log(err))
+        }
+    });
+
+
+});
 //     Tutorial.create(
 //         { title, description, author, category, price, thumbnail, video }
 //         )
