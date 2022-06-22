@@ -1,0 +1,65 @@
+{{!-- view to show mainview of consultation slots --}}
+
+<head>
+    <link rel="stylesheet" href="/css/catalogue.css">
+</head>
+
+<body>
+
+    <section class="section-products">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="header">
+                    <h2>Consultation Slots</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                {{!-- listing of consultation slots --}}
+                {{#if consultations}}
+                {{#each consultations}}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    {{!-- change the image via the css thr --}}
+                    <div id="product-{{id}}" class="single-product">
+                        <div class="part-1">
+                            <img src="{{consultationURL}}" class="product-{{id}} part-1 consultationImage123" style="">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="/student/consultation/display/{{id}}"><i class="fas fa-expand"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">{{replaceCommas title}}</h3>
+                            <h3 class="product-price">${{replaceCommas price}}</h3>
+                            <br>
+                            <h4>Description: </h4>
+                            <p class="product-description">{{replaceCommas description}}</p>
+                            <h4>Date: </h4>
+                            <p class="product-date">{{ formatDate date 'DD MMM YYYY'}}</p>
+                            <h4>Time</h4>
+                            <p class="product-starttime">{{formatDate start_time 'HH:mm'}} to {{formatDate end_time
+                                'HH:mm'}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="row justify-content-center text-center">
+                    <div>
+                        <div class="header">
+                            <h2>No Consultation slots created. Below is the template</h2>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+
+    </section>
+</body>

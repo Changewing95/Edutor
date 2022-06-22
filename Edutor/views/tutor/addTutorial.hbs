@@ -1,0 +1,63 @@
+<head>
+    <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Avaliable Courses</div>
+        <div class="content">
+            <form method="POST" action="#">
+                <div class="user-details mb-3">
+                    <div class="input-box mb-3">
+                        <span class="details">Title</span>
+                        <input type="text" name="title" placeholder="Enter Title of course" class="form-control" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">author</span>
+                        <input type="text" name="author" placeholder="Enter Author name of course" class="form-control" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Description</span>
+                        <input type="text" name="description" class="form-control" placeholder="Enter description of course" required>
+                    </div>
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Date</span>
+                        <input type="date" name="date" class="form-control" required>
+                    </div> --}}
+                    <div class="input-box mb-3">
+                        <span class="details">Category</span>
+                        <input type="text" name="category" list="categories" class="form-control"
+                            placeholder="Enter category of course" required>
+                        <datalist id="categories">
+                            <option value="Beginner Level">
+                            <option value="Intermediate Level">
+                            <option value="Advance Level">
+                        </datalist>
+                    </div>
+
+                    <div class="input-box mb-3">
+                        <span class="details">Enter Price of course</span>
+                        <input type='number' name="price" step='0.01' value='10.00' class="form-control" required>
+                    </div>
+                </div>
+                <div class="input-box mb-3">
+                    <span class="details">Upload Thumbnail</span>
+                    <input type="file" name="image"  accept="image/*" class="form-control"
+                        required>
+                </div>
+                <div class="input-box mb-3">
+                    <span class="details">Upload Tutorial Video</span>
+                    <input type="file" name="video" accept="video/*" class="form-control"
+                        required>
+                </div>
+                <div class="button">
+                    <input type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
