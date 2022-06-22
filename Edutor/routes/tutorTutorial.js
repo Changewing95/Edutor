@@ -29,15 +29,6 @@ router.get('/create', (req, res) => {
 //2. fixx image display
 //3. Fix video display
 router.post('/create', async function (req, res) {
-    let title = req.body.title;
-    let description = req.body.description;
-    let author = req.body.author;
-    // let date = moment(req.body.date, 'DD/MM/YYYY');
-    let category = req.body.category;
-    let price = req.body.price;
-    // let tutorialImageURL = req.body.tutorialImageURL;
-    let video = req.body.video;
-    let userId = req.user.id;
 
     if (!fs.existsSync('./public/uploads/' + req.user.id)) {
         fs.mkdirSync('./public/uploads/' + req.user.id, {
@@ -51,12 +42,26 @@ router.post('/create', async function (req, res) {
             res.json({ file: '/uploads/profile/profile.png', err: err });
         }
         else {
-            res.json({
-                file: `/uploads/${req.user.id}/${req.file.filename}`});
+    
+            let title = req.body.title;
+            let description = req.body.description;
+            let author = req.body.author;
+            // let date = moment(req.body.date, 'DD/MM/YYYY');
+            let category = req.body.category;
+            let price = req.body.price;
+            // let tutorialImageURL = req.body.tutorialImageURL;
+            let video = req.body.video;
+            let userId = req.user.id;
+        
+            // res.json({
+            //     file: `/uploads/${req.user.id}/${req.file.filename}`
+                
+            // });
             Tutorial.create(
-                { title, description, author, category, price, tutorialImageURL: req.file.filename , video, userId }
-            )
+                { title, description, author, category, price, tutorialImageURL: req.file.filename, video, userId }
+            )   
                 .then((tutorials) => {
+                    
                     console.log(tutorials.toJSON());
                     res.redirect('/tutor/tutorial/main');
                 })
@@ -178,7 +183,8 @@ router.post('/upload', (req, res) => {
     upload(req, res, (err) => {
         if (err) {
             // e.g. File too large
-            res.json({ file: '/uploads/profile/profile.png', err: err });        }
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
         else {
             res.json({
                 file: `/uploads/${req.user.id}/${req.file.file -
