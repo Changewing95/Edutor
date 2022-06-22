@@ -10,7 +10,7 @@
 <nav style="background-color: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
     class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="#" id="smallfont">All Courses<span class="sr-only">(current)</span></a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">All Courses<span class="sr-only">(current)</span></a>
     {{#if_equal user.roles "tutor"}}
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Consultation Slot</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Events</a>
