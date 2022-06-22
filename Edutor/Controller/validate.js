@@ -9,13 +9,17 @@ var uuid = require('uuid');
 let student = "student";
 let tutor = "tutor";
 
-exports.validate = (method) => {
+exports.validate = (method, req, res, next) => {
     switch (method) {
         case 'Validation': {
             return [
-                body('email').isEmail().withMessage('Please provide an email address'),
-                body('password').isLength({ min: 5 })
-                    .withMessage('Password must be at least 5 chars long'),
+                body('password').isLength({ min: 5 }),
+                body('passwordConfirmation').custom((value, { req }) => {
+                    if (value !== req.body.confirm_password) {
+                        throw new Error('Password confirmation does not match password');
+                    }
+                    // Indicates the success of this synchronous custom validator
+                }),
             ]
         }
 

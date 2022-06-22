@@ -16,4 +16,11 @@ const isEqualHelperHandlerbar = function(a, b, opts) {
     } 
 }
 
+
+const Multiply = function(a, b) {
+    return a * b;
+}
+
+
+
 module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar };
