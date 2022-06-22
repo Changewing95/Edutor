@@ -57,6 +57,21 @@
                     <input type="file" name="image" accept="image/*" class="form-control" required>
                 </div>
                 <div class="input-box mb-3">
+                        <span class="details">Image</span>
+                        <div class="custom-file mb-2">
+                            <input type="file" class="form-control custom-file-input" id="tutorialImageUpload"
+                                name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+
+                        </div>
+                        <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
+                        <img id="consultation" src="{{ tutorial.tutorialImageURL }}" height="100" width="100"
+                            alt="Consulation" class="border img-thumbnail img-fluid">
+                        {{!—- Hidden field to submit URL of poster to the server --}}
+                        <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
+                            value="{{ tutorial.tutorialImageURL}}">
+                    </div>
+                <div class="input-box mb-3">
                     <span class="details">Upload Tutorial Video</span>
                     <input type="file" name="video" accept="video/*" class="form-control" required>
                 </div>
