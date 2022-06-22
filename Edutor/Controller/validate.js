@@ -9,20 +9,30 @@ var uuid = require('uuid');
 let student = "student";
 let tutor = "tutor";
 
-exports.validate = (method, req, res, next) => {
+exports.validate = (method, req, res) => {
     switch (method) {
-        case 'Validation': {
+        case 'Register_Validation': {
             return [
-                body('password').isLength({ min: 5 }),
-                body('passwordConfirmation').custom((value, { req }) => {
-                    if (value !== req.body.confirm_password) {
+                body('password').isLength({ min: 5 }).withMessage("Password must be more than 5"),
+                body('email').custom(value => {
+                    return User.findOne({ where: { email: value } }).then(user => {
+                        console.log(user)
+                        if (user) {
+                            throw new Error('Email already registered! Please use a different email address');
+                        }
+                    })
+                }),
+                body('confirm_password').custom((value, { req }) => {
+                    if (value != req.body.password) {
                         throw new Error('Password confirmation does not match password');
                     }
-                    // Indicates the success of this synchronous custom validator
-                }),
+                    return true;
+
+
+                })
+
             ]
         }
-
     }
 }
 
@@ -31,6 +41,7 @@ exports.AuthoriseUser = async (req, res, next) => {
     // console.log(fullPath)
     try {
         const errors = validationResult(req); // FInds the validation
+        console.log(errors);
         if (!errors.isEmpty()) {
             // res.status(422.).json({errors: errors.array() });
             errors.array().forEach(error => {
@@ -48,46 +59,41 @@ exports.AuthoriseUser = async (req, res, next) => {
 
 
 exports.CheckIfVerified = async (req, res, next) => {
-    let { email } = req.body;
-    try {
-        let user = await User.findOne({ where: { email: email } });
-        if (!user) {
-            next()
-        }
-        else if (user.verified == "yes") {
-            console.log(user.verified);
-            next()
-        } else {
-            flashMessage(res, 'error', "Account not verified! Verify through your email!")
-            return res.render(`auth/registration${req.path}`);
-        }
-    } catch (err) {
-        console.log(err);
-    }
+    // let { email } = req.body;
+
+    // try {
+    //     let user = await User.findOne({ where: { email: email } });
+    //     if (!user) {
+    //         next()
+    //     }
+    //     else if (user.verified == "yes") {
+    //         console.log(user.verified);
+    //         next()
+    //     } else {
+    //         flashMessage(res, 'error', "Account not verified! Verify through your email!")
+    //         return res.render(`auth/registration${req.path}`);
+    //     }
+    // } catch (err) {
+    //     console.log(err);
+    // }
 };
 
 
 
 exports.CreateUser = async (req, res) => {
     let { name, email, password, confirm_password } = req.body;
-    console.log()
     try {
-        let user = await User.findOne({ where: { email: email } });
-        if (user) {
-            flashMessage(res, 'error', "Student Already Registered!")
-            return res.render('auth/registration/register_user');
-        } else {
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(password, salt);
-            let user = await User.create({ name, email, password: hash, confirm_password, roles: student })
-            Email.sendMail(email, user.verification_code).then((result) => {
-                console.log(result)
-            }).catch((error) => {
-                console.log(error)
-            });
-            flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email")
-            return res.render('auth/registration/register_user');
-        }
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(password, salt);
+        let user = await User.create({ name, email, password: hash, confirm_password, roles: student })
+        Email.sendMail(email, user.verification_code).then((result) => {
+            console.log(result)
+        }).catch((error) => {
+            console.log(error)
+        });
+        flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email")
+        return res.render('auth/registration/register_user');
+
     } catch (err) {
         res.send("Error")
         console.log(err)
@@ -99,23 +105,18 @@ exports.CreateTutor = async (req, res) => {
     let { name, email, password, confirm_password } = req.body;
     console.log()
     try {
-        let user = await User.findOne({ where: { email: email } });
-        if (user) {
-            flashMessage(res, 'error', "Tutor Already Registered!")
-            return res.render('auth/registration/register_tutor');
-        } else {
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(password, salt);
-            let user = await User.create({ name, email, password: hash, confirm_password, roles: tutor })
-            Email.sendMail(email, user.verification_code).then((result) => {
-                console.log(result)
-            }).catch((error) => {
-                console.log(error)
-            });
-            flashMessage(res, 'success', "Tutor Successfully Registered! Please proceed to verify your email")
-            return res.render('auth/registration/register_tutor');
-        }
-    } catch (err) {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(password, salt);
+        let user = await User.create({ name, email, password: hash, confirm_password, roles: tutor })
+        Email.sendMail(email, user.verification_code).then((result) => {
+            console.log(result)
+        }).catch((error) => {
+            console.log(error)
+        });
+        flashMessage(res, 'success', "Tutor Successfully Registered! Please proceed to verify your email")
+        return res.render('auth/registration/register_tutor');
+    }
+    catch (err) {
         res.send("Error")
         console.log(err)
     }

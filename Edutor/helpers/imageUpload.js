@@ -192,4 +192,4 @@ const path = require('path');
 
 // >>>>>>> master
 
-module.exports = upload;
+// module.exports = upload;

@@ -16,7 +16,7 @@ router.get('/login', (req,res) => {
 
 
 // Three middleware for login post to check requirements and to authorised user and lastly passport authenticate middleware to authorise user access
-router.post('/login', UserController.validate('Validation'), UserController.AuthoriseUser,passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), UserController.CheckIfVerified, (req,res) => {
+router.post('/login',passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), (req,res) => {
 	flashMessage(res, 'success', 'Successfully login!')
 	res.redirect('/');
 });
@@ -41,7 +41,7 @@ router.get('/register_user',(req,res) => {
 
 });
 
-router.post('/register_user', UserController.validate('Validation'), UserController.AuthoriseUser, UserController.CreateUser);
+router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser);
 
 
 
@@ -57,7 +57,7 @@ router.get('/register_tutor',(req,res) => {
 
 //  Posting Tutor
 
-router.post('/register_tutor', UserController.validate('Validation'), UserController.AuthoriseUser, UserController.CreateTutor);
+router.post('/register_tutor', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateTutor);
 
 
 

@@ -18,8 +18,12 @@ function localStrategy(passport) {
                         return done(null, false, {
                             message: 'Password incorrect'
                         });
-                    } else {
-                        console.log("Login! 1")
+                    } else if(user.verified == "no") {
+                        return done(null, false, {
+                            message: 'Account not verified! Verify through your email!'
+                        });
+                    }
+                     else {
                         done(null, user);
                     }
                 })

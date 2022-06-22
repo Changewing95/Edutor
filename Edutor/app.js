@@ -23,7 +23,9 @@ const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
-		if_equal: helpers.isEqualHelperHandlerbar
+		if_equal: helpers.isEqualHelperHandlerbar,
+		replaceCommas: helpers.replaceCommas,
+		formatDate: helpers.formatDate
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
