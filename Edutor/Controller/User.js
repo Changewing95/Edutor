@@ -53,7 +53,6 @@ exports.CheckIfUserExists = async (req,res,next) => {
 
 function CheckifPasswordIsTheSame(res, req, password, confirm_password) {
     if(password != confirm_password) {
-        console.log("hi");
         flashMessage(res, 'error', "Password is not the same!", 'fas fa-sign-in-alt', true);
         res.redirect('settings')
     }

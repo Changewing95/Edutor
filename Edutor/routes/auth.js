@@ -16,7 +16,7 @@ router.get('/login', (req,res) => {
 
 
 // Three middleware for login post to check requirements and to authorised user and lastly passport authenticate middleware to authorise user access
-router.post('/login',passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), (req,res) => {
+router.post('/login', UserController.validate('Verify_OTP'), UserController.AuthoriseUser, passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), (req,res) => {
 	flashMessage(res, 'success', 'Successfully login!')
 	res.redirect('/');
 });
@@ -36,12 +36,11 @@ router.get('/register', (req, res) => {
 //  Getting student registration page
 
 router.get('/register_user',(req,res) => {
-	console.log("h");
 	res.render('auth/registration/register_user', {currentpage: {register: true}})
 
 });
 
-router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser);
+router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser );
 
 
 
@@ -70,6 +69,21 @@ router.get('/validate/:id', async (req,res) => {
 		console.log(user.verified);
 	}
 	res.redirect('/');
+
+});
+
+
+router.get('/verify_email',(req,res) => {
+
+	res.render('auth/registration/verify_email', {currentpage: {register: true}})
+
+});
+
+
+
+router.get('/google_authenticator',(req,res) => {
+
+	res.render('auth/registration/google_authenticator', {currentpage: {register: true}})
 
 });
 

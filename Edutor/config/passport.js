@@ -1,11 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const speakeasy = require('speakeasy')
 
 
 function localStrategy(passport) {
     passport.use(
-        new LocalStrategy({ usernameField: 'email' }, ( email, password, done) => {
+        new LocalStrategy({ usernameField: 'email'},  function (email, password, done) {
             User.findOne({ where: { email: email } })
                 .then(user => {
                     if (!user) {
@@ -18,12 +19,12 @@ function localStrategy(passport) {
                         return done(null, false, {
                             message: 'Password incorrect'
                         });
-                    } else if(user.verified == "no") {
+                    } else if (user.verified == "no") {
                         return done(null, false, {
                             message: 'Account not verified! Verify through your email!'
                         });
-                    }
-                     else {
+                    } 
+                    else {
                         done(null, user);
                     }
                 })

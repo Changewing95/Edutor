@@ -5,6 +5,11 @@ const bcrypt = require('bcryptjs');
 const flashMessage = require('../helpers/messenger');
 const Email = require('../config/mail');
 var uuid = require('uuid');
+const speakeasy = require('speakeasy')
+const qrcode = require('qrcode')
+
+
+
 
 let student = "student";
 let tutor = "tutor";
@@ -16,7 +21,6 @@ exports.validate = (method, req, res) => {
                 body('password').isLength({ min: 5 }).withMessage("Password must be more than 5"),
                 body('email').custom(value => {
                     return User.findOne({ where: { email: value } }).then(user => {
-                        console.log(user)
                         if (user) {
                             throw new Error('Email already registered! Please use a different email address');
                         }
@@ -33,6 +37,26 @@ exports.validate = (method, req, res) => {
 
             ]
         }
+        case 'Verify_OTP': {
+            return [
+                body('email').custom((value, { req }) => {
+                    return User.findOne({ where: { email: value } }).then(user => {
+                        const otp_verified = speakeasy.totp.verify({
+                            secret: user.otp,
+                            encoding: 'ascii',
+                            token: req.body.otp
+                        })
+                        if (!otp_verified) {
+                            console.log(user.otp);
+                            console.log(req.body.otp)
+                            console.log(otp_verified);
+                            console.log("error");
+                            throw new Error('OTP not correct!');
+                        }
+                    })
+                })
+            ]
+        }
     }
 }
 
@@ -41,11 +65,9 @@ exports.AuthoriseUser = async (req, res, next) => {
     // console.log(fullPath)
     try {
         const errors = validationResult(req); // FInds the validation
-        console.log(errors);
         if (!errors.isEmpty()) {
             // res.status(422.).json({errors: errors.array() });
             errors.array().forEach(error => {
-                console.log(error)
                 flashMessage(res, 'error', error.msg)
             })
             return res.render(`auth/registration${req.path}`);
@@ -80,19 +102,28 @@ exports.CheckIfVerified = async (req, res, next) => {
 
 
 
-exports.CreateUser = async (req, res) => {
+exports.CreateUser = async (req, res, next) => {
     let { name, email, password, confirm_password } = req.body;
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
-        let user = await User.create({ name, email, password: hash, confirm_password, roles: student })
+
+        var secret = speakeasy.generateSecret({
+            name: email
+        })
+        console.log(secret);
+        let user = await User.create({ name, email, password: hash, roles: student, otp: secret.ascii })
         Email.sendMail(email, user.verification_code).then((result) => {
-            console.log(result)
+            // flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
         }).catch((error) => {
             console.log(error)
         });
-        flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email")
-        return res.render('auth/registration/register_user');
+        var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
+            res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
+
+        });
+
+        // return res.render('auth/registration/register_user');
 
     } catch (err) {
         res.send("Error")
@@ -103,18 +134,17 @@ exports.CreateUser = async (req, res) => {
 
 exports.CreateTutor = async (req, res) => {
     let { name, email, password, confirm_password } = req.body;
-    console.log()
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
-        let user = await User.create({ name, email, password: hash, confirm_password, roles: tutor })
+        let user = await User.create({ name, email, password: hash, roles: tutor })
         Email.sendMail(email, user.verification_code).then((result) => {
             console.log(result)
         }).catch((error) => {
             console.log(error)
         });
-        flashMessage(res, 'success', "Tutor Successfully Registered! Please proceed to verify your email")
-        return res.render('auth/registration/register_tutor');
+        res.render('auth/registration/verify_email', { currentpage: { register: true } })
+        // return res.render('auth/registration/register_tutor');
     }
     catch (err) {
         res.send("Error")
