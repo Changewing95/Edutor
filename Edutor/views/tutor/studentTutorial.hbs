@@ -20,34 +20,140 @@
                     </div>
                 </div>
             </div>
+            <h1>BEGIINERS NIA</h1>
+            {{#each tutorials}}
+            {{#if_equal category "Beginner Level"}}
+            
+            <div class="row1">
+                <div class="row">
+                    <!-- Single Product -->
+
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-{{id}}" class="single-product">
+                            <div class="part-1">
+                                <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
+                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                                {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                                {{!-- class="border img-thumbnail img-fluid" --}}
+                                <ul>
+                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">{{replaceCommas title}}</h3>
+                                {{!-- <h4>{{replaceCommas description}}</h4> --}}
+                                <h4 class="product-price">${{replaceCommas price}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if_equal}}
+            {{/each}}
+            {{!-- Intermediate level --}}
+            <h1>intermediate ok WOR</h1>
+            {{#each tutorials}}
+            {{#if_equal category "Intermediate Level"}}
+            <div class="row2">
+                
+                <div class="row">
+                    <!-- Single Product -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-{{id}}" class="single-product">
+                            <div class="part-1">
+                                <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
+                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                                {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                                {{!-- class="border img-thumbnail img-fluid" --}}
+                                <ul>
+                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">{{replaceCommas title}}</h3>
+                                {{!-- <h4>{{replaceCommas description}}</h4> --}}
+                                <h4 class="product-price">${{replaceCommas price}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if_equal}}
+            {{/each}}
+            <h1>ADVANCE WOR</h1>
+            {{#each tutorials}}
+            {{#if_equal category "Advance Level"}}
+            <div class="row2">
+                <div class="row">
+                    <!-- Single Product -->
+
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-{{id}}" class="single-product">
+                            <div class="part-1">
+                                <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
+                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                                {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                                {{!-- class="border img-thumbnail img-fluid" --}}
+                                <ul>
+                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">{{replaceCommas title}}</h3>
+                                {{!-- <h4>{{replaceCommas description}}</h4> --}}
+                                <h4 class="product-price">${{replaceCommas price}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if_equal}}
+            {{/each}}
+
+            {{!-- <h1>INTERMEDIAT OK</h1>
             <div class="row">
                 <!-- Single Product -->
-                {{#each tutorials}}
+
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                   <div id="product-{{id}}" class="single-product">
+                    <div id="product-{{id}}" class="single-product">
                         <div class="part-1">
-                            <img src="/uploads/{{userId}}/{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123" style="">
+                            <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
+                                class="product-{{id}} part-1 consultationImage123" style="">
                             {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
-                            {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300"alt=" Trulli"> --}}
-                             {{!-- class="border img-thumbnail img-fluid" --}}
+                            {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                            {{!-- class="border img-thumbnail img-fluid"
                             <ul>
                                 <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a></li>
                                 <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a></li>
-                                <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
-                               
-                                 
-                                
+                                <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a>
+                                </li>
                             </ul>
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{replaceCommas title}}</h3>
-                            {{!-- <h4 >{{replaceCommas description}}</h4> --}}
+                            {{!-- <h4>{{replaceCommas description}}</h4>
                             <h4 class="product-price">${{replaceCommas price}}</h4>
                         </div>
                     </div>
-                </div>
-                {{/each}}
-                {{!-- <!-- Single Product -->
+                </div> --}}
+                {{!-- ----------------- --}}
+                {{!--
+                <!-- Single Product -->
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <div id="product-2" class="single-product">
                         <div class="part-1">
@@ -105,7 +211,7 @@
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     <div id="product-1" class="single-product">
                         <div class="part-1">
-                            <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300"alt=" Trulli">
+                            <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli">
                             <ul>
                                 <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
                                 <li><a href="#"><i class="fas fa-heart"></i></a></li>
