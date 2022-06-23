@@ -168,12 +168,13 @@ router.post('/editTutorial/:id', (req, res) => {
             let category = req.body.category;
             let price = req.body.price;
             let video = req.body.video;
+            console.log(req.file)
             Tutorial.update(
-                { title, description, author, category, price, tutorialImageURL: req.file.filename, video }
+                { title, description, author, category, price, tutorialImageURL: req.file.filename, video },{ where: { id: req.params.id } }
             )
                 .then((tutorials) => {
 
-                    console.log(tutorials.toJSON());
+                    // console.log(tutorials.toJSON());
                     res.redirect('/tutor/tutorial/main');
                 })
                 .catch(err => console.log(err))
