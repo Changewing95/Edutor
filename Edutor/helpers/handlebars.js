@@ -9,12 +9,21 @@ const replaceCommas = function (value) {
 };
 
 
-const isEqualHelperHandlerbar = function(a, b, opts) {
+const isEqualHelperHandlerbar = function (a, b, opts) {
     if (a == b) {
-        return opts.fn(this) 
-    } else { 
-        return opts.inverse(this) 
-    } 
+        return opts.fn(this)
+    } else {
+        return opts.inverse(this)
+    }
 }
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar };
+const radioCheck = function (value, radioValue) {
+    return (value == radioValue) ? 'checked' : '';
+};
+
+const formatRating = function (value) {
+    const value123 = value;
+    return value123.toFixed(2);
+};
+
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, radioCheck, formatRating };

@@ -25,7 +25,9 @@ app.engine('hbs', engine({
 		helpers,
 		replaceCommas: helpers.replaceCommas,
 		if_equal: helpers.isEqualHelperHandlerbar,
-		formatDate: helpers.formatDate
+		formatDate: helpers.formatDate,
+		formatRating: helpers.formatRating,
+		radioCheck: helpers.radioCheck,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
