@@ -42,7 +42,7 @@ router.post('/create', async function (req, res) {
             res.json({ file: '/uploads/profile/profile.png', err: err });
         }
         else {
-    
+
             let title = req.body.title;
             let description = req.body.description;
             let author = req.body.author;
@@ -52,16 +52,16 @@ router.post('/create', async function (req, res) {
             // let tutorialImageURL = req.body.tutorialImageURL;
             let video = req.body.video;
             let userId = req.user.id;
-        
+
             // res.json({
             //     file: `/uploads/${req.user.id}/${req.file.filename}`
-                
+
             // });
             Tutorial.create(
                 { title, description, author, category, price, tutorialImageURL: req.file.filename, video, userId }
-            )   
+            )
                 .then((tutorials) => {
-                    
+
                     console.log(tutorials.toJSON());
                     res.redirect('/tutor/tutorial/main');
                 })
@@ -134,7 +134,15 @@ router.get('/editTutorial/:id', (req, res) => {
 
 
 router.post('/editTutorial/:id', (req, res) => {
-    let { title, description, author, category, price, tutorialImageURL, video } = req.body;
+    // let { title, description, author, category, price, tutorialImageURL: req.file.filename, video } = req.body;
+    let title = req.body.title;
+    let description = req.body.description;
+    let author = req.body.author;
+    // let date = moment(req.body.date, 'DD/MM/YYYY');
+    let category = req.body.category;
+    let price = req.body.price;
+    let tutorialImageURL = req.body.tutorialImageURL;
+    let video = req.body.video;
     Tutorial.update(
         { title, description, author, category, price, tutorialImageURL, video },
         { where: { id: req.params.id } }
@@ -145,6 +153,54 @@ router.post('/editTutorial/:id', (req, res) => {
         })
         .catch(err => console.log(err));
 });
+
+
+//usudiisaiud
+// router.post('/editTutorial/:id', (req, res) => {
+
+//     // if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+//     //     fs.mkdirSync('./public/uploads/' + req.user.id, {
+//     //         recursive:
+//     //             true
+//     //     });
+//     // }
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/uploads/profile/profile.png', err: err });
+//         }
+//         else {
+
+//             let title = req.body.title;
+//             let description = req.body.description;
+//             let author = req.body.author;
+//             // let date = moment(req.body.date, 'DD/MM/YYYY');
+//             let category = req.body.category;
+//             let price = req.body.price;
+//             // let tutorialImageURL = req.body.tutorialImageURL;
+//             let tutorialImageUpload = req.body.tutorialImageUpload;
+//             let video = req.body.video;
+//             // let userId = req.user.id;
+
+//             // res.json({
+//             //     file: `/uploads/${req.user.id}/${req.file.filename}`
+
+//             // });
+//             Tutorial.update(
+//                 { title, description, author, category, price, tutorialImageUpload, video},
+//                 { where: { id: req.params.id } }
+//             )
+//                 .then((tutorials) => {
+
+//                     console.log(tutorials.toJSON());
+//                     res.redirect('/tutor/tutorial/main');
+//                 })
+//                 .catch(err => console.log(err))
+//         }
+//     });
+
+
+// });
 
 
 router.get('/deleteTutorial/:id', async function

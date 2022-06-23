@@ -33,5 +33,5 @@ const upload = multer({
     fileFilter: (req, file, callback) => {
         checkFileType(file, callback);
     }
-}).single('tutorialImageURL'); // Must be the name as the HTML file upload input
+}).single('tutorialImageUpload'); // Must be the name as the HTML file upload input
 module.exports = upload;
