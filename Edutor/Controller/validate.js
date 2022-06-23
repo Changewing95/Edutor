@@ -37,26 +37,6 @@ exports.validate = (method, req, res) => {
 
             ]
         }
-        case 'Verify_OTP': {
-            return [
-                body('email').custom((value, { req }) => {
-                    return User.findOne({ where: { email: value } }).then(user => {
-                        const otp_verified = speakeasy.totp.verify({
-                            secret: user.otp,
-                            encoding: 'ascii',
-                            token: req.body.otp
-                        })
-                        if (!otp_verified) {
-                            console.log(user.otp);
-                            console.log(req.body.otp)
-                            console.log(otp_verified);
-                            console.log("error");
-                            throw new Error('OTP not correct!');
-                        }
-                    })
-                })
-            ]
-        }
     }
 }
 
@@ -99,6 +79,8 @@ exports.CheckIfVerified = async (req, res, next) => {
     //     console.log(err);
     // }
 };
+
+
 
 
 
@@ -154,3 +136,24 @@ exports.CreateTutor = async (req, res) => {
 
 
 
+exports.CreateAdmin = async (req, res) => {
+    const user = "EdutorAdmin"
+    const email =  'edutorow@gmail.com'
+    const password = '+]k!h"`uQnY]'
+    const admin = "admin"
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+    var secret = speakeasy.generateSecret({
+        name: email
+    })
+    let admin_account = User.create({ user, email, password: hash, verified: "yes", roles: admin, otp: secret.ascii})
+	Email.sendMail(email, user.verification_code).then((result) => {
+		// flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
+	}).catch((error) => {
+		console.log(error)
+	});
+	var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
+		res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
+
+	});
+}

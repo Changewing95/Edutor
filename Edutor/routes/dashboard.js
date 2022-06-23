@@ -12,8 +12,16 @@ var uuid = require('uuid');
 const { pipeline } = require('stream');
 
 
-router.get('/overview', ensureAuthenticated, (req, res) => {
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
+router.get('/overview', ensureAuthenticated, async (req, res) => {
+    let studentCount = await User.count({
+        where: { roles: "student" }
+    })
+    let tutorCount = await User.count({
+        where: { roles: "tutor" }
+    })
+    // let getCountry = await User.findOne({where: {}})
+
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
 });
 
 
@@ -72,7 +80,7 @@ router.put('/profilePictureUpload', async (req, res) => {
     })
 
     pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
-        if(!error) {
+        if (!error) {
             res.send("succaess");
         }
     });
@@ -97,8 +105,15 @@ router.get('/display', async (req, res) => {
 });
 
 
+// async function getsAllStudent() {
+//    await User.count({
+//     where: { roles: "student" }
+//   }).then((count) => {
+//     console.log(count)
+//     return count
+//   })
 
-
+// }
 
 
 module.exports = router;

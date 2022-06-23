@@ -1,17 +1,137 @@
 <head>
-<link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
-<div class="container-fluid dashboard"> 
-
-<form>
-  <div class="row">
-    <div class="col">
-      <input type="text" class="form-control form-control-lg" placeholder="First name">
-    </div>
-    <div class="col">
-      <input type="text" class="form-control form-control-lg" placeholder="Last name">
+<div class="container-fluid dashboard">
+  {{#if_eq user.roles "admin"}}
+  <h1 style="font-weight: 700; font-size: 20px;   text-transform: uppercase; margin-top: 15px;"> ADMIN | Overview</h1>
+  <div id="root">
+    <div class="container pt-5">
+      <div class="row align-items-stretch">
+        <div class="c-dashboardInfo col-lg-3 col-md-6">
+          <div class="wrap">
+            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Number of Students<svg
+                class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                </path>
+              </svg></h4><span id="getstudentCount"
+              class="hind-font caption-12 c-dashboardInfo__count">{{studentCount}}</span>
+          </div>
+        </div>
+        <div class="c-dashboardInfo col-lg-3 col-md-6">
+          <div class="wrap">
+            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Number of Tutors<svg
+                class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                </path>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{tutorCount}}</span><span
+              class="hind-font caption-12 c-dashboardInfo__subInfo"></span>
+          </div>
+        </div>
+        <div class="c-dashboardInfo col-lg-3 col-md-6">
+          <div class="wrap">
+            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Net Amount<svg
+                class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                </path>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">€5000</span>
+          </div>
+        </div>
+        <div class="c-dashboardInfo col-lg-3 col-md-6">
+          <div class="wrap">
+            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Revenue<svg
+                class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                </path>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">6,40%</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</form>
+
+
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+
+  {{/if_eq}}
+
+
 </div>
+
+<script>
+
+  const labels = []
+
+  var config = {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Users Demography",
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ], data: [10, 59, 80, 81, 56, 55, 40],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 1,
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  }
+
+  var chart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+
+
+  const socket = io();
+
+  var someValue = "Singapore";
+
+  socket.emit('add', someValue);
+
+  socket.on('update', (arr) => {
+    countries = arr;
+    chart.data.labels.push(arr);
+    chart.update();    
+
+  });
+
+
+</script>

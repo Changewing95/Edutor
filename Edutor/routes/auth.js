@@ -5,6 +5,8 @@ const UserController = require('../Controller/validate');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const flashMessage = require('../helpers/messenger');
+const Email = require('../config/mail');
+var address = require('address');
 
 
 router.get('/login', (req,res) => {
@@ -16,7 +18,7 @@ router.get('/login', (req,res) => {
 
 
 // Three middleware for login post to check requirements and to authorised user and lastly passport authenticate middleware to authorise user access
-router.post('/login', UserController.validate('Verify_OTP'), UserController.AuthoriseUser, passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), (req,res) => {
+router.post('/login', passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), (req,res) => {
 	flashMessage(res, 'success', 'Successfully login!')
 	res.redirect('/');
 });
@@ -35,7 +37,7 @@ router.get('/register', (req, res) => {
 
 //  Getting student registration page
 
-router.get('/register_user',(req,res) => {
+router.get('/register_user',async (req,res) => {
 	res.render('auth/registration/register_user', {currentpage: {register: true}})
 
 });
@@ -43,7 +45,10 @@ router.get('/register_user',(req,res) => {
 router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser );
 
 
+router.get('/location_specific_service', async (req, res) => {
+	  console.log(address.ipv6());
 
+})
 
 
 //  Getting Tutor registration page
@@ -88,6 +93,7 @@ router.get('/google_authenticator',(req,res) => {
 });
 
 
+router.get('/create_admin', UserController.CreateAdmin);
 
 
 
