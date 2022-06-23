@@ -12,8 +12,6 @@ const upload = require('../helpers/reviewImageUpload');
 
 
 // REVIEW
-// ROUTES (GET)
-
 // for students
 router.get('/main', (req, res) => {
     Review.findAll({
@@ -31,6 +29,15 @@ router.get('/main', (req, res) => {
 router.get('/create', (req, res) => {
     res.render('review/addReview');
 });
+
+router.get('/editReview/:id', (req, res) => {
+    Review.findByPk(req.params.id)
+        .then((review) => {
+            res.render('review/editReview', { review });
+        })
+        .catch(err => console.log(err));
+});
+
 
 
 // ROUTES (POST)
@@ -111,36 +118,31 @@ router.post('/editReview/:id', async (req, res) => {
 });
 
 
-
-
-
-// CONSULTATION CODES:
-// // CODING LOGIC (CRUD)
-// // DELETE
-// router.get('/deleteReview/:id', async function (req, res) {
-//     try {
-//         let review = await Review.findByPk(req.params.id);
-//         if (!review) {
-//             flashMessage(res, 'error', 'Review not found');
-//             res.redirect('/student/review/listReview');
-//             return;
-//         }
-//         /*
-//         if (req.user.id != review.userId) {
-//             flashMessage(res, 'error', 'Unauthorised access');
-//             res.redirect('/review//listReviews');
-//             return;
-//         }
-//         */
-
-//         let result = await Review.destroy({ where: { id: review.id } });
-//         console.log(result + ' review deleted');
-//         res.redirect('/student/review/listReview');
-//     }
-//     catch (err) {
-//         console.log(err);
-//     }
-// });
+// DELETE
+router.get('/deleteReview/:id', async function (req, res) {
+    try {
+        let review = await Review.findByPk(req.params.id);
+        if (!review) {
+            flashMessage(res, 'error', 'Review not found');
+            res.redirect('/student/review/main');
+            return;
+        }
+        /*
+        if (req.user.id != review.userId) {
+            flashMessage(res, 'error', 'Unauthorised access');
+            res.redirect('/review//listReviews');
+            return;
+        }
+        */
+        let result = await Review.destroy({ where: { id: review.id } });
+        console.log(result + ' review deleted');
+        flashMessage(res, 'info', 'Review deleted');
+        res.redirect('/student/review/main');
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
 
 
 
