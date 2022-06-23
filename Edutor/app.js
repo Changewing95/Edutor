@@ -108,6 +108,9 @@ const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
 const cartRoute = require('./routes/cart');
 const studbookingRoute = require('./routes/studentConsultation');
+const studreviewRoute = require('./routes/review');
+const tutorreviewRoute = require('./routes/tutorReview');
+
 
 
 
@@ -118,6 +121,8 @@ app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
+app.use('/student/review', studreviewRoute);
+app.use('/tutor/review', tutorreviewRoute)
 
 
 

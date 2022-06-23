@@ -26,3 +26,25 @@ $('#consultationUpload').on('change', function () {
             }
         })
 });
+
+$('#reviewUpload').on('change', function () {
+    let formdata = new FormData();
+    let image = $("#reviewUpload")[0].files[0];
+    formdata.append('reviewUpload', image);
+    fetch('/student/review/upload', {
+        method: 'POST',
+        body: formdata
+    })
+        .then(res => res.json())
+        .then((data) => {
+            $('#review').attr('src', data.file);
+            $('#reviewURL').attr('value', data.file); // sets reviewURL hidden field
+            if (data.err) {
+                $('#reviewErr').show();
+                $('#reviewErr').text(data.err.message);
+            }
+            else {
+                $('#reviewErr').hide();
+            }
+        })
+});

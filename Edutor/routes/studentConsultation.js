@@ -1,11 +1,7 @@
-const moment = require('moment');
 const express = require('express');
 const router = express.Router();
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
-// for file upload
-const fs = require('fs');
-const upload = require('../helpers/imageUpload');
 // for validation
 // const ensureAuthenticated = require('../helpers/auth');
 
