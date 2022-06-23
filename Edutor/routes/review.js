@@ -16,7 +16,7 @@ const upload = require('../helpers/reviewImageUpload');
 router.get('/main', (req, res) => {
     Review.findAll({
         // where: { userId: req.user.id },
-        order: [['title']],
+        order: [['createdAt']],
         raw: true
     })
         .then((reviews) => {

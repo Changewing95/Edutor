@@ -170,14 +170,18 @@
             <div class="col-sm-12">
                 <hr />
                 <div class="review-block">
+                    {{#if reviews}}
+                    {{#each reviews}}
                     <div class="row">
                         <div class="col-sm-3">
                             <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            <div class="review-block-name"><a href="#">nktailor</a></div>
-                            <div class="review-block-date">January 29, 2016<br />1 day ago</div>
+                            <div class="review-block-name"><a href="#">User name</a></div>
+                            <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}<br />1 day ago</div>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-sm-6">
                             <div class="review-block-rate">
+                                <p class="text-left"><span class="text-muted">{{rating}}.0</span></p>
+
                                 <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 </button>
@@ -194,77 +198,27 @@
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 </button>
                             </div>
-                            <div class="review-block-title">this was nice in buy</div>
-                            <div class="review-block-description">this was nice in buy. this was nice in buy. this
-                                was
-                                nice in buy. this was nice in buy this was nice in buy this was nice in buy this was
-                                nice in buy this was nice in buy</div>
+                            <div class="review-block-title">{{title}}</div>
+                            <div class="review-block-category">{{category}}</div>
+                            <div class="review-block-description">{{description}}</div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img src="{{image}}">
                         </div>
                     </div>
                     <hr />
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            <div class="review-block-name"><a href="#">nktailor</a></div>
-                            <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="review-block-rate">
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
+                    {{/each}}
+                    {{else}}
+                    <div class="row justify-content-center text-center">
+                        <div>
+                            <div class="header">
+                                <h2>You have yet to receive any review.</h2>
+                                <hr>
                             </div>
-                            <div class="review-block-title">this was nice in buy</div>
-                            <div class="review-block-description">this was nice in buy. this was nice in buy. this
-                                was
-                                nice in buy. this was nice in buy this was nice in buy this was nice in buy this was
-                                nice in buy this was nice in buy</div>
                         </div>
                     </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            <div class="review-block-name"><a href="#">nktailor</a></div>
-                            <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="review-block-rate">
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                            <div class="review-block-title">this was nice in buy</div>
-                            <div class="review-block-description">this was nice in buy. this was nice in buy. this
-                                was
-                                nice in buy. this was nice in buy this was nice in buy this was nice in buy this was
-                                nice in buy this was nice in buy</div>
-                        </div>
-                    </div>
+
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -280,8 +234,5 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
-
-
-    {{>_feedback}}
     </div>
 </body>

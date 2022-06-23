@@ -11,8 +11,17 @@ const flashMessage = require('../helpers/messenger');
 // ROUTES (GET)
 // for tutors
 router.get('/listReview', (req, res) => {
-    res.render('review/overview');
-})
+    Review.findAll({
+        // where: { userId: req.user.id },
+        order: [['title']],
+        raw: true
+    })
+        .then((reviews) => {
+            // pass object to review.hbs
+            res.render('review/overview', { reviews });
+        })
+        .catch(err => console.log(err));
+});
 
 // ROUTES (POST)
 
