@@ -132,28 +132,55 @@ router.get('/editTutorial/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
+//ORIGINAL (BUT IMAGE ISNT UPDATING)
+// router.post('/editTutorial/:id', (req, res) => {
+//     // let { title, description, author, category, price, tutorialImageURL: req.file.filename, video } = req.body;
+//     let title = req.body.title;
+//     let description = req.body.description;
+//     let author = req.body.author;
+//     // let date = moment(req.body.date, 'DD/MM/YYYY');
+//     let category = req.body.category;
+//     let price = req.body.price;
+//     let tutorialImageURL = req.body.tutorialImageURL;
+//     let video = req.body.video;
+//     Tutorial.update(
+//         { title, description, author, category, price, tutorialImageURL, video },
+//         { where: { id: req.params.id } }
+//     )
+//         .then((result) => {
+//             console.log(result[0] + ' video updated');
+//             res.redirect('/tutor/tutorial/main');
+//         })
+//         .catch(err => console.log(err));
+// });
 
+//TRY UPDATE WITH WHAT JEREMY SAID
 router.post('/editTutorial/:id', (req, res) => {
-    // let { title, description, author, category, price, tutorialImageURL: req.file.filename, video } = req.body;
-    let title = req.body.title;
-    let description = req.body.description;
-    let author = req.body.author;
-    // let date = moment(req.body.date, 'DD/MM/YYYY');
-    let category = req.body.category;
-    let price = req.body.price;
-    let tutorialImageURL = req.body.tutorialImageURL;
-    let video = req.body.video;
-    Tutorial.update(
-        { title, description, author, category, price, tutorialImageURL, video },
-        { where: { id: req.params.id } }
-    )
-        .then((result) => {
-            console.log(result[0] + ' video updated');
-            res.redirect('/tutor/tutorial/main');
-        })
-        .catch(err => console.log(err));
-});
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
+        else {
+            let title = req.body.title;
+            let description = req.body.description;
+            let author = req.body.author;
+            let category = req.body.category;
+            let price = req.body.price;
+            let video = req.body.video;
+            Tutorial.update(
+                { title, description, author, category, price, tutorialImageURL: req.file.filename, video }
+            )
+                .then((tutorials) => {
 
+                    console.log(tutorials.toJSON());
+                    res.redirect('/tutor/tutorial/main');
+                })
+                .catch(err => console.log(err))
+        }
+    });
+
+});
 
 //usudiisaiud
 // router.post('/editTutorial/:id', (req, res) => {
@@ -178,7 +205,7 @@ router.post('/editTutorial/:id', (req, res) => {
 //             let category = req.body.category;
 //             let price = req.body.price;
 //             // let tutorialImageURL = req.body.tutorialImageURL;
-//             let tutorialImageUpload = req.body.tutorialImageUpload;
+//             // let tutorialImageUpload = req.body.tutorialImageUpload;
 //             let video = req.body.video;
 //             // let userId = req.user.id;
 
@@ -187,15 +214,14 @@ router.post('/editTutorial/:id', (req, res) => {
 
 //             // });
 //             Tutorial.update(
-//                 { title, description, author, category, price, tutorialImageUpload, video},
+//                 { title, description, author, category, price, tutorialImageURL: req.file.filename, video },
 //                 { where: { id: req.params.id } }
 //             )
-//                 .then((tutorials) => {
-
-//                     console.log(tutorials.toJSON());
+//                 .then((result) => {
+//                     console.log(result[0] + ' video updated');
 //                     res.redirect('/tutor/tutorial/main');
 //                 })
-//                 .catch(err => console.log(err))
+//                 .catch(err => console.log(err));
 //         }
 //     });
 
@@ -243,8 +269,7 @@ router.post('/upload', (req, res) => {
         }
         else {
             res.json({
-                file: `/uploads/${req.user.id}/${req.file.file -
-                    name}`
+                file: `/uploads/${req.user.id}/${req.file.filename}`
             });
         }
     });
