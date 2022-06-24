@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Event Creation</div>
+        <div class="content">
+            <form method="POST" action="">
+                <div class="user-details mb-3">
+                    <div class="input-box mb-3">
+                        <span class="details">Title</span>
+                        <input type="text" placeholder="Enter Event Title" name="title" class="form-control" required>
+                    </div>
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Image</span>
+                        <input type="file" placeholder="Enter Image" name="image" class="form-control"
+                            accept="image/png, image/jpeg, image/jpg" required>
+                    </div> --}}
+                    <div class="text-danger small mb-2" id="cover" style="display:none"></div>
+                    <div class="input-box mb-3">
+                        <span class="details">Description</span>
+                        <input type="text" class="form-control" placeholder="Enter description of course"
+                            name="description" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Start Date</span>
+                        <input type="date" id ="datepicker"class="form-control" name="startdate" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">End Date</span>
+                        <input type="date" class="form-control" name="enddate" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Start time</span>
+                        <input type="text" class="form-control" name="starttime" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">End time</span>
+                        <input type="text" class="form-control" name="endtime" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Max No. of People</span>
+                        <input type="text" class="form-control" name="people" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <label for="status">Online/In Person:</label>
+                        <select id="cars" name="status">
+                            <option value="In Person">In Person</option>
+                            <option value="Online">Online</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		value: moment().format('DD/MM/YYYY'),
+	});
+</script>
+
+</html>
