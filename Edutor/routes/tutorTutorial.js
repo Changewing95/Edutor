@@ -5,6 +5,8 @@ const router = express.Router();
 const Tutorial = require('../models/Tutorial');
 const fs = require('fs');
 const upload = require('../helpers/uploadImage');
+const flashMessage = require('../helpers/messenger');
+
 
 //TO DO:
 //1. Retrieve only the tutorials with the current userID (under findall, retrieve when.....- refer to practical)
@@ -155,33 +157,66 @@ router.get('/editTutorial/:id', (req, res) => {
 // });
 
 //TRY UPDATE WITH WHAT JEREMY SAID
-router.post('/editTutorial/:id', (req, res) => {
-    upload(req, res, (err) => {
-        if (err) {
-            // e.g. File too large
-            res.json({ file: '/uploads/profile/profile.png', err: err });
-        }
-        else {
-            let title = req.body.title;
-            let description = req.body.description;
-            let author = req.body.author;
-            let category = req.body.category;
-            let price = req.body.price;
-            let video = req.body.video;
-            console.log(req.file)
-            Tutorial.update(
-                { title, description, author, category, price, tutorialImageURL: req.file.filename, video },{ where: { id: req.params.id } }
-            )
-                .then((tutorials) => {
+// router.post('/editTutorial/:id', (req, res) => {
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/uploads/profile/profile.png', err: err });
+//         }
+//         else {
+//             let title = req.body.title;
+//             let description = req.body.description;
+//             let author = req.body.author;
+//             let category = req.body.category;
+//             let price = req.body.price;
+//             let video = req.body.video;
+//             console.log(req.file)
+//             Tutorial.update(
+//                 { title, description, author, category, price, tutorialImageURL: req.file.filename, video },{ where: { id: req.params.id } }
+//             )
+//                 .then((tutorials) => {
 
-                    // console.log(tutorials.toJSON());
-                    res.redirect('/tutor/tutorial/main');
-                })
-                .catch(err => console.log(err))
-        }
-    });
+//                     // console.log(tutorials.toJSON());
+//                     res.redirect('/tutor/tutorial/main');
+//                 })
+//                 .catch(err => console.log(err))
+//         }
+//     });
 
-});
+// });
+
+
+router.post('/editTutorial/:id', async (req, res) => {
+    let tutorial =  await Tutorial.findByPk(req.params.id);
+     var file = tutorial.tutorialImageURL;
+     upload(req, res, (err) => {
+         if (err) {
+             // e.g. File too large
+             res.json({ file: '/uploads/profile/profile.png', err: err });
+         }
+         else {
+             let title = req.body.title;
+             let description = req.body.description;
+             let author = req.body.author;
+             let category = req.body.category;
+             let price = req.body.price;
+             let video = req.body.video;
+             if(req.file) {
+                 file = req.file.filename;
+             }
+             Tutorial.update(
+                 { title, description, author, category, price, tutorialImageURL: file, video },{ where: { id: req.params.id } }
+             )
+                 .then((tutorials) => {
+ 
+                     // console.log(tutorials.toJSON());
+                     res.redirect('/tutor/tutorial/main');
+                 })
+                 .catch(err => console.log(err))
+         }
+     });
+ 
+ });
 
 //usudiisaiud
 // router.post('/editTutorial/:id', (req, res) => {
