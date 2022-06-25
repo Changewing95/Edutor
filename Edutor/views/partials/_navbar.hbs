@@ -21,14 +21,19 @@
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav ml-auto">
             {{#if user}}
+            <li class="nav-item">
+                <a class="nav-link" id="smallfont" href="/cart" style="margin-top: 8%;">Cart </a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="/profile/{{user.profile_pic}}" width="50"
-                        height="50"> {{user.name}} | Profile </a>
+                    aria-haspopup="true" aria-expanded="false" style="font-size: 14px;"><img src="/profile/{{user.profile_pic}}" width="30"
+                        height="30"> {{user.name}} | Profile </a>
                 {{else}}
+
             <li class="nav-item {{#if currentpage.register}}active{{/if}}">
                 <a class="nav-link" id="smallfont" href="/auth/register"><i class="fa fa-envelope"></i> Register </a>
             </li>

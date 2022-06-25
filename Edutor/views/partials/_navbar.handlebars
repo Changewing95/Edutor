@@ -1,0 +1,39 @@
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+
+
+</head>
+
+<nav class="mb-4 navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand font-bold" href="/">Edutor</a>
+      <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="#">All Courses <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link"  style="color: white; font-weight: 200;"href="#">Book Tutors</a>
+      <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="#">Book Events</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+        aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+        <ul class="navbar-nav ml-auto">
+            {{#if user}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img src="/profile/{{user.profile_pic}}" width="50"
+                        height="50"> {{user.name}} | Profile </a>
+                {{else}}
+            <li class="nav-item {{#if currentpage.register}}active{{/if}}">
+                <a class="nav-link" href="/auth/register"><i class="fa fa-envelope"></i> Register </a>
+            </li>
+            <li class="nav-item {{#if currentpage.login}}active{{/if}}">
+                <a class="nav-link" href="/auth/login"><i class="fa fa-gear"></i> Login</a>
+            </li>
+            {{/if}}
+            <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+                <a class="dropdown-item" href="#">My account</a>
+                <a class="dropdown-item" href="/logout">Log out</a>
+            </div>
+            </li>
+        </ul>
+    </div>
+</nav>

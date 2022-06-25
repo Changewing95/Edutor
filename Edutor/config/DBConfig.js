@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 require('dotenv').config();
 
 
+
 // Instantiates Sequelize with database parameters
 
 
@@ -17,4 +18,8 @@ const sequelize = new Sequelize(
         timezone: '+08:00'
     }
 );
+
+
+
+
 module.exports = sequelize;

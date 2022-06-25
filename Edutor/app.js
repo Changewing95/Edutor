@@ -21,14 +21,15 @@ const app = express();
 // }));
 const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
-	helpers: helpers,
+	helpers: {helpers,
+	Multiply: helpers.Multiply},
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 
 }));
-app.set('view engine', 'hbs');
 
+app.set('view engine', 'hbs');
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -84,6 +85,24 @@ app.use(function (req, res, next) {
 	next()
 });
 
+// Session-persisted message middleware
+app.use(function(req, res, next){
+    var err = req.session.error,
+        msg = req.session.notice,
+        success = req.session.success;
+
+    delete req.session.error;
+    delete req.session.success;
+    delete req.session.notice;
+
+    if (err) res.locals.error = err;
+    if (msg) res.locals.notice = msg;
+    if (success) res.locals.success = success;
+
+    next();
+});
+
+
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 // Connects to MySQL database
@@ -102,6 +121,8 @@ const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
 const cartRoute = require('./routes/cart');
 const productRoute = require('./routes/product');
+const checkRoute = require('./routes/checkout');
+
 
 
 app.use('/', mainRoute);
@@ -110,10 +131,7 @@ app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/cart', cartRoute);
 app.use('/product', productRoute);
-
-
-
-
+app.use('/checkout', checkRoute);
 
 
 const port = 5000;

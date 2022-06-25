@@ -8,4 +8,8 @@ const replaceCommas = function (value) {
     return value ? value.replace(/,/g, ' | ') : 'None';
 }
 
-module.exports = { formatDate, replaceCommas };
+const Multiply = function(a, b) {
+    return a * b;
+}
+  
+module.exports = { formatDate, replaceCommas, Multiply};

@@ -17,20 +17,19 @@
 					</div>
                     <form>
                             <form action="product/edit/{{id}}" method="POST">
-                            <input type="hidden" name="id" value="{{id}}">
+                            <input type="hidden" name="id" value={{id}}>
                             <button type="submit" class="btn btn-primary">Edit</button>
                             </form>
                             &nbsp;
 
                             <form action="product/delete/{{id}}" method="POST">
-                            <input type="hidden" name="id" value="{{id}}">
+                            <input type="hidden" name="id" value={{id}}>
                             <button type="submit" class="btn btn-primary">Delete</button>
                             </form>
                             &nbsp;
 
-                        
-                            <form action="product/add-to-cart" method="POST">
-                            <input type="hidden" name="id" value="{{id}}">
+                            <form action="/cart/addtoCart" method="POST">
+							<input type="hidden" name="id" value={{id}}> 
                             <button type="submit" class="btn btn-primary">Add to cart</button>
                             </form>
                     </form>
