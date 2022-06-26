@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <h1>BEGIINERS NIA</h1>
+            <h2 class="types">BEGIINERS NIA</h2>
             <div class="row1">
                 <div class="row">
                     <!-- Single Product -->
@@ -36,11 +36,10 @@
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                    <li><a href="#"><i class="fa fa-shopping-cart" ></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
                                 </ul>
                             </div>
                             <div class="part-2">
@@ -56,7 +55,8 @@
             </div>
 
             {{!-- Intermediate level --}}
-            <h1>intermediate ok WOR</h1>
+            <h2 class="types">intermediate ok WOR</h2>
+         
 
             <div class="row2">
 
@@ -73,11 +73,10 @@
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                   <li><a href="#"><i class="fa fa-shopping-cart" ></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
                                 </ul>
                             </div>
                             <div class="part-2">
@@ -89,16 +88,19 @@
                     </div>
                     {{/if_equal}}
                     {{/each}}
+                    {{!-- {{#else}}
+                    <p>None</p> --}}
                 </div>
             </div>
-
-            <h1>ADVANCE WOR</h1>
+            
+            <h2 class="types">ADVANCE WOR</h2>
 
             <div class="row2">
                 <div class="row">
                     <!-- Single Product -->
                     {{#each tutorials}}
                     {{#if_equal category "Advance Level"}}
+
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
@@ -108,11 +110,10 @@
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-                                    <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a>
+                                    <<li><a href="#"><i class="fa fa-shopping-cart" ></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
-                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
                                 </ul>
                             </div>
                             <div class="part-2">
@@ -127,163 +128,7 @@
                 </div>
             </div>
 
-
-            {{!-- <h1>INTERMEDIAT OK</h1>
-            <div class="row">
-                <!-- Single Product -->
-
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-{{id}}" class="single-product">
-                        <div class="part-1">
-                            <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
-                                class="product-{{id}} part-1 consultationImage123" style="">
-                            {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
-                            {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
-                            {{!-- class="border img-thumbnail img-fluid"
-                            <ul>
-                                <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a></li>
-                                <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a></li>
-                                <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">{{replaceCommas title}}</h3>
-                            {{!-- <h4>{{replaceCommas description}}</h4>
-                            <h4 class="product-price">${{replaceCommas price}}</h4>
-                        </div>
-                    </div>
-                </div> --}}
-                {{!-- ----------------- --}}
-                {{!--
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-2" class="single-product">
-                        <div class="part-1">
-                            <span class="discount">15% off</span>
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-edit"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-3" class="single-product">
-                        <div class="part-1">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-old-price">$79.99</h4>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-4" class="single-product">
-                        <div class="part-1">
-                            <span class="new">new</span>
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-1" class="single-product">
-                        <div class="part-1">
-                            <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-old-price">$79.99</h4>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-2" class="single-product">
-                        <div class="part-1">
-                            <span class="discount">15% off</span>
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-3" class="single-product">
-                        <div class="part-1">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-old-price">$79.99</h4>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Product -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-4" class="single-product">
-                        <div class="part-1">
-                            <span class="new">new</span>
-                            <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
-                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">Here Product Title</h3>
-                            <h4 class="product-price">$49.99</h4>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
-        </div>
+        
     </section>
 </body>

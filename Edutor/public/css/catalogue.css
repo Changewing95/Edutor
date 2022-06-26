@@ -6,6 +6,10 @@ body {
     height:auto;
 }
 
+.types{
+    font-style: italic;
+    margin:20px;
+    }
 
 a,
 a:hover {

@@ -26,6 +26,58 @@ router.get('/main', ensureAuthenticated, (req, res) => {
 router.get('/create', (req, res) => {
     res.render('tutor/addTutorial');
 });
+
+
+
+// router.post('/create', async function (req, res) {
+
+//     if (!fs.existsSync('./public/uploads/')) {
+//         fs.mkdirSync('./public/uploads/', {
+//             recursive:
+//                 true
+//         });
+//     }
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/uploads/profile/profile.png', err: err });
+//         }
+//         else {
+//             if (req.file == "undefined") {
+//                 console.log("No image selected!")
+//             }
+//             else {
+//                 let title = req.body.title;
+//                 let description = req.body.description;
+//                 let author = req.body.author;
+//                 // let date = moment(req.body.date, 'DD/MM/YYYY');
+//                 let category = req.body.category;
+//                 let price = req.body.price;
+//                 let tutorialImageURL = req.files.tutorialmageURL[0].path;
+//                 let video = req.body.req.files.video[0].path;
+//                 let userId = req.user.id;
+//                 Tutorial.create(
+//                     { title, description, author, category, price, tutorialImageURL, video, userId }
+//                 )
+//                     .then((tutorials) => {
+
+//                         console.log(tutorials.toJSON());
+//                         res.redirect('/tutor/tutorial/main');
+//                     })
+//                     .catch(err => console.log(err))
+//             }
+
+
+
+//         }
+
+
+//         });
+
+
+//     });
+    
+
 // TO DO:
 //1. SAVE THE USER ID TGT WITH THE INFO SO CAN RETRIEVE ACCORDING TO CORRECT USER
 //2. fixx image display
@@ -59,6 +111,8 @@ router.post('/create', async function (req, res) {
             //     file: `/uploads/${req.user.id}/${req.file.filename}`
 
             // });
+            const message = 'Tutorial successfully uploaded';
+            flashMessage(res, 'success', message);
             Tutorial.create(
                 { title, description, author, category, price, tutorialImageURL: req.file.filename, video, userId }
             )
@@ -157,35 +211,6 @@ router.get('/editTutorial/:id', (req, res) => {
 // });
 
 //TRY UPDATE WITH WHAT JEREMY SAID
-// router.post('/editTutorial/:id', (req, res) => {
-//     upload(req, res, (err) => {
-//         if (err) {
-//             // e.g. File too large
-//             res.json({ file: '/uploads/profile/profile.png', err: err });
-//         }
-//         else {
-//             let title = req.body.title;
-//             let description = req.body.description;
-//             let author = req.body.author;
-//             let category = req.body.category;
-//             let price = req.body.price;
-//             let video = req.body.video;
-//             console.log(req.file)
-//             Tutorial.update(
-//                 { title, description, author, category, price, tutorialImageURL: req.file.filename, video },{ where: { id: req.params.id } }
-//             )
-//                 .then((tutorials) => {
-
-//                     // console.log(tutorials.toJSON());
-//                     res.redirect('/tutor/tutorial/main');
-//                 })
-//                 .catch(err => console.log(err))
-//         }
-//     });
-
-// });
-
-
 router.post('/editTutorial/:id', async (req, res) => {
     let tutorial =  await Tutorial.findByPk(req.params.id);
      var file = tutorial.tutorialImageURL;
@@ -204,6 +229,8 @@ router.post('/editTutorial/:id', async (req, res) => {
              if(req.file) {
                  file = req.file.filename;
              }
+            const message = 'Tutorial successfully edited';
+            flashMessage(res, 'success', message);
              Tutorial.update(
                  { title, description, author, category, price, tutorialImageURL: file, video },{ where: { id: req.params.id } }
              )
@@ -279,6 +306,8 @@ router.get('/deleteTutorial/:id', async function
         //     res.redirect('/video/listVideos');
         //     return;
         // }
+        const message = 'Tutorial successfully deleted';
+        flashMessage(res, 'success', message);
         let result = await Tutorial.destroy({ where: { id: tutorials.id } });
         console.log(result + ' video deleted');
         res.redirect('/tutor/tutorial/main');

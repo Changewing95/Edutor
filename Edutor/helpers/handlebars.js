@@ -17,4 +17,4 @@ const isEqualHelperHandlerbar = function(a, b, opts) {
     } 
 }
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar };
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar};
