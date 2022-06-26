@@ -12,6 +12,7 @@ const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
 
 
+
 const app = express();
 
 
@@ -70,6 +71,8 @@ app.use(session({
 }));
 
 
+
+
 const flash = require('connect-flash');
 app.use(flash());
 
@@ -109,6 +112,7 @@ const tutorialRoute = require('./routes/tutorTutorial');
 const cartRoute = require('./routes/cart');
 const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
+const fileUpload = require('express-fileupload');
 
 
 
@@ -121,7 +125,7 @@ app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
 
-
+app.use(fileUpload());
 
 
 const port = 5000;
