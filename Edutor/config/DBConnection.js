@@ -2,6 +2,7 @@ const mySQLDB = require('./DBConfig');
 const User = require('../models/User');
 const Tutorial = require('../models/Tutorial');
 const Consultation = require('../models/Booking');
+const Review = require('../models/Review');
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
     mySQLDB.authenticate()
@@ -16,6 +17,9 @@ const setUpDB = (drop) => {
 
             User.hasMany(Consultation);
             Consultation.belongsTo(User);
+
+            User.hasMany(Review);
+            Review.belongsTo(User);
 
             // The sync functioin creates the tables if none exists. The true or false "force" parameter will determine if all tables are preserved or dropped.
             mySQLDB.sync({

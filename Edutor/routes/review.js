@@ -8,14 +8,14 @@ const fs = require('fs');
 const upload = require('../helpers/reviewImageUpload');
 
 // for validation
-// const ensureAuthenticated = require('../helpers/auth');
+const ensureAuthenticated = require('../helpers/auth');
 
 
 // REVIEW
 // for students
-router.get('/main', (req, res) => {
+router.get('/main', ensureAuthenticated, (req, res) => {
     Review.findAll({
-        // where: { userId: req.user.id },
+        where: { userId: req.user.id },
         order: [['createdAt']],
         raw: true
     })
@@ -26,13 +26,30 @@ router.get('/main', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', ensureAuthenticated, (req, res) => {
     res.render('review/addReview');
 });
 
-router.get('/editReview/:id', (req, res) => {
+router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
+    // Review.findByPk(req.params.id)
+    //     .then((review) => {
+    //         res.render('review/editReview', { review });
+    //     })
+    //     .catch(err => console.log(err));
+
     Review.findByPk(req.params.id)
         .then((review) => {
+            if (!review) {
+                flashMessage(res, 'error', 'Video not found');
+                res.redirect('/student/review/main');
+                return;
+            }
+            if (req.user.id != review.userId) {
+                flashMessage(res, 'error', 'Unauthorised access');
+                res.redirect('/student/review/main');
+                return;
+            }
+
             res.render('review/editReview', { review });
         })
         .catch(err => console.log(err));
@@ -42,13 +59,14 @@ router.get('/editReview/:id', (req, res) => {
 
 // ROUTES (POST)
 // CREATE
-router.post('/create', async (req, res) => {
+router.post('/create', ensureAuthenticated, async (req, res) => {
     // title, image, rating, description, category
     let title = req.body.title;
     let image = req.body.reviewURL;
     let rating = req.body.rate;
     let category = req.body.category;
     let description = req.body.description;
+    let userId = req.user.id;
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -68,7 +86,7 @@ router.post('/create', async (req, res) => {
     if (body.success) {
         const message = 'Review slot successfully submitted';
         flashMessage(res, 'success', message);
-        Review.create({ title, category, image, rating, description })
+        Review.create({ title, category, image, rating, description, userId })
             .then((review) => {
                 console.log(review.toJSON());
                 res.redirect('/student/review/main');
@@ -78,13 +96,14 @@ router.post('/create', async (req, res) => {
 });
 
 // EDIT
-router.post('/editReview/:id', async (req, res) => {
+router.post('/editReview/:id', ensureAuthenticated, async (req, res) => {
     // title, image, rating, description, category
     let title = req.body.title;
     let image = req.body.reviewURL;
     let rating = req.body.rate;
     let category = req.body.category;
     let description = req.body.description;
+    let userId = req.user.id;
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -106,7 +125,7 @@ router.post('/editReview/:id', async (req, res) => {
         flashMessage(res, 'success', message);
 
         Review.update(
-            { title, category, image, rating, description },
+            { title, category, image, rating, description, userId },
             { where: { id: req.params.id } }
         )
             .then((result) => {
@@ -119,7 +138,7 @@ router.post('/editReview/:id', async (req, res) => {
 
 
 // DELETE
-router.get('/deleteReview/:id', async function (req, res) {
+router.get('/deleteReview/:id', ensureAuthenticated, async function (req, res) {
     try {
         let review = await Review.findByPk(req.params.id);
         if (!review) {
@@ -127,13 +146,11 @@ router.get('/deleteReview/:id', async function (req, res) {
             res.redirect('/student/review/main');
             return;
         }
-        /*
         if (req.user.id != review.userId) {
             flashMessage(res, 'error', 'Unauthorised access');
-            res.redirect('/review//listReviews');
+            res.redirect('/student/review/main');
             return;
         }
-        */
         let result = await Review.destroy({ where: { id: review.id } });
         console.log(result + ' review deleted');
         flashMessage(res, 'info', 'Review deleted');
@@ -150,8 +167,8 @@ router.get('/deleteReview/:id', async function (req, res) {
 // image upload
 router.post('/upload', (req, res) => {
     // create user id directory for upload if not exist
-    if (!fs.existsSync('./public/uploads/review/' + 1)) {
-        fs.mkdirSync('./public/uploads/review/' + 1, {
+    if (!fs.existsSync('./public/uploads/review/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/review/' + req.user.id, {
             recursive:
                 true
         });
@@ -163,7 +180,7 @@ router.post('/upload', (req, res) => {
         }
         else {
             res.json({
-                file: `/uploads/review/1/${req.file.filename}`
+                file: `/uploads/review/${req.user.id}/${req.file.filename}`
             });
         }
     });
