@@ -10,6 +10,8 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
+var Country = require('../models/Country');
+const Validate = require('../Controller/validate');
 
 
 router.get('/overview', ensureAuthenticated, async (req, res) => {
@@ -21,7 +23,7 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     })
     // let getCountry = await User.findOne({where: {}})
 
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
 });
 
 
@@ -42,7 +44,7 @@ router.get('/settings/delete_student', ensureAuthenticated, UserController.Delet
 
 
 // UPDATE
-router.post('/settings', ensureAuthenticated, UserController.CheckIfUserExists, UserController.UpdateUser);
+router.post('/settings', ensureAuthenticated, UserController.UpdateUser);
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
@@ -105,6 +107,8 @@ router.get('/display', async (req, res) => {
 });
 
 
+
+
 // async function getsAllStudent() {
 //    await User.count({
 //     where: { roles: "student" }
@@ -114,6 +118,23 @@ router.get('/display', async (req, res) => {
 //   })
 
 // }
+
+
+router.get('/statistic', (req,res) => {
+
+    Country.findAll({
+        // where: { userId: req.user.id },
+    })
+        .then((countries) => {
+            // pass object to consultation.hbs
+            res.json(countries.map((country) => {
+                return {country:country.country, count:country.count, country_length: country.length}
+            }))
+        })
+        .catch(err => console.log(err));
+
+});
+
 
 
 module.exports = router;

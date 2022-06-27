@@ -35,16 +35,16 @@ var io = require('socket.io')(http)
 // 	})
 // })
 
-const chartArray = [];
+// const chartArray = [];
 
-io.on('connection', (socket) => {
-    socket.on('add', (data) => {
-        chartArray.push(data);
-    }); 
+// io.on('connection', (socket) => {
+//     socket.on('add', (data) => {
+//         chartArray.push(data);
+//     }); 
 
-    setInterval(function() {
-        socket.emit('update', chartArray);}, 30000);
-});
+//     setInterval(function() {
+//         socket.emit('update', chartArray);}, 30000);
+// });
 
 
 // app.engine('handlebars', engine({

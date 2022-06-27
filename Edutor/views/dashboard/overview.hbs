@@ -43,7 +43,7 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">€5000</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">$0</span>
           </div>
         </div>
         <div class="c-dashboardInfo col-lg-3 col-md-6">
@@ -54,7 +54,7 @@
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
                 </path>
-              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">6,40%</span>
+              </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">0</span>
           </div>
         </div>
       </div>
@@ -75,14 +75,14 @@
 <script>
 
   const labels = []
-
+  const datas = []
   var config = {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Users Demography",
+          label: "Demography Of Registered Users",
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 159, 64, 0.2)',
@@ -91,7 +91,7 @@
             'rgba(54, 162, 235, 0.2)',
             'rgba(153, 102, 255, 0.2)',
             'rgba(201, 203, 207, 0.2)'
-          ], data: [10, 59, 80, 81, 56, 55, 40],
+          ], data: [],
           borderColor: [
             'rgb(255, 99, 132)',
             'rgb(255, 159, 64)',
@@ -106,6 +106,16 @@
       ]
     },
     options: {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+                return `${context.raw[0]} Users from ${context.label}`
+            
+            }
+          }
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
@@ -129,9 +139,31 @@
   socket.on('update', (arr) => {
     countries = arr;
     chart.data.labels.push(arr);
-    chart.update();    
+    chart.update();
 
   });
+
+
+  function getStatistic() {
+    $.get('/dashboard/statistic', (res) => {
+      console.log(res);
+      for (var i = 0; i < res.length; i++) {
+        chart.data.labels[i] = [res[i]['country']]
+        chart.data.datasets[0].data[i] = [res[i]['count']];
+      }
+
+
+
+      chart.update();
+
+    })
+  }
+  $(document).ready(() => {
+    getStatistic()
+    // Setting how long to send request to client side, now its every 10 second one live update
+    setInterval(getStatistic, 100000)
+
+  })
 
 
 </script>

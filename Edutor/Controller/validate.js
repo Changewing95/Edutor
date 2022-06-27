@@ -60,6 +60,9 @@ exports.AuthoriseUser = async (req, res, next) => {
 }
 
 
+
+
+
 exports.CheckIfVerified = async (req, res, next) => {
     // let { email } = req.body;
 
@@ -138,7 +141,7 @@ exports.CreateTutor = async (req, res) => {
 
 exports.CreateAdmin = async (req, res) => {
     const user = "EdutorAdmin"
-    const email =  'edutorow@gmail.com'
+    const email = 'edutorow@gmail.com'
     const password = '+]k!h"`uQnY]'
     const admin = "admin"
     var salt = bcrypt.genSaltSync(10);
@@ -146,14 +149,14 @@ exports.CreateAdmin = async (req, res) => {
     var secret = speakeasy.generateSecret({
         name: email
     })
-    let admin_account = User.create({ user, email, password: hash, verified: "yes", roles: admin, otp: secret.ascii})
-	Email.sendMail(email, user.verification_code).then((result) => {
-		// flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
-	}).catch((error) => {
-		console.log(error)
-	});
-	var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
-		res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
+    let admin_account = User.create({ user, email, password: hash, verified: "yes", roles: admin, otp: secret.ascii })
+    Email.sendMail(email, user.verification_code).then((result) => {
+        // flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
+    }).catch((error) => {
+        console.log(error)
+    });
+    var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
+        res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
 
-	});
+    });
 }

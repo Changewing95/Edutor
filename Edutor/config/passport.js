@@ -9,15 +9,15 @@ function localStrategy(passport) {
         new LocalStrategy({ usernameField: 'email', passReqToCallback: true, }, function (req, email, password, done) {
             User.findOne({ where: { email: email } })
                 .then(user => {
+                    if (!user) {
+                        console.log("user not found")
+                        return done(null, false, { message: 'No User Found' });
+                    }
                     const otp_verified = speakeasy.totp.verify({
                         secret: user.otp,
                         encoding: 'ascii',
                         token: req.body.otp
                     })
-                    if (!user) {
-                        console.log("user not found")
-                        return done(null, false, { message: 'No User Found' });
-                    }
                     // Match password
                     isMatch = bcrypt.compareSync(password, user.password);
                     if (!isMatch) {
