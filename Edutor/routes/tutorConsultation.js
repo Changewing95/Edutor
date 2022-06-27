@@ -8,12 +8,12 @@ const fs = require('fs');
 const upload = require('../helpers/imageUpload');
 const { stringify } = require('querystring');
 // for validation
-// const ensureAuthenticated = require('../helpers/auth');
+const ensureAuthenticated = require('../helpers/auth');
 
 // ROUTING: 
-router.get('/main', (req, res) => {
+router.get('/main', ensureAuthenticated, (req, res) => {
     Consultation.findAll({
-        // where: { userId: req.user.id },
+        where: { userId: req.user.id },
         order: [['date']],
         raw: true
     })
@@ -25,13 +25,30 @@ router.get('/main', (req, res) => {
     // res.render('tutor/consultation');
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', ensureAuthenticated, (req, res) => {
     res.render('consultation/addConsultation');
 });
 
-router.get('/editConsultation/:id', (req, res) => {
+router.get('/editConsultation/:id', ensureAuthenticated, (req, res) => {
+    // Consultation.findByPk(req.params.id)
+    //     .then((consultation) => {
+    //         res.render('consultation/editConsultation', { consultation });
+    //     })
+    //     .catch(err => console.log(err));
+
     Consultation.findByPk(req.params.id)
         .then((consultation) => {
+            if (!consultation) {
+                flashMessage(res, 'error', 'Consultation not found');
+                res.redirect('/tutor/consultation/main');
+                return;
+            }
+            if (req.user.id != consultation.userId) {
+                flashMessage(res, 'error', 'Unauthorised access');
+                res.redirect('/tutor/consultation/main');
+                return;
+            }
+
             res.render('consultation/editConsultation', { consultation });
         })
         .catch(err => console.log(err));
@@ -41,7 +58,7 @@ router.get('/editConsultation/:id', (req, res) => {
 
 // CODING LOGIC (CRUD)
 // CREATE
-router.post('/create', async (req, res) => {
+router.post('/create', ensureAuthenticated, async (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
@@ -49,6 +66,7 @@ router.post('/create', async (req, res) => {
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
+    let userId = req.user.id
 
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
@@ -74,7 +92,7 @@ router.post('/create', async (req, res) => {
         const message = 'Consultation slot successfully submitted';
         flashMessage(res, 'success', message);
 
-        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time })
+        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, userId })
             .then((consultation) => {
                 console.log(consultation.toJSON());
                 res.redirect('/tutor/consultation/main');
@@ -85,7 +103,7 @@ router.post('/create', async (req, res) => {
 
 
 // EDIT
-router.post('/editConsultation/:id', async (req, res) => {
+router.post('/editConsultation/:id', ensureAuthenticated, async (req, res) => {
     let title = req.body.title;
     let consultationURL = req.body.consultationURL;
     let price = req.body.price;
@@ -93,6 +111,7 @@ router.post('/editConsultation/:id', async (req, res) => {
     let start_time = moment(req.body.start_time, 'HH:mm');
     let end_time = moment(req.body.end_time, 'HH:mm');
     let date = moment(req.body.consultDate, 'DD/MM/YYYYs');
+    let userId = req.user.id;
 
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
@@ -120,7 +139,7 @@ router.post('/editConsultation/:id', async (req, res) => {
         flashMessage(res, 'success', message);
 
         Consultation.update(
-            { title, consultationURL, price, description, date, start_time, end_time },
+            { title, consultationURL, price, description, date, start_time, end_time, userId },
             { where: { id: req.params.id } }
         )
             .then((result) => {
@@ -134,7 +153,7 @@ router.post('/editConsultation/:id', async (req, res) => {
 
 
 // DELETE
-router.get('/deleteConsultation/:id', async function (req, res) {
+router.get('/deleteConsultation/:id', ensureAuthenticated, async function (req, res) {
     try {
         let consultation = await Consultation.findByPk(req.params.id);
         if (!consultation) {
@@ -142,13 +161,11 @@ router.get('/deleteConsultation/:id', async function (req, res) {
             res.redirect('/tutor/consultation/main');
             return;
         }
-        /*
         if (req.user.id != consultation.userId) {
             flashMessage(res, 'error', 'Unauthorised access');
             res.redirect('/consultation/listConsultations');
             return;
         }
-        */
 
         let result = await Consultation.destroy({ where: { id: consultation.id } });
         console.log(result + ' consultation deleted');
@@ -165,8 +182,8 @@ router.get('/deleteConsultation/:id', async function (req, res) {
 // image upload
 router.post('/upload', (req, res) => {
     // create user id directory for upload if not exist
-    if (!fs.existsSync('./public/uploads/' + 1)) {
-        fs.mkdirSync('./public/uploads/' + 1, {
+    if (!fs.existsSync('./public/uploads/consultation/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/consultation/' + req.user.id, {
             recursive:
                 true
         });
@@ -178,7 +195,7 @@ router.post('/upload', (req, res) => {
         }
         else {
             res.json({
-                file: `/uploads/1/${req.file.filename}`
+                file: `/uploads/consultation/${req.user.id}/${req.file.filename}`
             });
         }
     });
