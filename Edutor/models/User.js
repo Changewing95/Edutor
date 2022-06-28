@@ -25,6 +25,8 @@ const User = db.define('user',
             defaultValue: "profile"
         },
         verification_code : {type: Sequelize.UUID,defaultValue: Sequelize.UUIDV4},
-        otp : { type: Sequelize.STRING }
+        otp : { type: Sequelize.STRING },
+        isNew: { type: Sequelize.STRING, allowNull: true, defaultValue: "yes" },
+        interest: { type: Sequelize.STRING }
     });
 module.exports = User;

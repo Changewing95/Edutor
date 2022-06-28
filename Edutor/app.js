@@ -13,6 +13,7 @@ passportConfig.localStrategy(passport);
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
+const { spawn } = require("child_process");
 
 
 
@@ -66,6 +67,31 @@ app.engine('hbs', engine({
 
 }));
 app.set('view engine', 'hbs');
+
+
+// REDIS DATABASE FOR RECOMMENDATION
+
+const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
+
+ls.stdout.on("data", data => {
+	console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on("data", data => {
+	console.log(`stderr: ${data}`);
+});
+
+ls.on('error', (error) => {
+	console.log(`error: ${error.message}`);
+});
+
+ls.on("close", code => {
+	console.log(`child process exited with code ${code}`);
+});
+
+
+// 
+
 
 
 // Express middleware to parse HTTP body in order to read HTTP data
