@@ -44,10 +44,11 @@ exports.UpdateUser = async (req, res) => {
             User.update({
                 name: name,
                 email: email.toLowerCase(),
-                password: hash
-            }, { where: { id: req.user.id } }).then(() => {
+                password: hash,
+            }, { where: { id: req.user.id } }).then((userObject) => {
+
                 flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
-                res.redirect('settings');
+                res.redirect('/logout');
             }).catch((errors) => {
                 console.log(errors);
             })

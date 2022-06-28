@@ -92,13 +92,13 @@ exports.CreateUser = async (req, res, next) => {
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
-
         var secret = speakeasy.generateSecret({
             name: email
         })
         console.log(secret);
         let user = await User.create({ name, email, password: hash, roles: student, otp: secret.ascii })
         Email.sendMail(email, user.verification_code).then((result) => {
+            console.log(result);
             // flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
         }).catch((error) => {
             console.log(error)

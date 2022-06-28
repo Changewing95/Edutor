@@ -29,6 +29,7 @@
     "flash-messenger": "^1.1.1",
     "handlebars": "^4.7.7",
     "http": "^0.0.1-security",
+    "ip": "^1.1.8",
     "isomorphic-fetch": "^3.0.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.3",
@@ -44,6 +45,7 @@
     "sequelize": "^6.19.0",
     "socket.io": "^4.5.1",
     "speakeasy": "^2.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zipcodes": "^8.0.0"
   }
 }
