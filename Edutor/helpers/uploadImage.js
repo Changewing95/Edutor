@@ -26,6 +26,7 @@ function checkFileType(file, callback) {
         callback({ message: 'Images Only' });
     }
 }
+
 // Define Upload Function
 const upload = multer({
     storage: storage,
@@ -34,4 +35,30 @@ const upload = multer({
         checkFileType(file, callback);
     }
 }).single('tutorialImageUpload'); // Must be the name as the HTML file upload input
+
+// //video
+// //video
+// function checkVideoType(file, callback) {
+//     // Allowed file extensions
+//     const filetypeVid = /mp4/;
+//     // Test extension
+//     const extnameVid =
+//         filetypeVid.test(path.extname(file.originalname).toLowerCase());
+//     // Test mime
+//     const mimetypeVid = filetypes.test(file.mimetype);
+//     if (mimetypeVid && extnameVid) {
+//         return callback(null, true);
+//     }
+//     else {
+//         callback({ message: 'Images Only' });
+//     }
+// }
+// // Define Upload Function
+// const uploadVid = multer({
+//     storage: storage,
+//     limits: { fileSize: 1000000 }, // 1MB
+//     fileFilter: (req, file, callback) => {
+//         checkVideoType(file, callback);
+//     }
+// }).single('video'); // Must be the name as the HTML file upload input
 module.exports = upload;
