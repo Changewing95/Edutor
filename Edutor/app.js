@@ -13,6 +13,8 @@ passportConfig.localStrategy(passport);
 
 
 const app = express();
+app.use(express.static(__dirname + '/public'));
+
 
 
 // app.engine('handlebars', engine({
@@ -20,6 +22,7 @@ const app = express();
 // 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
 // }));
 const helpers = require('./helpers/handlebars');
+// const room = require('./public/js/helpers');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
@@ -28,7 +31,33 @@ app.engine('hbs', engine({
 		formatDate: helpers.formatDate,
 		formatRating: helpers.formatRating,
 		radioCheck: helpers.radioCheck,
+		calculateTotalRating: helpers.calculateTotalRating,
+		avgRating: helpers.avgRating,
 	},
+	// room: {
+	// 	room,
+	// 	generateRandomString: room.generateRandomString,
+	// 	closeVideo: room.closeVideo,
+	// 	pageHasFocus: room.pageHasFocus,
+	// 	getQString: room.getQString,
+	// 	userMediaAvailable: room.userMediaAvailable,
+	// 	getUserFullMedia: room.getUserFullMedia,
+	// 	getUserAudio: room.getUserAudio,
+	// 	shareScreen: room.shareScreen,
+	// 	addChat: room.addChat,
+	// 	getIceServer: room.getIceServer,
+	// 	toggleChatNotificationBadge: room.toggleChatNotificationBadge,
+	// 	replaceTrack: room.replaceTrack,
+	// 	toggleShareIcons: room.toggleShareIcons,
+	// 	toggleVideoBtnDisable: room.toggleVideoBtnDisable,
+	// 	maximiseStream: room.maximiseStream,
+	// 	singleStreamToggleMute: room.singleStreamToggleMute,
+	// 	saveRecordedStream: room.saveRecordedStream,
+	// 	toggleModel: room.toggleModel,
+	// 	setLocalStream: room.setLocalStream,
+	// 	adjustVideoElemSize: room.adjustVideoElemSize,
+	// 	createDemoRemotes: room.createDemoRemotes
+	// },
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),

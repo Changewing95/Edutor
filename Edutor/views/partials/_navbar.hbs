@@ -7,7 +7,7 @@
     }
 </style>
 
-<nav style="background-color: {{#if_equal  user.roles " tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+<nav style="background-color: {{#if_equal user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
     class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">All
@@ -17,13 +17,11 @@
         href="/tutor/consultation/main">Consultation Slot</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Events</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/review/main">Review</a>
+        href="/tutor/review/listReview">Review</a>
     {{else}}
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/consultation/main">Consultation Slot</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
+    {{!-- <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/tutor/review/listReview">View
-        Feedback</a>
+        Feedback</a> --}}
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/review/main">Leave Feedback</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"

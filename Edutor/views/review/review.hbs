@@ -44,11 +44,13 @@
             margin-right: 30px
         }
 
+        /*
         .pic {
             width: 200px;
             height: 250px;
             margin-right: 10px
         }
+        */
 
         .vote {
             cursor: pointer
@@ -93,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="ml-auto">
-                                    <p class="text-muted pt-5 pt-sm-3">{{formatDate updatedAt 'DD-MMM-YYYY'}}</p>
+                                    <p class="text-muted pt-5 pt-sm-3">{{formatDate updatedAt 'DD MMM YYYY'}}</p>
                                     <div class="fa-icons row d-flex justify-content-end">
                                         <div style="margin-right: 20px">
                                             <a href="/student/review/editReview/{{id}}"><i class="fas fa-edit fa-lg"
@@ -129,9 +131,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="text-right">
-                                        <img class="pic" src="{{image}}">
-                                    </div>
+                                    <img class="img-fluid rounded float-end" style="margin-top: 10px" src="{{image}}">
                                 </div>
                             </div>
                         </div>

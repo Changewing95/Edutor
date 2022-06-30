@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User')
 const flashMessage = require('../helpers/messenger');
 const UserController = require('../Controller/User');
+const Consultation = require('../models/Booking');
 const FileUpload = require('../helpers/imageUpload');
 const ensureAuthenticated = require('../helpers/checkAuthentication');
 const { nextTick } = require('process');
@@ -10,7 +11,13 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
+const app = express();
 
+
+// for video conference
+const server = require("http").Server(app); 	// for socket.io
+const io = require("socket.io")(server);		// for socket.io
+const stream = require('../public/js/stream');
 
 router.get('/overview', ensureAuthenticated, (req, res) => {
     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
@@ -72,7 +79,7 @@ router.put('/profilePictureUpload', async (req, res) => {
     })
 
     pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
-        if(!error) {
+        if (!error) {
             res.send("succaess");
         }
     });
@@ -97,7 +104,42 @@ router.get('/display', async (req, res) => {
 });
 
 
+// router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
+//     Consultation.findByPk(req.params.id)
+//         .then((consultation) => {
+//             if (!consultation) {
+//                 flashMessage(res, 'error', 'Consultation not found');
+//                 res.redirect('/dashboard/settings');
+//                 return;
+//             }
+//             if (req.user.id != consultation.userId) {
+//                 flashMessage(res, 'error', 'Unauthorised access');
+//                 res.redirect('/dashboard/settings');
+//                 return;
+//             }
 
+//             res.render('consultation/callroom', { consultation });
+//         })
+//         .catch(err => console.log(err));
+//     // res.render("consultation/callroom");
+// })
+
+
+// router.get('/consultation', ensureAuthenticated, (req, res) => {
+//     Consultation.findAll({
+//         where: { userId: req.user.id },
+//         order: [['date']],
+//         raw: true
+//     })
+//         .then((consultations) => {
+//             // pass object to consultation.hbs
+//             res.render('dashboard/dashboardOverview', { consultations, layout: 'main2' });
+//         })
+//         .catch(err => console.log(err));
+//     // res.render('tutor/consultation');
+// });
+
+// io.of('/stream').on('connection', stream);
 
 
 

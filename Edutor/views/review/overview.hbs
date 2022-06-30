@@ -1,9 +1,6 @@
 {{!-- done by yong lin, for tutor main display of reviews --}}
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <style>
@@ -63,8 +60,15 @@
 
 <body>
     <div class="container">
+        <div class="row justify-content-center text-center">
+            <div>
+                <div class="header">
+                    <h2>Your Reviews</h2>
+                </div>
+            </div>
+        </div>
 
-        <div class="row">
+        {{!-- <div class="row">
             <div class="col-sm-6">
                 <div class="rating-block">
                     <h4>Average user rating</h4>
@@ -164,7 +168,7 @@
                     <div class="pull-right" style="margin-left:10px;">0</div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row">
             <div class="col-sm-12">
@@ -174,14 +178,15 @@
                     {{#each reviews}}
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                            {{!-- <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                            --}}
                             <div class="review-block-name"><a href="#">User name</a></div>
                             <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}<br />1 day ago</div>
                         </div>
                         <div class="col-sm-6">
                             <div class="review-block-rate">
                                 <p class="text-left"><span class="text-muted">{{rating}}.0</span></p>
-
+                                {{!--
                                 <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                 </button>
@@ -196,7 +201,7 @@
                                 </button>
                                 <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
                                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
+                                </button> --}}
                             </div>
                             <div class="review-block-title">{{title}}</div>
                             <div class="review-block-category">{{category}}</div>
@@ -225,14 +230,5 @@
 
     </div> <!-- /container -->
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
     </div>
 </body>

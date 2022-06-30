@@ -18,7 +18,7 @@ router.get('/listReview', (req, res) => {
     })
         .then((reviews) => {
             // pass object to review.hbs
-            res.render('review/overview', { reviews });
+            res.render('review/overview.hbs', { reviews });
         })
         .catch(err => console.log(err));
 });

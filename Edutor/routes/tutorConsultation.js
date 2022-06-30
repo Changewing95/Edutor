@@ -1,5 +1,6 @@
 const moment = require('moment');
 const express = require('express');
+const app = express();
 const router = express.Router();
 const Consultation = require('../models/Booking');
 const flashMessage = require('../helpers/messenger');
@@ -10,7 +11,46 @@ const { stringify } = require('querystring');
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 
-// ROUTING: 
+// for video conference
+const server = require("http").Server(app); 	// for socket.io
+const io = require("socket.io")(server);		// for socket.io
+const stream = require('../public/js/stream');
+
+router.get('/vidroom/:id', function (req, res) {
+    Consultation.findByPk(req.params.id)
+        .then((consultation) => {
+            if (!consultation) {
+                flashMessage(res, 'error', 'Consultation not found');
+                res.redirect('/tutor/consultation/settings');
+                return;
+            }
+            if (req.user.id != consultation.userId) {
+                flashMessage(res, 'error', 'Unauthorised access');
+                res.redirect('/tutor/consultation/settings');
+                return;
+            }
+
+            res.render('consultation/callroom', { consultation });
+        })
+        .catch(err => console.log(err));
+    // res.render("consultation/callroom");
+})
+
+
+router.get('/settings', (req, res) => {
+    Consultation.findAll({
+        where: { userId: req.user.id },
+        order: [['date']],
+        raw: true
+    })
+        .then((consultations) => {
+            // pass object to consultation.hbs
+            res.render('dashboard/dashboardOverview', { consultations });
+        })
+        .catch(err => console.log(err));
+    // res.render('tutor/consultation');
+});
+
 router.get('/main', ensureAuthenticated, (req, res) => {
     Consultation.findAll({
         where: { userId: req.user.id },
@@ -24,6 +64,7 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
     // res.render('tutor/consultation');
 });
+
 
 router.get('/create', ensureAuthenticated, (req, res) => {
     res.render('consultation/addConsultation');
@@ -65,6 +106,9 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let description = req.body.description;
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
+    // if (start_time > end_time) {
+    //     flashMessage(res, 'error', message);
+    // }
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
     let userId = req.user.id
 
@@ -204,6 +248,11 @@ router.post('/upload', (req, res) => {
 
 
 
+io.of('/stream').on('connection', stream);
+
+// io.of('/stream').on('connection', (stream) => {
+//     console.log('a user connected');
+// });
 
 
 module.exports = router;

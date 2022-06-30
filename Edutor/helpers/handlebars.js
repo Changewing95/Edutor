@@ -26,4 +26,17 @@ const formatRating = function (value) {
     return value123.toFixed(2);
 };
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, radioCheck, formatRating };
+const calculateTotalRating = function (value) {
+    var total = 0;
+    var count = 0;
+    total += value;
+    count += 1;
+    return avgRating(total, count);
+}
+
+const avgRating = function (total, count) {
+    var avgRating = total / count;
+    return avgRating.toFixed(1);
+}
+
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, radioCheck, formatRating, calculateTotalRating, avgRating };
