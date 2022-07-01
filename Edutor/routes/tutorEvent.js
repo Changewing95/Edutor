@@ -3,11 +3,9 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const moment = require('moment');
 const Event = require('../models/Event');
-
-//File upload 
+const path = require('path')
 const fs = require('fs');
-const upload = require('../helpers/imageUpload');
-
+const upload = require('../helpers/eventimageupload');
 
 
 router.get('/main', (req, res) => {
@@ -26,26 +24,90 @@ router.get('/main', (req, res) => {
 router.get('/create', (req, res) => {
     res.render('tutor/addEvent');
 });
+// router.post('/create', (req, res) => {
+//     if (!fs.existsSync('./public/uploads/')) {
+//         fs.mkdirSync('./public/uploads/' , {
+//             recursive:
+//                 true
+//         });
+//     }
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/uploads/profile/profile.png', err: err });
+//         }
+//         else {
+
+//         let title = req.body.title;
+//         // let image = req.body.image
+//         let description = req.body.description;
+//         let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
+//         let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
+//         let starttime = req.body.starttime;
+//         let endtime = req.body.endtime;
+//         let people = req.body.people;
+//         let status = req.body.status;
+//         //let userId = req.user.id;
+
+//         const message = 'Event successfully uploaded';
+//         flashMessage(res, 'success', message);
+//         Event.create(
+//             { title, eventImageURL:req.file.filename, description, startdate, enddate, starttime, endtime, people, status }
+//         )
+//             .then((event) => {
+//                 console.log(event.toJSON());
+//                 res.redirect('/tutor/event/main');
+//             })
+//             .catch(err => console.log(err))
+//         }
+//     });
+// });
+
+
+
 router.post('/create', (req, res) => {
-    let title = req.body.title;
-    // let image = req.body.image
-    let description = req.body.description;
-    let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
-    let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
-    let starttime = req.body.starttime;
-    let endtime = req.body.endtime;
-    let people = req.body.people;
-    let status = req.body.status;
-    //let userId = req.user.id;
-    Event.create(
-        { title, description, startdate, enddate, starttime, endtime, people, status }
-    )
-        .then((event) => {
-            console.log(event.toJSON());
-            res.redirect('/tutor/event/main');
-        })
-        .catch(err => console.log(err))
+    if (!fs.existsSync('../public/eventuploads/')) {
+        fs.mkdirSync('../public/eventuploads/' + { recursive: true });
+    }
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(req.files, "asd")
+            // e.g. File too large
+            res.json({ file: '/img/no-image.jpg', err: err });
+        }
+        else {
+
+            console.log(req.files['posterUpload'][0].filename)
+            var eventlink = req.files['posterUpload'][0].filename
+            let title = req.body.title;
+            // let image = req.body.image
+            let description = req.body.description;
+            let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
+            let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
+            let starttime = req.body.starttime;
+            let endtime = req.body.endtime;
+            let people = req.body.people;
+            let status = req.body.status;
+            let price = req.body.price;
+
+            //let userId = req.user.id;
+            
+        
+            Event.create(
+                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price }
+            )
+                .then((event) => {
+                    console.log(event.toJSON());
+                    res.redirect('/tutor/event/main');
+                })
+                .catch(err => console.log(err))
+                // res.json({ file: `/eventuploads/${req.file.filename}` });
+            
+        }
+    });
+
 });
+
 
 router.get('/editEvent/:id', (req, res) => {
     Event.findByPk(req.params.id)
@@ -70,10 +132,11 @@ router.post('/editEvent/:id', (req, res) => {
     let endtime = req.body.endtime;
     let people = req.body.people;
     let status = req.body.status;
+    let price = req.body.price;
     //let userId = req.user.id;
 
     Event.update(
-        { title, description, startdate, enddate, starttime, endtime, people, status },
+        { title, description, startdate, enddate, starttime, endtime, people, status,price },
         { where: { id: req.params.id } }
 
     )
@@ -108,21 +171,20 @@ router.get('/deleteEvent/:id', async function
     }
 });
 
-router.post('/upload',  (req, res) => {
-    // Creates user id directory for upload if not exist
-    if (!fs.existsSync('./public/eventuploads/' + req.user.id)) {
-    fs.mkdirSync('./public/eventuploads/' + req.user.id, { recursive:
-    true });
-    }
-    upload(req, res, (err) => {
-    if (err) {
-    // e.g. File too large
-    res.json({ file: '/img/no-image.jpg', err: err });
-    }
-    else {
-    res.json({ file: `/uploads/${req.user.id}/${req.file.file}` });
-    }
-    });
-    });
+// router.post('/upload', (req, res) => {
+//     // Creates user id directory for upload if not exist
+//     if (!fs.existsSync('../public/eventuploads/')) {
+//         fs.mkdirSync('../public/eventuploads/' + { recursive: true });
+//     }
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/img/no-image.jpg', err: err });
+//         }
+//         else {
+//             res.json({ file: `/uploads/${req.file.file.name}` });
+//         }
+//     });
+// });
 
 module.exports = router;

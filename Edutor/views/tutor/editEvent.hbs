@@ -16,28 +16,45 @@
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
-                        <input type="text" placeholder="Enter Event Title" id="title" onblur="initialisedTitle()"value="{{event.title}}"name="title" class="form-control" required>
+                        <input type="text" placeholder="Enter Event Title" id="title" onblur="initialisedTitle()"
+                            value="{{event.title}}" name="title" class="form-control" required>
                     </div>
                     {{!-- <div class="input-box mb-3">
                         <span class="details">Image</span>
                         <input type="file" placeholder="Enter Image" name="image" class="form-control"
                             accept="image/png, image/jpeg, image/jpg" required>
                     </div> --}}
+
+                    <div class="input-box mb-3">
+                        <span class="details">Upload File</span>
+                        <div class="custom-file mb-2">
+                            <input type="file" class="custom-file-input" id="posterUpload" name="posterUpload"
+                                accept="image/png,image/jpeg,image/jpg,image/gif" >
+                            <label class="custom-file-label" for="customFile" >{{event.eventURL}}</label>
+                        </div>
+                        <div class="text-danger small mb-2" id="posterErr" style="display:none" ></div>
+                        {{!—- Hidden field to submit URL of poster to the server --}}
+                        {{!-- <input id="posterURL" type="hidden" name="posterURL"> --}}
+
+                    </div>
                     <div class="text-danger small mb-2" id="cover" style="display:none"></div>
                     <div class="input-box mb-3">
                         <label for="description" class="details">Description</label>
-                        <textarea class="form-control" placeholder="Enter description of course" id="description" name="description" rows="5" maxlength="2000">{{event.description}}</textarea>
+                        <textarea class="form-control" placeholder="Enter description of course" id="description"
+                            name="description" rows="5" maxlength="2000">{{event.description}}</textarea>
                         {{!-- <span class="details">Description</span>
                         <input type="text" class="form-control" placeholder="Enter description of course"
                             name="description" required> --}}
                     </div>
-                    <div class="input-box mb-3">
+                    <div class="input-box mb-4">
                         <span class="details">Start Date</span>
-                        <input id="datepicker" class="form-control" name="startdate" value="{{formatDate event.startdate 'DD/MM/YYYY'}}" readonly required>
+                        <input id="datepicker" class="form-control" name="startdate"
+                            value="{{formatDate event.startdate 'DD/MM/YYYY'}}" readonly required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">End Date</span>
-                        <input class="form-control" id="datepick" name="enddate" value="{{formatDate event.enddate 'DD/MM/YYYY'}}" readonly required>
+                        <input class="form-control" id="datepick" name="enddate"
+                            value="{{formatDate event.enddate 'DD/MM/YYYY'}}" readonly required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Start time</span>
@@ -45,15 +62,20 @@
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">End time</span>
-                        <input type="text" class="form-control" name="endtime" value="{{event.endttime}}" required>
+                        <input type="text" class="form-control" name="endtime" value="{{event.endtime}}" required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Max No. of People</span>
                         <input type="text" class="form-control" name="people" value="{{event.people}}" required>
                     </div>
                     <div class="input-box mb-3">
+                        <span class="details">Price</span>
+                        <input type="text" class="form-control" name="price"
+                            placeholder="Enter price" value="{{event.price}}"required>
+                    </div>
+                    <div class="input-box mb-3">
                         <label for="status">Online/In Person:</label>
-                        <select name="status">
+                        <select name="status" >
                             <option value="In Person">In Person</option>
                             <option value="Online">Online</option>
                         </select>
@@ -71,11 +93,11 @@
 <script>
     $('#datepicker').datepicker({
         format: "dd/mm/yyyy",
-        
+
     });
     $('#datepick').datepicker({
         format: "dd/mm/yyyy",
-        
+
     });
 </script>
 

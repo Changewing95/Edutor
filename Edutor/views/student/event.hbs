@@ -7,17 +7,12 @@
 <body>
 
     <section class="section-products">
-        <div>
-            <a href="/tutor/event/create">
-                <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Create Event</p>
-            </a>
-        </div>
         <div class="container">
             {{#if event}}
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
-                        <h2>Your Events</h2>
+                        <h2>Events</h2>
                     </div>
                 </div>
             </div>
@@ -31,8 +26,8 @@
                             <img src="/eventuploads/1/{{eventURL}}" class="single-product">
 
                             <ul>
-                                <li><a href="/tutor/event/editEvent/{{id}}"><i class="fas fa-pencil-alt"></i></a></li>
-                                <li><a href="/tutor/event/deleteEvent/{{id}}"><i class="fas fa-trash-alt"></i></a></li>
+                                <li><a href=""><i class="fa fa-shopping-cart"></i></a></li>
+
 
                             </ul>
                         </div>

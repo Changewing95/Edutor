@@ -1,19 +1,21 @@
 const multer = require('multer');
 const path = require('path');
+
+
 // Set Storage Engine
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, '../public/eventuploads/' + 1 + '/');
+        callback(null, './public/eventuploads/' + '1' + '/');
     },
     filename: (req, file, callback) => {
-        callback(null, 1 + '-' + Date.now() +
+        callback(null, '1' + '-' + Date.now() +
             path.extname(file.originalname));
     }
 });
 // Check File Type
 function checkFileType(file, callback) {
     // Allowed file extensions
-    const filetypes = /jpeg|jpg|png/;
+    const filetypes = /jpeg|jpg|png|gif/;
     // Test extension
     const extname =
         filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -33,5 +35,6 @@ const upload = multer({
     fileFilter: (req, file, callback) => {
         checkFileType(file, callback);
     }
-}).fields // Must be the name as the HTML file upload input
-module.exports = upload;
+}).fields([{name: 'posterUpload', maxCount: 1}]) // Must be the name as the HTML file upload input
+
+module.exports = upload
