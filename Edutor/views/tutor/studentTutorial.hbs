@@ -1,5 +1,3 @@
-{{!-- view to show mainview of consultation slots --}}
-
 <head>
     <link rel="stylesheet" href="/css/catalogue.css">
 </head>
@@ -20,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <h2 class="types">BEGIINERS NIA</h2>
+            <h2 class="types">Beginner Level</h2>
             <div class="row1">
                 <div class="row">
                     <!-- Single Product -->
@@ -55,7 +53,7 @@
             </div>
 
             {{!-- Intermediate level --}}
-            <h2 class="types">intermediate ok WOR</h2>
+            <h2 class="types">Intermediate Level</h2>
          
 
             <div class="row2">
@@ -93,7 +91,7 @@
                 </div>
             </div>
             
-            <h2 class="types">ADVANCE WOR</h2>
+            <h2 class="types">Advance Level</h2>
 
             <div class="row2">
                 <div class="row">
@@ -127,6 +125,45 @@
                     {{/each}}
                 </div>
             </div>
+
+
+<h2 class="types">Others</h2>
+
+            <div class="row2">
+                <div class="row">
+                    <!-- Single Product -->
+                    {{#each tutorials}}
+                    {{#if_equal category "Others"}}
+
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-{{id}}" class="single-product">
+                            <div class="part-1">
+                                <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
+                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                                {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                                {{!-- class="border img-thumbnail img-fluid" --}}
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-shopping-cart" ></i></a>
+                                    </li>
+                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">{{replaceCommas title}}</h3>
+                                {{!-- <h4>{{replaceCommas description}}</h4> --}}
+                                <h4 class="product-price">${{replaceCommas price}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if_equal}}
+                    {{/each}}
+                </div>
+            </div>
+
+
+
 
             </div>
         

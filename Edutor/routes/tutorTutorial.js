@@ -82,62 +82,62 @@ router.get('/create', (req, res) => {
 //1. SAVE THE USER ID TGT WITH THE INFO SO CAN RETRIEVE ACCORDING TO CORRECT USER
 //2. fixx image display
 //3. Fix video display
-router.post('/create', async function (req, res) {
+// router.post('/create', async function (req, res) {
 
-    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
-        fs.mkdirSync('./public/uploads/' + req.user.id, {
-            recursive:
-                true
-        });
-    }
-    // try {
-    //     const file = req.body.video
-    //     console.log(file)
-    //     const savePath = path.join(__dirname, 'public', 'uploads', req.user.id, file.name)
-    //     await file.mv(savePath)
-    // }
-    // catch (error) {
-    //     console.log(error)
-    //     res.send("error uploading vudeo")
-    // }
-    upload(req, res, (err) => {
-        if (err) {
-            // e.g. File too large
-            res.json({ file: '/uploads/profile/profile.png', err: err });
-        }
-        else {
+//     if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+//         fs.mkdirSync('./public/uploads/' + req.user.id, {
+//             recursive:
+//                 true
+//         });
+//     }
+//     // try {
+//     //     const file = req.body.video
+//     //     console.log(file)
+//     //     const savePath = path.join(__dirname, 'public', 'uploads', req.user.id, file.name)
+//     //     await file.mv(savePath)
+//     // }
+//     // catch (error) {
+//     //     console.log(error)
+//     //     res.send("error uploading vudeo")
+//     // }
+//     upload(req, res, (err) => {
+//         if (err) {
+//             // e.g. File too large
+//             res.json({ file: '/uploads/profile/profile.png', err: err });
+//         }
+//         else {
            
-            let title = req.body.title;
-            let description = req.body.description;
-            let author = req.body.author;
-            // let date = moment(req.body.date, 'DD/MM/YYYY');
-            let category = req.body.category;
-            let price = req.body.price;
-            // let tutorialImageURL = req.body.tutorialImageURL;
-            let video = req.body.video;
-            let userId = req.user.id;
+//             let title = req.body.title;
+//             let description = req.body.description;
+//             let author = req.body.author;
+//             // let date = moment(req.body.date, 'DD/MM/YYYY');
+//             let category = req.body.category;
+//             let price = req.body.price;
+//             // let tutorialImageURL = req.body.tutorialImageURL;
+//             let video = req.body.video;
+//             let userId = req.user.id;
 
         
-                // res.json({
-                //     file: `/uploads/${req.user.id}/${req.file.filename}`
+//                 // res.json({
+//                 //     file: `/uploads/${req.user.id}/${req.file.filename}`
 
-                // });
-                const message = 'Tutorial successfully uploaded';
-                flashMessage(res, 'success', message);
-                Tutorial.create(
-                    { title, description, author, category, price, tutorialImageURL: req.file.filename, video, userId }
-                )
-                    .then((tutorials) => {
+//                 // });
+//                 const message = 'Tutorial successfully uploaded';
+//                 flashMessage(res, 'success', message);
+//                 Tutorial.create(
+//                     { title, description, author, category, price, tutorialImageURL: req.file.filename, video, userId }
+//                 )
+//                     .then((tutorials) => {
 
-                        console.log(tutorials.toJSON());
-                        res.redirect('/tutor/tutorial/main');
-                    })
-                    .catch(err => console.log(err))
-            }
-    });
+//                         console.log(tutorials.toJSON());
+//                         res.redirect('/tutor/tutorial/main');
+//                     })
+//                     .catch(err => console.log(err))
+//             }
+//     });
 
 
-});
+// });
 //     Tutorial.create(
 //         { title, description, author, category, price, thumbnail, video }
 //         )
@@ -177,7 +177,55 @@ router.post('/create', async function (req, res) {
 // });
 
 
+router.post('/create', async function (req, res) {
 
+    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/' + req.user.id, {
+            recursive:
+                true
+        });
+    }
+
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
+        else {
+
+            console.log(req.files);
+            var imageUpload = req.files['tutorialImageUpload'][0].filename
+            var videoUpload = req.files['tutorialVideoUpload'][0].filename
+            let title = req.body.title;
+            let description = req.body.description;
+            let author = req.body.author;
+            // let date = moment(req.body.date, 'DD/MM/YYYY');
+            let category = req.body.category;
+            let price = req.body.price;
+            // let tutorialImageURL = req.body.tutorialImageURL;
+            let video1 = req.session.video;
+            let userId = req.user.id;
+            const message = 'Tutorial successfully uploaded';
+            flashMessage(res, 'success', message);
+            Tutorial.create(
+                { title, description, author, category, price, tutorialImageURL: imageUpload, video:videoUpload , userId }
+            )
+                .then((tutorials) => {
+
+                    console.log(tutorials.toJSON());
+                    res.redirect('/tutor/tutorial/main');
+                })
+                .catch(err => console.log(err))
+        }
+    });
+
+
+});
+
+
+router.get('/get-video/:fileName', (req, res) => {
+    res.sendFile(`uploads/${req.user.id}/${req.params.fileName}`, { root: 'public' })
+})
 
 //NEED TO DO:
 //1. Retrieve the specific Tutorial ID that the user clicks (under findall, retrieve when.....- refer to practical)
@@ -221,29 +269,44 @@ router.get('/editTutorial/:id', (req, res) => {
 //         .catch(err => console.log(err));
 // });
 
-//TRY UPDATE WITH WHAT JEREMY SAID
+//TRY UPDATE 
 router.post('/editTutorial/:id', async (req, res) => {
     let tutorial = await Tutorial.findByPk(req.params.id);
-    var file = tutorial.tutorialImageURL;
+    var Imagefile = tutorial.tutorialImageURL;
+    var VideoFile = tutorial.video;
+    console.log(Imagefile)
+    console.log(VideoFile)
+
     upload(req, res, (err) => {
         if (err) {
             // e.g. File too large
             res.json({ file: '/uploads/profile/profile.png', err: err });
         }
         else {
+            console.log(req.files, "ji")
             let title = req.body.title;
             let description = req.body.description;
             let author = req.body.author;
             let category = req.body.category;
             let price = req.body.price;
             let video = req.body.video;
-            if (req.file) {
-                file = req.file.filename;
+            // console.log(req.files['tutorialImageUpload'][0].filename)
+            //many key value pair and many index so the index to find attribute
+            //.filename is part of the attribute
+            if (req.files['tutorialImageUpload']) {
+                
+                // console.log(req.file
+                Imagefile = req.files['tutorialImageUpload'][0].filename
+                // Imagefile = "hi"
+            }
+            if (req.files['tutorialVideoUpload']) {
+                VideoFile = req.files['tutorialVideoUpload'] [0].filename
+
             }
             const message = 'Tutorial successfully edited';
             flashMessage(res, 'success', message);
             Tutorial.update(
-                { title, description, author, category, price, tutorialImageURL: file, video }, { where: { id: req.params.id } }
+                { title, description, author, category, price, tutorialImageURL: Imagefile, video:VideoFile }, { where: { id: req.params.id } }
             )
                 .then((tutorials) => {
 

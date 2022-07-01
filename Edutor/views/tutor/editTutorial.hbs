@@ -7,7 +7,7 @@
     <div class="container">
         <div class="title">EDITTTTTT</div>
         <div class="content">
-            <form method="POST" enctype="multipart/form-data" action="#">
+            <form method="POST"  id="my-form" enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         {{!-- <span class="details">Title</span> --}}
@@ -44,23 +44,27 @@
                         <label class="details" class="font-italic" for="category">Category</label>
                         <select class="form-control" id="category" name="category" rows="1" maxlength="20"
                             value="{{tutorials.category}}">
-                            
+
                             <datalist id="categories">
-                                <option value="" disabled selected hidden>{{tutorials.category}}</option> 
+                                <option value="" disabled selected hidden>{{tutorials.category}}</option>
                                 <option value="Beginner Level">Beginner Level</option>
                                 <option value="Intermediate Level">Intermediate Level</option>
                                 <option value="Advance Level">Advance Level</option>
+                                <option value="Others">Others</option>
                             </datalist>
                         </select>
-
                     </div>
 
                     <div class="input-box mb-3">
                         <label class="details">Enter Price Of Course</label>
-                        <textarea class="form-control" id="price" name="price" rows="1"
-                            maxlength="1000">{{tutorials.price}}</textarea>
+                         <input type="number" class="form-control" id="price" name="price" rows="1"  value="{{tutorials.price}}">
+                        {{!-- <textarea class="form-control" id="price" name="price" rows="1"
+                            maxlength="1000">{{tutorials.price}}</textarea> --}}
                     </div>
+
+
                 </div>
+                
                 {{!-- <div class="input-box mb-3">
                     <span class="details">Upload Thumbnail</span>
                     <input type="file" name="image" accept="image/*" class="form-control" required>
@@ -72,46 +76,74 @@
                         <input type="file" class="form-control custom-file-input" id="tutorialImageURL"
                             name="tutorialImageURL" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">Choose File</label>
-
                     </div>
                     <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
                     <img id="tutorial" src="{{ consultation.consultationURL }}" height="100" width="100"
                         alt="Consulation" class="border img-thumbnail img-fluid">
-                    {{!—- Hidden field to submit URL of poster to the server --}}
+                    Hidden field to submit URL of poster to the server 
                     <input id="consultationURL" type="hidden" name="consultationURL"
                         value="{{ consultation.consultationURL}}">
-                </div> --}}
+                </div>  --}}
 
                 <div class="input-box mb-3">
-                    <span class="details">Image</span>
+                    <span class="details">Update Thumbnail</span>
                     <div class="custom-file mb-2">
                         <input type="file" class="form-control custom-file-input" id="tutorialImageUpload"
-                            name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif" >
+                            name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">{{tutorials.tutorialImageURL}}</label>
-
                     </div>
 
                     <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
                         value="{{ tutorials.tutorialImageURL}}">
 
-                    {{!-- <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
-                    <img id="consultation" src="{{ tutorials.tutorialImageURL }}" height="100" width="100"
-                        alt="Tutorial" class="border img-thumbnail img-fluid">
-                    {{!—- Hidden field to submit URL of poster to the server --}}
-                    <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
-                        value="{{ tutorials.tutorialImageURL}}"> --}}
-                </div>
-                {{!-- <div class="input-box mb-3">
-                    <span class="details">Upload Tutorial Video</span>
-                    <input type="file" name="video" accept="video/*" class="form-control" required>
-                </div> --}}
-                <div class="button">
-                    <input type="submit" value="Update">
-                </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Update tutorial video</span>
+                        <div class="custom-file mb-2">
+                            <input type="file" class="form-control custom-file-input" id="tutorialVideoURL"
+                                name="tutorialVideoUpload" accept="video/*">
+                            <label class="custom-file-label" for="customFile">{{tutorials.video}}</label>
+
+                        </div>
+
+
+                        <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}">
+                        <video width="320" height="240" controls>
+                            <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
+                        </video>
+
+{{!-- 
+                        <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
+                        <img id="consultation" src="{{ tutorials.tutorialImageURL }}" height="100" width="100"
+                            alt="Tutorial" class="border img-thumbnail img-fluid">
+                         Hidden field to submit URL of poster to the server 
+                        <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
+                            value="{{ tutorials.tutorialImageURL}}">  --}}
+                    </div>
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Upload Tutorial Video</span>
+                        <input type="file" name="video" accept="video/*" class="form-control" required>
+                    </div> --}}
+                    <div class="button">
+                        <input type="submit" value="Update">
+                    </div>
             </form>
         </div>
     </div>
 
 </body>
+<script>
+
+const uploadButton = document.querySelector('#upload-btn');
+ uploadButton.addEventListener('click', (e) => {
+  const form = document.querySelector('#my-form');
+  const formData = new FormData(form);
+  fetch('http://localhost:5000/tutor/tutorial/upload-video', {
+     method: 'POST',
+     body: formData,
+  });
+ });
+
+
+</script>
 
 </html>

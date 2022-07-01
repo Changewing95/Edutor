@@ -7,7 +7,7 @@
     <div class="container">
         <div class="title">Avaliable Courses</div>
         <div class="content">
-            <form method="POST"  enctype="multipart/form-data" action="#">
+            <form method="POST"  id="my-form"  enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
@@ -36,6 +36,7 @@
                             <option value="Beginner Level">Beginner Level</option>
                             <option value="Intermediate Level">Intermediate Level</option>
                             <option value="Advance Level">Advance Level</option>
+                            <option value="Others">Others</option>
                         </datalist>
                         </select>
                     </div>
@@ -54,6 +55,7 @@
 
                 </div>
                 <div class="input-box mb-3">
+                    <span class="details">Upload Thumbnail</span>
                     <div class="custom-file mb-2">
                         <input type="file" class="custom-file-input" id="tutorialImageUpload" name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">Choose File</label>
@@ -64,7 +66,6 @@
                         <input type="file" class="form-control custom-file-input" id="tutorialImageURL"
                             name="tutorialImageURL" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">Choose File</label>
-
                     </div>
                     <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
                     <img id="consultation" src="/profile/profile.png" height="100" width="100" alt="Consulation"
@@ -73,10 +74,11 @@
                     {{!-- <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"> --}}
                 </div>
 
-                 {{!-- <div class="input-box mb-3">
+                 <div class="input-box mb-3">
                     <span class="details">Upload Tutorial Video</span>
-                    <input type="file" name="video" accept="video/*" class="form-control" required>
-                </div>   --}}
+                    <input type="file" name="tutorialVideoUpload" accept="video/*" class="form-control">
+
+                </div>  
 
                 <div class="button">
                     <input type="submit">
@@ -86,5 +88,19 @@
     </div>
 
 </body>
+<script>
+
+const uploadButton = document.querySelector('#upload-btn');
+ uploadButton.addEventListener('click', (e) => {
+  const form = document.querySelector('#my-form');
+  const formData = new FormData(form);
+  fetch('http://localhost:5000/tutor/tutorial/upload-video', {
+     method: 'POST',
+     body: formData,
+  });
+ });
+
+
+</script>
 
 </html>
