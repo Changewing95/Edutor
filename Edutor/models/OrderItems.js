@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
-const moment = require('moment');
-const sequelize = require('sequelize');
+
 
 const OrderItems = db.define('orderItems',
     {
@@ -11,12 +10,14 @@ const OrderItems = db.define('orderItems',
             autoIncrement: true,
             allowNull: false
            },
-        prodId:{type: Sequelize.INTEGER},
+        cust_name: {type: Sequelize.STRING},
+        tutor_id: {type: Sequelize.STRING},
+        prod_name:{type: Sequelize.STRING},
         qty: {type: Sequelize.INTEGER},
-        price: { type: Sequelize.DECIMAL(8,2)}
-        //forgein key is order ID
+        status: {type: Sequelize.STRING},
+        price: {type: Sequelize.DECIMAL(8,2)}
+        //foreign key is order id from Orders table (model)
     });
 
-    
 
 module.exports = OrderItems;

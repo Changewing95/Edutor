@@ -1,74 +1,142 @@
 <head>
     <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="common.js"></script>
+    <script src="/js/croppie.js"></script>
+
 </head>
 
 <div class="container-fluid dashboard">
     <div class="container mt-5">
+        <div class="alert alert-danger alert-dismissible collapse" id="InvalidImage" role="alert">
+            <strong>Invalid Image type!</strong> Please make sure that the uploaded image is a valid image
+        </div>
         <h1 style="font-weight: 700; font-size: 20px;   text-transform: uppercase;">{{user.name}} | Settings</h1>
-        <form>
-            <div class="row">
-                <div class="col">
-                    <img src="/profile/{{user.profile_pic}}" width="200px" height="200px" alt="...">
-                </div>
+        <div class="row">
+            <div class="col">
+
+                <img src="/dashboard/display" width="200px" height="200px" alt="...">
+                <input type="file" name="profilePictureUpload" id="insert_image" class='hidden' />
+                <label style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save" for="insert_image">CHANGE
+                    PROFILE</label>
+
             </div>
-        </form>
-    </div>
-</div>
-<section id="contact">
-    <div class="container">
-        <form action="" method="post">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 style="font-size: 20px"><b>General Information</b></h2>
-                    <hr width="30%">
-                    <p>Want to change your information? Change below!</p>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i>
-                            Email</label>
-                        <input type="email" name="email" value="{{email}}" class="form-control form-control-lg border border-dark"
-                            id="register-tutor-email" aria-describedby="emailHelp" placeholder="Email">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i>
-                            Username</label>
-                        <input type="username" name="name" value="{{name}}" class="form-control form-control-lg border border-dark"
-                            id="register-tutor-username" placeholder="Username">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="register-tutor-password"> <i class="fa fa-key" aria-hidden="true"></i>
-                            Password</label>
-                        <input type="password" name="password" class="form-control form-control-lg border border-dark"
-                            id="register-tutor-password" placeholder="Password">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="register-tutor-confirm-password"><i class="fa fa-key" aria-hidden="true"></i>
-                            Confirm
-                            Password</label>
-                        <input type="password" name="confirm_password"
-                            class="form-control form-control-lg border border-dark" id="register-tutor-confirm-password"
-                            placeholder="Confirm Password">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <button type="submit" style=" font-size: 18px;"
-                        class=" btn btn-success btn-lg  button_save" role="button" aria-pressed="true">SAVE ACCOUNT</a>
-                </div>
-        </form>
-
-        <div class="col-lg-6">
-            <a href="settings/delete_student" style=" font-size: 18px;" class=" btn btn-danger btn-lg  button_delete"
-                role="button" aria-pressed="true">DELETE
-                ACCOUNT</a>
-
         </div>
     </div>
+
+    {{!-- MODAL --}}
+
+    <div id="insertimageModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Crop & Insert Image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="text-center">
+                            <div id="image_demo" style="width:350px; margin-top:30px"></div>
+                        </div>
+                        {{!-- <div class="col-md-4" style="padding-top:30px;">
+
+                        </div> --}}
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-left">
+                    <button class="btn btn-success  crop_image mr-auto">Crop & Insert Image</button>
+                    <button class="btn btn-default mr-auto" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
+    <section id="contact">
+        <div class="container">
+            <form action="" method="post">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 style="font-size: 20px; margin-top: 7px;"><b>General Information</b></h2>
+                        <hr width="30%">
+                        <p>Want to change your information? Change below!</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                Email</label>
+                            <input type="email" name="email" value="{{email}}"
+                                class="form-control form-control-lg border border-dark" id="register-tutor-email"
+                                aria-describedby="emailHelp" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i>
+                                Username</label>
+                            <input type="username" name="name" value="{{name}}"
+                                class="form-control form-control-lg border border-dark" id="register-tutor-username"
+                                placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="register-tutor-password"> <i class="fa fa-key" aria-hidden="true"></i>
+                                Password</label>
+                            <input type="password" name="password"
+                                class="form-control form-control-lg border border-dark" id="register-tutor-password"
+                                placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="register-tutor-confirm-password"><i class="fa fa-key" aria-hidden="true"></i>
+                                Confirm
+                                Password</label>
+                            <input type="password" name="confirm_password"
+                                class="form-control form-control-lg border border-dark"
+                                id="register-tutor-confirm-password" placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <button type="submit" style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save"
+                                role="button" aria-pressed="true">SAVE ACCOUNT</a>
+                        </div>
+                    </div>
+
+            </form>
+
+            <div class="col-lg-6">
+                <button type="button" style=" font-size: 18px;" data-toggle="modal" data-target="#exampleModal"
+                    class=" btn btn-danger btn-lg  button_delete" role="button" aria-pressed="true">DELETE
+                    ACCOUNT</a>
+
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Deletion of account confirmation
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                            <a href="settings/delete_student" class=" btn btn-danger" role="button"
+                                aria-pressed="true">Yes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+
 </section>

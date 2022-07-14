@@ -76,15 +76,37 @@
         <h3 style="font-size:15px; margin-top: 15px;"><b>1. Order Items</b></h3>
         <tr>
           <td style="width: 50%;">
+              <form action="/checkout/place_order" method="POST">
+
             {{#each cart}}
             <div id="example2" style="margin-left:4px;">
-              <h5 style="text-align: left;font-size:12px;">{{name}}<br><span style="font-size:9px;">By "Creator"</span></h5>
+              <h5 style="text-align:left;font-size:12px;">{{title}}<br><span style="font-size:9px;">A course by {{author}}</span></h5>
               <h6 style="text-align:right;margin-top:-5%;"><b>{{price}}</b></h6>
+              <input type="hidden" name="tutorID" id="tutorID" value="{{userId}}">
             </div>  
+            <br>
             {{/each}}
             <br>
                 <h3 style="font-size:15px; margin-left:-2%;margin-top: 15px;margin-bottom:15px;"><b>2. Payment</b></h3>
-              <form action="/checkout/ordercreate" method="POST">
+              {{#if orders}}
+                {{#each orders}}
+                <input type="hidden" name="oid" id="oid" value="{{increaseOID order_id 1}}">
+                {{/each}}
+              {{else}}
+                  <input type="hidden" name="oid" id="oid" value="1">
+              {{/if}}
+
+
+
+              {{#if user}}
+              <div>
+                  <label>Name</label>
+                  <input type="text" name="cust_name" id="cust_name" value="{{user.name}}" disabled />
+                </div>
+                <br>
+              {{/if}}
+
+
                 <div class="select-wrap">
                   <label>Country</label>
                   <select name="country" id="country" style="width: 100%;">

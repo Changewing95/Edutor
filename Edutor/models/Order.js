@@ -10,11 +10,15 @@ const Order = db.define('order',
             autoIncrement: true,
             allowNull: false
            },
+
+        order_id: {type: Sequelize.INTEGER},
         paym: {type: Sequelize.STRING},
         country:{type: Sequelize.STRING},
-        totalPrice: { type: Sequelize.DECIMAL(8,2)}
+        totalPrice: { type: Sequelize.DECIMAL(8,2)},
+        product_ids: {type: Sequelize.STRING}
+        //foreign key is the student's id (userId)
     });
-
+    
     
 
 module.exports = Order;

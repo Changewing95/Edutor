@@ -23,7 +23,7 @@ const User = db.define('user',
         roles: { type: Sequelize.STRING, allowNull: false },
         profile_pic: {
             type: Sequelize.STRING,
-            defaultValue: "profile.png"
+            defaultValue: "profile"
         },
         verification_code : {type: Sequelize.UUID,defaultValue: Sequelize.UUIDV4},
     });

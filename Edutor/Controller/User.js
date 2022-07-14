@@ -2,6 +2,7 @@ const { json } = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const flashMessage = require('../helpers/messenger');
+const bcrypt = require('bcryptjs');
 
 
 
@@ -19,10 +20,13 @@ exports.DeleteUser = async (req, res) => {
 
 exports.UpdateUser = (req, res) => {
     let {name, email, password, confirm_password} = req.body;
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+    CheckifPasswordIsTheSame(res, req, password, confirm_password)
     User.update({
         name: name,
         email: email,
-        password: password,
+        password: hash,
         confirm_password: confirm_password
     }, {where: {id: req.user.id}}).then(() => {
         res.redirect('settings');
@@ -43,4 +47,14 @@ exports.CheckIfUserExists = async (req,res,next) => {
         next()
     }
 
+}
+
+
+
+function CheckifPasswordIsTheSame(res, req, password, confirm_password) {
+    if(password != confirm_password) {
+        console.log("hi");
+        flashMessage(res, 'error', "Password is not the same!", 'fas fa-sign-in-alt', true);
+        res.redirect('settings')
+    }
 }

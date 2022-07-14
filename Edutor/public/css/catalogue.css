@@ -2,6 +2,14 @@ body {
     font-family: "Poppins", sans-serif;
     color: #444444;
 }
+.container{
+    height:auto;
+}
+
+.types{
+    font-style: italic;
+    margin:20px;
+    }
 
 a,
 a:hover {
@@ -56,25 +64,13 @@ a:hover {
     transform: scale(1.2, 1.2) rotate(5deg);
 }
 
-.section-products #product-1 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
+
+.section-products .consultationImage123 .part-1::before {
+    /* background: no-repeat center !important; */
+    object-fit: cover;
     transition: all 0.3s;
-}
-
-.section-products #product-2 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products #product-3 .part-1::before {
-    background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
-    background-size: cover;
-}
-
-.section-products #product-4 .part-1::before {
-    background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
-    background-size: cover;
+    max-width: 150px;
+    min-height: 100px;
 }
 
 .section-products .single-product .part-1 .discount,

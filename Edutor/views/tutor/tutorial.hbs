@@ -1,0 +1,180 @@
+{{!-- view to show mainview of consultation slots --}}
+
+<head>
+    <link rel="stylesheet" href="/css/catalogue.css">
+</head>
+
+<body>
+
+    <section class="section-products">
+        <div>
+            <a href="/tutor/tutorial/create">
+                <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Upload New Tutorial</p>
+            </a>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="header">
+                        <h2>Your uploaded Tutorials</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Single Product -->
+                {{#each tutorials}}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                   <div id="product-{{id}}" class="single-product">
+                        <div class="part-1">
+                            <img src="/uploads/{{userId}}/{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123" style="">
+                            {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                            {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300"alt=" Trulli"> --}}
+                             {{!-- class="border img-thumbnail img-fluid" --}}
+                            <ul>
+                                <li><a href="/tutor/tutorial/editTutorial/{{id}}"><i class="fas fa-edit"></i></a></li>
+                                <li><a href="/tutor/tutorial/deleteTutorial/{{id}}"><i class="fa fa-trash"></i></a></li>
+                                <li><a href="/tutor/tutorial/display/{{id}}"><i class="fas fa-expand"></i></a></li>
+                               
+                                 
+                                
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">{{replaceCommas title}}</h3>
+                            {{!-- <h4 >{{replaceCommas description}}</h4> --}}
+                            <h4 class="product-price">${{replaceCommas price}}</h4>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                {{!-- <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-2" class="single-product">
+                        <div class="part-1">
+                            <span class="discount">15% off</span>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-edit"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-3" class="single-product">
+                        <div class="part-1">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-old-price">$79.99</h4>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-4" class="single-product">
+                        <div class="part-1">
+                            <span class="new">new</span>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-1" class="single-product">
+                        <div class="part-1">
+                            <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300"alt=" Trulli">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-old-price">$79.99</h4>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-2" class="single-product">
+                        <div class="part-1">
+                            <span class="discount">15% off</span>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-3" class="single-product">
+                        <div class="part-1">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-old-price">$79.99</h4>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div id="product-4" class="single-product">
+                        <div class="part-1">
+                            <span class="new">new</span>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+                </div> --}}
+            </div>
+        </div>
+    </section>
+</body>

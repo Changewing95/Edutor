@@ -47,15 +47,15 @@ exports.CheckIfVerified = async (req, res, next) => {
     let { email } = req.body;
     try {
         let user = await User.findOne({ where: { email: email } });
-        if(!user) {
+        if (!user) {
             next()
         }
-        else if(user.verified == "yes") {
+        else if (user.verified == "yes") {
             console.log(user.verified);
             next()
         } else {
-        flashMessage(res, 'error', "Account not verified! Verify through your email!")
-        return res.render(`auth/registration${req.path}`);
+            flashMessage(res, 'error', "Account not verified! Verify through your email!")
+            return res.render(`auth/registration${req.path}`);
         }
     } catch (err) {
         console.log(err);
@@ -103,6 +103,11 @@ exports.CreateTutor = async (req, res) => {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
             let user = await User.create({ name, email, password: hash, confirm_password, roles: tutor })
+            Email.sendMail(email, user.verification_code).then((result) => {
+                console.log(result)
+            }).catch((error) => {
+                console.log(error)
+            });
             flashMessage(res, 'success', "Tutor Successfully Registered! Please proceed to verify your email")
             return res.render('auth/registration/register_tutor');
         }

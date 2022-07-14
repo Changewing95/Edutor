@@ -1,0 +1,95 @@
+<head>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="common.js"></script>
+    <script src="/js/croppie.js"></script>
+    <style>
+     #example1 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 2px grey;
+    margin: 15px;
+         }
+  .button {
+    background-color: #5CBF8F; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .table-condensed td {
+    border: none !important;
+    }
+
+  .select-wrap {
+    border: 1px solid #777;
+    width:150px;
+    background-color:#fff;
+    position:relative;
+  }
+  .select-wrap label{
+    font-size:8px;
+    text-transform: uppercase;
+    color: #777;
+    padding: 0 8px; 
+    margin-top: -1%; 
+    position: absolute;
+    top:6px;
+  }
+
+  select{
+    background-color: #fff;
+    border:0px;
+    height:40px;
+    font-size: 16px;
+    padding-left: 3%;
+    padding-top: 4%;
+    font-size: 13px;
+    margin-right: 4%;
+  }
+
+    label {
+        display: block;
+    }
+
+    input[type="radio"]{
+        width: auto;
+        display: inline;
+    }
+    </style>
+
+</head>
+
+<div class="container-fluid dashboard">
+    <div class="container mt-5" style="margin-left:-10%">
+        <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;">orders</h1>
+            {{#if order}}
+            {{#each order}}
+            <div id="example1" style="margin-top:3%;margin-left:3%;width:110%;padding-top:2%;padding-bottom:3%;padding-right:3%;">
+               <h5 style="font-weight: 700;">Order #{{oid}} details</h5>
+               <table>
+                <tr>
+                    <td>
+                        <h6 style="font-size: 13px;margin-top:5%;font-weight: 700;"><u>General</u></h6>
+                        <h6 style="font-size: 13px;">Date Created: {{createdAt}}</h6>
+                        <h6 style="font-size: 13px;">Payment Method: {{paym}}</h6>
+                        <h6 style="font-size: 13px;">Customer: {{customer}}</h6>
+                        <h6 style="font-size: 13px;">Customer Email: {{customer_email}}</h6>
+
+                        <h6 style="font-size: 13px;margin-top:5%;font-weight: 700;"><u>General</u></h6>
+
+                    </td>
+                </tr>
+               </table>
+            </div>
+            {{/each}}
+            {{/if}}
+
+
+    </div>
+</div>
+
+</section>

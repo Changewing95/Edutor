@@ -1,0 +1,113 @@
+<style>
+  #example1 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 2px grey;
+    margin: 15px;
+  }
+  #example3 {
+    padding: 15px 70% 15px 15px;
+    box-shadow: 0px 0.5px 2px grey;
+  }
+
+  #example2 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 3px grey;
+  }
+  .button {
+    background-color: #5CBF8F; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .table-condensed td {
+    border: none !important;
+    }
+
+  .select-wrap {
+    border: 1px solid #777;
+    width:150px;
+    background-color:#fff;
+    position:relative;
+  }
+  .select-wrap label{
+    font-size:8px;
+    text-transform: uppercase;
+    color: #777;
+    padding: 0 8px; 
+    margin-top: -1%; 
+    position: absolute;
+    top:6px;
+  }
+
+  select{
+    background-color: #fff;
+    border:0px;
+    height:40px;
+    font-size: 16px;
+    padding-left: 3%;
+    padding-top: 4%;
+    font-size: 13px;
+    margin-right: 4%;
+  }
+
+    label {
+        display: block;
+    }
+
+    input[type="radio"]{
+        width: auto;
+        display: inline;
+    }
+
+
+</style>
+{{#each orders}}
+<div class="row" style="width:120%; margin-left:-7%;">
+    <table style="width: 100%;">
+        <td style="width:40%;">
+        <h2 style="font-size: 22px; margin-top:10%;"><b>Order Summary #{{order_id}}</b></h2>
+        <p style="text-align: left;font-size: 13px;">View your order details and order items again <u>here</u></p>
+        <div class="table-responsive cart_info" style="margin-top:5%;">
+        <b><h4 style="font-size: 15px; margin-top:2%;font-weight:700;">Account Information</h4></b>
+            <div id="example1" style="margin-left: -7px;width:90%;">
+                <p style="text-align: left;font-size: 13px;">Name: {{userId}}</p>
+                <p style="text-align: left;font-size: 13px;">Email: {{user.email}}</p>
+            </div>
+        <b><h4 style="font-size: 15px; margin-top:2%;font-weight:700;">Payment Details</h4></b>
+            <div id="example1" style="margin-left: -7px;width:90%;">
+                <h6 style="text-align: left;font-weight:600;">{{country}}</h6>
+                <p style="text-align: left;font-size: 13px;">Payment Method: {{paym}}</p>
+            </div>
+        </div>
+        </td>
+        <td style="width: 30%;">
+            <b><h4 style="font-size: 15px; margin-left:3%;margin-top: 36.5%;font-weight:700;">Details</h4></b>
+
+            <div id="example1" style="width:80%;">
+                <h6 style="text-align:left;font-weight:600;margin-top:5%">Order Subtotal:</h6>
+                <h6 style="text-align: left;font-size: 13px;">SGD {{totalPrice}}</h6>
+                <h6 style="text-align: left;font-weight:600;">Order Discount:</h6>
+                <p style="text-align: left;font-size: 13px;">SGD 0.00</p>
+                <h6 style="text-align: left;font-weight:600;margin-top:-2%;">Order Total:</h6>
+                <h6 style="text-align: left;font-weight:600;margin-bottom:17%;"><u>SGD {{totalPrice}}</u></h6>
+            </div>
+        </td>
+        <td style="width:100%;">
+            <b><h4 style="font-size: 15px; margin-top: 36%;font-weight:700;color:white;">/////</h4></b>
+            <div id="example1" style="width:80%;">
+                <h6 style="text-align: left;font-weight:600;margin-top:5%">Order Date:</h6>
+                <h6 style="text-align: left;font-size: 13px;">{{createdAt}}</h6>
+                <h6 style="text-align: left;font-weight:400;font-size:11px;margin-bottom:17%;color:grey;margin-bottom:30%;">Refunds are not applicable under Edutor’s guidelines and Privacy Policy. 
+                Digital downloads, once sold, are deemed un-refundable. 
+                For more enquiries, email us at support@edutor.org</h6>
+            </div>
+        </td>
+    </table>
+</div>
+{{/each}}
