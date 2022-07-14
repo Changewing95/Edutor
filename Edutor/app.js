@@ -11,7 +11,6 @@ const passportConfig = require('./config/passport');
 const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
 
-
 const app = express();
 
 
@@ -21,15 +20,20 @@ const app = express();
 // }));
 const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
-	helpers: {helpers,
-	Multiply: helpers.Multiply},
+	helpers: {
+		helpers,
+		increaseOID: helpers.increaseOID,
+		replaceCommas: helpers.replaceCommas,
+		if_equal: helpers.isEqualHelperHandlerbar,
+		formatDate: helpers.formatDate
+	},
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 
 }));
-
 app.set('view engine', 'hbs');
+
 
 // Express middleware to parse HTTP body in order to read HTTP data
 app.use(express.urlencoded({
@@ -66,6 +70,8 @@ app.use(session({
 }));
 
 
+
+
 const flash = require('connect-flash');
 app.use(flash());
 
@@ -85,24 +91,6 @@ app.use(function (req, res, next) {
 	next()
 });
 
-// Session-persisted message middleware
-app.use(function(req, res, next){
-    var err = req.session.error,
-        msg = req.session.notice,
-        success = req.session.success;
-
-    delete req.session.error;
-    delete req.session.success;
-    delete req.session.notice;
-
-    if (err) res.locals.error = err;
-    if (msg) res.locals.notice = msg;
-    if (success) res.locals.success = success;
-
-    next();
-});
-
-
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 // Connects to MySQL database
@@ -119,8 +107,12 @@ const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
+const tutorialRoute = require('./routes/tutorTutorial');
+const studbookingRoute = require('./routes/studentConsultation');
+const studentTutorialRoute = require('./routes/studentTutorial');
+const fileUpload = require('express-fileupload');
+//ruri
 const cartRoute = require('./routes/cart');
-const productRoute = require('./routes/product');
 const checkRoute = require('./routes/checkout');
 
 
@@ -129,9 +121,15 @@ app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
+app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
-app.use('/product', productRoute);
+app.use('/student/consultation', studbookingRoute);
+app.use('/student/tutorial', studentTutorialRoute);
+//ruri
+app.use('/cart', cartRoute);
 app.use('/checkout', checkRoute);
+
+app.use(fileUpload());
 
 
 const port = 5000;
