@@ -10,11 +10,14 @@ const passport = require('passport');
 const passportConfig = require('./config/passport');
 const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
-
+// const stream = require('/public/js/stream');
+const stream = require('../Edutor/public/js/stream');
 
 const app = express();
 app.use(express.static(__dirname + '/public'));
 
+const http = require("http").Server(app); 	// for socket.io
+const io = require("socket.io")(http);		// for socket.io
 
 
 // app.engine('handlebars', engine({
@@ -141,6 +144,7 @@ const cartRoute = require('./routes/cart');
 const studbookingRoute = require('./routes/studentConsultation');
 const studreviewRoute = require('./routes/review');
 const tutorreviewRoute = require('./routes/tutorReview');
+const { Http2ServerRequest } = require('http2');
 
 
 
@@ -161,6 +165,8 @@ app.use('/tutor/review', tutorreviewRoute)
 const port = 5000;
 
 // Starts the server and listen to port
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
-});
+// app.listen(port, () => {
+// 	console.log(`Server started on port ${port}`);
+// });
+
+http.listen(port, () => console.log(`Listening on port ${port}`));

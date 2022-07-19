@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
+const app = express();
+const Consultation = require('../models/Booking');
+
 
 
 
@@ -28,9 +31,37 @@ router.post('/flash', (req, res) => {
 
 // Log out  + it clears the sessions of the users
 router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+	req.logout();
+	res.redirect('/');
 });
 
+
+// for video conference
+const server = require("http").Server(app); 	// for socket.io
+const io = require("socket.io")(server);		// for socket.io
+const stream = require('../public/js/stream');
+
+router.get('/vidroom/:id', function (req, res) {
+	Consultation.findByPk(req.params.id)
+		.then((consultation) => {
+			if (!consultation) {
+				flashMessage(res, 'error', 'Consultation not found');
+				res.redirect('/tutor/consultation/settings');
+				return;
+			}
+			if (req.user.id != consultation.userId) {
+				flashMessage(res, 'error', 'Unauthorised access');
+				res.redirect('/tutor/consultation/settings');
+				return;
+			}
+
+			res.render('consultation/callroom', { consultation });
+		})
+		.catch(err => console.log(err));
+	// res.render("consultation/callroom");
+})
+
+
+io.of('/stream').on('connection', stream);
 
 module.exports = router;
