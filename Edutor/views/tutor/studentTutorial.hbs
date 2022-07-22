@@ -18,7 +18,15 @@
                     </div>
                 </div>
             </div>
-            <h2 class="types">Beginner Level</h2>
+            {{#each tutorials}}
+            {{#if_equal category "Beginner Level"}}
+            <h2 class="types">Beginnersss Level</h2> 
+            {{else}}
+
+            {{/if_equal}}
+            {{/each}}
+
+
             <div class="row1">
                 <div class="row">
                     <!-- Single Product -->
@@ -55,7 +63,13 @@
             </div>
 
             {{!-- Intermediate level --}}
+            {{#each tutorials}}
+            {{#if_equal tutorials.category "Intermediate Level"}}
             <h2 class="types">Intermediate Level</h2>
+            {{else}}
+
+            {{/if_equal}}
+            {{/each}}
 
 
             <div class="row2">
@@ -90,8 +104,14 @@
                     {{/each}}
                 </div>
             </div>
-
+            {{#each tutorials}}
+            {{#if_equal category "Advance Level"}}
             <h2 class="types">Advance Level</h2>
+            {{else}}
+
+            {{/if_equal}}
+            {{/each}}
+
 
             <div class="row2">
                 <div class="row">
@@ -123,15 +143,18 @@
                     </div>
 
                     {{/if_equal}}
-                 
+
                     {{/each}}
 
                 </div>
             </div>
 
 
+            {{#each tutorials}}
+            {{#if_equal category "Others"}}
             <h2 class="types">Others</h2>
-
+            {{/if_equal}}
+            {{/each}}
             <div class="row2">
                 <div class="row">
                     <!-- Single Product -->
@@ -160,8 +183,10 @@
                             </div>
                         </div>
                     </div>
+
                     {{/if_equal}}
-           
+
+
                     {{/each}}
 
 
