@@ -31,10 +31,19 @@ function cartCount(cart,req){
 
 
 router.get('/', (req,res,next) =>{
-    var cart = req.session.cart;
-    var total = req.session.total;
-    var cartCount = req.session.cartCount;
-    res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
+ 
+    Cart.findAll({
+        where: { student_ID: req.user.id },
+        raw: true
+    })
+        .then((cartitems) => {
+            var cart = req.session.cart;
+            var total = req.session.total;
+            var cartCount = req.session.cartCount;
+            res.render('cart/cart', { cartitems, cartCount: cartCount,total: total });
+        })
+        .catch(err => console.log(err));
+    // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
 });
 
 // router.post('/addtoCart', cartController.addToCart);
@@ -45,12 +54,14 @@ router.post('/addtoCart', (req,res) => {
     var price = req.body.price;
     var image = req.body.image;
     var author = req.body.author;
-    // var tutorid = req.body.tutorid;
+    var tutorid = req.body.tutorid;
     var current_student = req.user.id;
 
-
+    // creating cart here
+    var cart = req.session.cart;
+    //use findOrCreate here later
     Cart.create(
-        { student_ID: current_student, product_ID: id, product_name: title,  price: price, image: image, author:author}
+        { student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author}
     )
         .then((carts) => {
 
@@ -59,25 +70,27 @@ router.post('/addtoCart', (req,res) => {
         })
         .catch(err => console.log(err))
 
-    // var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid};
+    // end creating cart
 
-    // if(req.session.cart){
-    //     var cart = req.session.cart;
+    var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid};
 
-    //     if(!isProductinCart(cart,id)){
-    //         cart.push(addingProd)
-    //     }
-    // }else{
-    //     req.session.cart = [addingProd];
-    //     var cart = request.session.cart;
-    // }
+    if(req.session.cart){
+        var cart = req.session.cart;
 
-    // //calculate total
-    // calculateTotal(cart,req);
-    // cartCount(cart,req);
+        if(!isProductinCart(cart,id)){
+            cart.push(addingProd)
+        }
+    }else{
+        req.session.cart = [addingProd];
+        var cart = request.session.cart;
+    }
 
-    //return to cart page
-    // res.redirect('/cart');
+    //calculate total
+    calculateTotal(cart,req);
+    cartCount(cart,req);
+
+    // return to cart page
+    res.redirect('/cart');
 
 });
 
@@ -85,6 +98,14 @@ router.post('/addtoCart', (req,res) => {
 router.post('/delete-cart', (req,res) => {
     var id = req.body.productID;
     var cart = req.session.cart;
+
+    Cart.destroy({
+        where: {product_ID : id},
+        raw: true
+        }).then((destroyeditem) => {
+            console.log(destroyeditem);
+    });
+
 
     for(let i=0; i<cart.length; i++){
         if(cart[i].id == id){

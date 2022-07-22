@@ -31,14 +31,14 @@
       <tbody>
         <tr>
           <td style="width: 70%;">
-            {{#if cart}}
-            <span style="font-size:14px; margin-left:-1%">{{Cartcount}} items in cart</span>
-            {{#each cart}}
+            {{#if cartitems}}
+            <span style="font-size:14px; margin-left:-1%">{{cartCount}} items in cart</span>
+            {{#each cartitems}}
             <div id="example1" style="margin-left: -7px;">
-              <img src="/uploads/{{tutorid}}/{{image}}"class="product-{{id}} part-1 consultationImage123" style="width=50px;height:50px;">
-              <h5 style="text-align: left;">{{replaceCommas title}}<br><span style="font-size:13px;">A course by {{author}}</span></h5>
+              <img src="/uploads/{{tutor_ID}}/{{image}}"class="product-{{product_ID}} part-1 consultationImage123" style="width=50px;height:50px;">
+              <h5 style="text-align: left;">{{product_name}}<br><span style="font-size:13px;">A course by {{author}}</span></h5>
               <form action="/cart/delete-cart" method="POST">
-                <input type="hidden" name="productID" value="{{id}}">
+                <input type="hidden" name="productID" value="{{product_ID}}">
                 <button type="submit" style="float:right;margin-top:-10%;border:none;background-color:white;"><i class="fa fa-trash" aria-hidden="true"></i></button>
               </form>
               <h4 style="text-align:right; color:green;margin-top:-5%;"><b>{{price}}</b></h4>

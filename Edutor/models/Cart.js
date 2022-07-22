@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
-const moment = require('moment');
 
 const Cart = db.define('cart',
     {
@@ -10,16 +9,15 @@ const Cart = db.define('cart',
             autoIncrement: true,
             allowNull: false
            },
-        
-        student_ID: {type: Sequelize.INTEGER},
-        product_ID: {type: Sequelize.INTEGER},
+        student_ID: {type: Sequelize.STRING},
+        tutor_ID:{type: Sequelize.STRING},
+        product_ID: {type: Sequelize.STRING},
         product_name: {type: Sequelize.STRING},
         price: { type: Sequelize.DECIMAL(8,2)},
         image: { type: Sequelize.STRING },
-        author: { type: Sequelize.STRING },
+        author: { type: Sequelize.STRING }
         // video: { type: Sequelize.STRING }
 
-        //foreign key is the student's id (userId)
     });
     
     

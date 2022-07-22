@@ -110,8 +110,10 @@ const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
 const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
+
 const fileUpload = require('express-fileupload');
 //ruri
+const vourcherRoute = require('./routes/vouchers');
 const cartRoute = require('./routes/cart');
 const checkRoute = require('./routes/checkout');
 
@@ -122,10 +124,10 @@ app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
-app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
 //ruri
+app.use('/coupon/voucher', vourcherRoute);
 app.use('/cart', cartRoute);
 app.use('/checkout', checkRoute);
 
