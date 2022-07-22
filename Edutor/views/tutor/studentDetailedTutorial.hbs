@@ -1,0 +1,49 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/singleTutorial.css">
+</head>
+
+<body onload="onLoadSubmit()">
+    <div class="container">
+        {{!-- {{#each tutorials}} --}}
+        <h1>HHIHIHIHIIHI new</h1>
+        <div class="title">{{tutorials.title}}</div>
+        <div class="content">
+            {{!-- <div>
+                {{!-- <img class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg">
+                <img src="/uploads/{{tutorials.userId}}/{{tutorials.tutorialImageURL}}" class="view" style="">
+            </div> --}}
+            {{!-- <form method="POST" id="my-form" enctype="multipart/form-data" action="#"> --}}
+
+
+                    <div>
+
+                        {{!-- <input id="login" type="hidden" name="login" value={{ tutorials.userId}}"> --}}
+                        <video width="820" height="640" controls>
+                            <source src="http://localhost:5000/student/tutorial/get-video/{{tutorials.userId}}/{{tutorials.video}}"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </form>
+
+
+                <div class="button">
+                    <input type="button" class="buyButton" value="Buy now">
+                    <input type="button" class="cartButton" value="Add to cart">
+                </div>
+                <div>
+                    <h4>Author</h4>
+                    {{!-- Will display None because dunno display which tutorial info so need to retroeve according to
+                    tutorial ID first--}}
+                    <p>{{tutorials.author}}</p>
+                    <h4>Description</h4>
+                    <p>{{tutorials.description}}</p>
+                </div>
+        </div>
+        {{!-- {{/each}} --}}
+    </div>
+
+</body>
+
+
+</html>

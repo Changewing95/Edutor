@@ -1,3 +1,6 @@
+ .container{
+    height:auto;
+ }
  .container .title {
      font-size: 25px;
      font-weight: 500;

@@ -3,58 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/dashboard.css">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-    <div class="sidebar">
+
+    <div style="background: {{#if_eq user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
+        class="sidebar">
         <div class="logo-details">
-            <i class='bx bxl-c-plus-plus icon'></i>
+            <i class='bx  icon'></i>
             <div class="logo_name">Edutor</div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
-
             <li>
-                <a href="#">
+                <a style=" background: {{#if_equal  user.roles "tutor"}} {{else}}  {{/if_equal}}"
+                    href="/">
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Home</span>
                 </a>
                 <span class="tooltip">Home</span>
             </li>
-                <li class="active">
-                <a href="#">
+            <li class="{{#if currentpage.overview}}active{{/if}}">
+                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}}  {{/if_equal}}"
+                    href="/dashboard/overview">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Overview</span>
                 </a>
                 <span class="tooltip">Overview</span>
             </li>
             <li>
-                <a href="#">
+                <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}  {{/if_equal}}"
+                    href="#">
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Order</span>
                 </a>
                 <span class="tooltip">Order</span>
             </li>
             <li>
-                <a href="#">
+                <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}
+                    {{/if_equal}}"href="#">
                     <i class='bx bx-user'></i>
                     <span class="links_name">Profile</span>
                 </a>
                 <span class="tooltip">Profile</span>
             </li>
             <li>
-                <a href="#">
+                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}}  {{/if_equal}}"
+                    href="#">
                     <i class='bx bx-folder'></i>
                     <span class="links_name">Consultation Slot</span>
                 </a>
                 <span class="tooltip">Consultation Slot</span>
             </li>
-            <li>
-                <a href="#">
+            <li class="{{#if currentpage.settings}}active{{/if}}">
+                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}} {{/if_equal}}"
+                    href="/dashboard/settings">
                     <i class='bx bx-cog'></i>
                     <span class="links_name">Setting</span>
                 </a>
@@ -63,11 +69,11 @@
             {{!-- <li class="profile">
                 <div class="profile-details">
                     <!--<img src="profile.jpg" alt="profileImg">-->
-                    </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out"></i>
-            </li> --}}
-        </ul>
+    </div>
+    <i class='bx bx-log-out' id="log_out"></i>
+    </li> --}}
+    </ul>
     </div>
 
     <script>
