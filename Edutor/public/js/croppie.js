@@ -49,7 +49,12 @@ $(function () {
                 data: response,
                 processData: false,
                 contentType: false,
+<<<<<<< HEAD
                 success: function (data) {
+=======
+                complete: function (data) {
+                    console.log("asd");
+>>>>>>> master
                     $('#insertimageModal').modal('hide');
                     window.location.reload();
                 }
@@ -58,6 +63,9 @@ $(function () {
     });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 });
 

@@ -2,6 +2,24 @@ const multer = require('multer');
 const path = require('path');
 
 
+<<<<<<< HEAD
+=======
+// Set Storage Engine
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, '../public/eventuploads/' + 1 + '/');
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, 1 + '-' + Date.now() +
+//             path.extname(file.originalname));
+//     }
+// });
+
+
+
+
+>>>>>>> master
 
 // Clara
 // Set Storage Engine
@@ -144,6 +162,10 @@ function checkFileType(file, callback) {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 // Define Upload Function
 const upload = multer({
     storage: storage,
@@ -240,7 +262,10 @@ const upload = multer({
 
 // };
 
+<<<<<<< HEAD
 // >>>>>>> master
+=======
+>>>>>>> master
 
 module.exports = upload;
 // module.exports = tutorialImageUpload;

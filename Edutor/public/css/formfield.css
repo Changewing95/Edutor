@@ -1,5 +1,9 @@
  .container{
+<<<<<<< HEAD
     height:780px;
+=======
+    height:auto;
+>>>>>>> master
  }
  .container .title {
      font-size: 25px;

@@ -10,10 +10,19 @@ const storage = multer.diskStorage({
             path.extname(file.originalname));
     }
 });
+<<<<<<< HEAD
 // Check File Type
 function checkFileType(file, callback) {
     // Allowed file extensions
     const filetypes = /jpeg|jpg|png|gif/;
+=======
+
+
+// Check File Type
+function checkFileType(file, callback) {
+    // Allowed file extensions
+    const filetypes = /jpeg|jpg|png|mp4|gif/;
+>>>>>>> master
     // Test extension
     const extname =
         filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -26,6 +35,7 @@ function checkFileType(file, callback) {
         callback({ message: 'Images Only' });
     }
 }
+<<<<<<< HEAD
 // Define Upload Function
 const upload = multer({
     storage: storage,
@@ -34,4 +44,15 @@ const upload = multer({
         checkFileType(file, callback);
     }
 }).single('tutorialImageUpload'); // Must be the name as the HTML file upload input
+=======
+
+// Define Upload Function
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 10000000000000 }, // 1MB
+    fileFilter: (req, file, callback) => {
+        checkFileType(file, callback);
+    }
+}).fields([{name: 'tutorialImageUpload', maxCount: 1}, {name: 'tutorialVideoUpload', maxCount: 1}]) // Must be the name as the HTML file upload input
+>>>>>>> master
 module.exports = upload;

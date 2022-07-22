@@ -6,35 +6,44 @@
 
     <div style="margin-top: 5%;" class="register-center">
         <h1>Student Registration</h1>
-        <h2 style="font-size: 20px;">If you already have an account registered, you can <span style="color:red;">Login
+        <h2 style="font-size: 17px;">If you already have an account registered, you can <span style="color:red;">Login
                 here!</span></h2>
 
     </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
 
-        <form action="" method="post">
-        <div class="form-group">
-            <label for="register-student-email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
-            <input type="email" name="email" class="form-control form-control-lg border border-dark" id="register-student-email"
-                aria-describedby="emailHelp" placeholder="Email">
-            {{!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                else.</small> --}}
-        </div>
-        <div class="form-group">
-            <label for="register-student-username"> <i class="fa fa-user" aria-hidden="true"></i> Username</label>
-            <input type="username" name="name" class="form-control form-control-lg border border-dark" id="register-student-username"
-                placeholder="Username">
-        </div>
-        <div class="form-group">
-            <label for="register-student-password"> <i class="fa fa-key" aria-hidden="true"></i> Password</label>
-            <input type="password" name="password" class="form-control form-control-lg border border-dark" id="register-student-password"
-                placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="register-student-confirm-password"><i class="fa fa-key" aria-hidden="true"></i> Confirm Password</label>
-            <input type="password" name="confirm_password" class="form-control form-control-lg border border-dark" id="register-student-confirm-password"
-                placeholder="Confirm Password">
-        </div>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="register-student-email"><i class="fa fa-envelope" aria-hidden="true"></i> Email</label>
+                    <input type="email" name="email" class="form-control form-control-lg border border-dark"
+                        id="register-student-email" aria-describedby="emailHelp" placeholder="Email">
+                    {{!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small> --}}
+                </div>
+                <div class="form-group">
+                    <label for="register-student-username"> <i class="fa fa-user" aria-hidden="true"></i>
+                        Username</label>
+                    <input type="username" name="name" class="form-control form-control-lg border border-dark"
+                        id="register-student-username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="register-student-password"> <i class="fa fa-key" aria-hidden="true"></i>
+                        Password</label>
+                    <input type="password" name="password" class="form-control form-control-lg border border-dark"
+                        id="register-student-password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="register-student-confirm-password"><i class="fa fa-key" aria-hidden="true"></i> Confirm
+                        Password</label>
+                    <input type="password" name="confirm_password"
+                        class="form-control form-control-lg border border-dark" id="register-student-confirm-password"
+                        placeholder="Confirm Password">
+                </div>
 
-        <button type="submit" class="form-control form-control-lg register-submit btn btn-success">Register</button>
+                <button type="submit"
+                    class="form-control form-control-lg register-submit btn btn-success">Register</button>
+        </div>
+    </div>
     </form>
 </div>
