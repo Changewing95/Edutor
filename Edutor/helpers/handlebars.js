@@ -12,25 +12,17 @@ const replaceCommas = function (value) {
 const isEqualHelperHandlerbar = function(a, b, opts) {
     if (a == b) {
         return opts.fn(this) 
-<<<<<<< HEAD
     } else { 
-=======
-    } 
-    else { 
->>>>>>> master
         return opts.inverse(this) 
     } 
 }
 
-<<<<<<< HEAD
 const increaseOID = function(a,b) {
     return a+b;
 }
   
 
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, increaseOID};
-=======
 
 
 const Multiply = function(a, b) {
@@ -49,5 +41,4 @@ const if_eq = function () {
 
 
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq};
->>>>>>> master
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq,increaseOID, Multiply};

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-{{!-- view to show mainview of consultation slots --}}
-
-=======
->>>>>>> master
 <head>
     <link rel="stylesheet" href="/css/catalogue.css">
 </head>
@@ -23,9 +18,6 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <h2 class="types">BEGIINERS NIA</h2>
-=======
             {{#each tutorials}}
             {{#if_equal category "Beginner Level"}}
             <h2 class="types">Beginnersss Level</h2> 
@@ -35,22 +27,16 @@
             {{/each}}
 
 
->>>>>>> master
             <div class="row1">
                 <div class="row">
                     <!-- Single Product -->
                     {{#each tutorials}}
                     {{#if_equal category "Beginner Level"}}
-<<<<<<< HEAD
-
-=======
->>>>>>> master
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
                                 <img src="/uploads/{{userId}}/{{tutorialImageURL}}"
                                     class="product-{{id}} part-1 consultationImage123" style="">
-<<<<<<< HEAD
                                 <ul>
                                     {{!-- <li><a href="#"><i class="fa fa-shopping-cart" ></i></a> --}}
                                     <form action="/cart/addtoCart" method="POST">
@@ -64,7 +50,6 @@
                                     </form>
                                     </li>
                                     <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
-=======
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
@@ -72,40 +57,29 @@
                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
->>>>>>> master
                                     </li>
                                 </ul>
                             </div>
                             <div class="part-2">
-<<<<<<< HEAD
                                 <h3 class="product-title">{{title}}</h3>
                                 {{!-- <h4>{{replaceCommas description}}</h4> --}}
                                 <h4 class="product-price">${{price}}</h4>
-=======
                                 <h3 class="product-title">{{replaceCommas title}}</h3>
                                 {{!-- <h4>{{replaceCommas description}}</h4> --}}
                                 <h4 class="product-price">${{replaceCommas price}}</h4>
->>>>>>> master
                             </div>
                         </div>
                     </div>
                     {{/if_equal}}
-<<<<<<< HEAD
                     {{/each}}
-=======
 
                     {{/each}}
 
 
->>>>>>> master
                 </div>
             </div>
 
             {{!-- Intermediate level --}}
-<<<<<<< HEAD
-            <h2 class="types">intermediate ok WOR</h2>
-         
-=======
             {{#each tutorials}}
             {{#if_equal tutorials.category "Intermediate Level"}}
             <h2 class="types">Intermediate Level</h2>
@@ -114,7 +88,6 @@
             {{/if_equal}}
             {{/each}}
 
->>>>>>> master
 
             <div class="row2">
 
@@ -131,15 +104,9 @@
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-<<<<<<< HEAD
-                                   <li><a href="#"><i class="fa fa-shopping-cart" ></i></a>
-                                    </li>
-                                    <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
-=======
                                     <li><a href="#"><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
->>>>>>> master
                                     </li>
                                 </ul>
                             </div>
@@ -152,14 +119,6 @@
                     </div>
                     {{/if_equal}}
                     {{/each}}
-<<<<<<< HEAD
-                    {{!-- {{#else}}
-                    <p>None</p> --}}
-                </div>
-            </div>
-            
-            <h2 class="types">ADVANCE WOR</h2>
-=======
                 </div>
             </div>
             {{#each tutorials}}
@@ -170,7 +129,6 @@
             {{/if_equal}}
             {{/each}}
 
->>>>>>> master
 
             <div class="row2">
                 <div class="row">
@@ -187,7 +145,6 @@
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-<<<<<<< HEAD
                                     {{!-- <li><a href="#"><i class="fa fa-shopping-cart" ></i></a> --}}
                                     <form action="/cart/addtoCart" method="POST">
 							        <input type="hidden" name="id" value={{id}}> 
@@ -195,11 +152,6 @@
                                     </form>
                                     </li>
                                     <li><a href="/tutor/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
-=======
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a>
-                                    </li>
-                                    <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
->>>>>>> master
                                     </li>
                                 </ul>
                             </div>
@@ -210,17 +162,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    {{/if_equal}}
-                    {{/each}}
-                </div>
-            </div>
-
-            </div>
-        
-    </section>
-</body>
-=======
 
                     {{/if_equal}}
 
@@ -280,4 +221,3 @@
 
     </section>
 </body>
->>>>>>> master
