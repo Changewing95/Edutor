@@ -10,6 +10,9 @@ var address = require('address');
 var axios = require('axios');
 var Country = require('../models/Country');
 var zipcodes = require('zipcodes');
+var Location = require('../helpers/location');
+
+
 
 router.get('/login', (req, res) => {
 	res.render('auth/registration/login', {
@@ -46,30 +49,10 @@ router.get('/register_user', async (req, res) => {
 
 });
 
-router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser);
+router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser, Location.getLocation);
 
 
-router.get('/location_specific_service', async (req, res) => {
-	// var ip2 = address.ip();
-	var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
-	var response = await axios.get(`https://ipapi.co/${ip}/json/`);
-	var country = response.data.country_name
-	console.log(response);
-	await Country.findOrCreate({
-		where: {
-			country: country
-		},
-		defaults: { // set the default properties if it doesn't exist
-			country: country,
-			count: 0
-		}
-	})
-	let found = await Country.findOne({ where: { country: country } });
-	await Country.update({
-		count: found.count + 1
-	}, { where: { country: country } })
-	res.send("done");
-})
+router.get('/location_specific_service', )
 
 
 

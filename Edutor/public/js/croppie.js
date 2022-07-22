@@ -49,7 +49,8 @@ $(function () {
                 data: response,
                 processData: false,
                 contentType: false,
-                success: function (data) {
+                complete: function (data) {
+                    console.log("asd");
                     $('#insertimageModal').modal('hide');
                     window.location.reload();
                 }

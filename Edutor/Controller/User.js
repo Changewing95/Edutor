@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const flashMessage = require('../helpers/messenger');
 const bcrypt = require('bcryptjs');
+const Email = require('../config/mail');
 
 
 
@@ -16,49 +17,170 @@ exports.DeleteUser = async (req, res) => {
     })
 }
 
+function IsUserEmailValid(getUser) {
+    if (getUser) {
+        return false
+    } else {
+        return true
+    }
+
+}
+
+function IsUserUsernameValid(username) {
+    return true
+}
+
+
+function IsUserPasswordValid(password, cfm_password) {
+    if (password.length < 5 || cfm_password.length < 5) {
+        return false
+    } else if (password != cfm_password) {
+        return false
+    } else {
+        return true
+    }
+}
+
 
 
 exports.UpdateUser = async (req, res) => {
     var isValid = true;
     let getUser = await User.findOne({ where: { email: req.body.email } });
     let { name, email, password, confirm_password } = req.body;
-    if (name.length > 0 && email.length > 0 && password.length > 0 && confirm_password.length > 0) {
-        if (password.length < 5 || confirm_password.length < 5) {
-            flashMessage(res, 'error', 'Password must be at least 5 characters');
-            isValid = false;
+
+    if (name.length > 0 || email.length > 0 || password.length > 0 || confirm_password.length > 0) {
+
+        if (name.length > 0) {
+            if (IsUserUsernameValid(name)) {
+                User.update({
+                    name: name
+                }, { where: { id: req.user.id } })
+            } else {
+                isValid = false;
+                flashMessage(res, 'error', 'Error, username must have more than one character');
+            }
         }
-        else if (password != confirm_password) {
-            flashMessage(res, 'error', 'Password does not match confirmation_password');
-            isValid = false;
+
+
+        if (password.length > 0 || confirm_password.length > 0) {
+            if (IsUserPasswordValid(password, confirm_password)) {
+                var salt = bcrypt.genSaltSync(10);
+                var hash = bcrypt.hashSync(password, salt);
+                User.update({
+                    password: hash
+                }, { where: { id: req.user.id } })
+            } else {
+                isValid = false;
+                flashMessage(res, 'error', 'Error, ensure that there is at least 5 character');
+            }
         }
-        else if (getUser) {
-            flashMessage(res, 'error', 'Email is already in use!');
-            isValid = false;
+
+        if ((email.length > 0)) {
+            if (IsUserEmailValid(getUser)) {
+                User.update({
+                    email: email.toLowerCase()
+                }, { where: { id: req.user.id } })
+            } else {
+                isValid = false;
+                flashMessage(res, 'error', 'User already exists Please choose another email address');
+
+            }
         }
+
         if (!isValid) {
             res.redirect('settings');
             return;
         } else {
-            var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(password, salt);
-            User.update({
-                name: name,
-                email: email.toLowerCase(),
-                password: hash,
-            }, { where: { id: req.user.id } }).then((userObject) => {
-
-                flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
-                res.redirect('/logout');
-            }).catch((errors) => {
-                console.log(errors);
-            })
+            flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
+            res.redirect('settings');
+            return;
+            // res.redirect('/logout');
         }
     } else {
-        flashMessage(res, 'success', "No Changes! Please fulfill all the above fields", 'fas fa-sign-in-alt', true);
+        flashMessage(res, 'success', "No changes!", 'fas fa-sign-in-alt', true);
         res.redirect('settings');
+        return; 
+        
     }
 
+
+    // if (name.length > 0) {
+    //     User.update({
+    //         name: name
+    //     }, { where: { id: req.user.id } })
+    // }
+    // if (email.length > 0) {
+    //     if (getUser) {
+    //         flashMessage(res, 'error', 'Email is already in use!');
+    //         isValid = false;
+    //     } else {
+    //         User.update({
+    //             email: email.toLowerCase()
+    //         }, { where: { id: req.user.id } })
+    //     }
+    // }
+    // if (password.length < 5 || confirm_password.length < 5) {
+    //     flashMessage(res, 'error', 'Password must be at least 5 characters');
+    //     isValid = false;
+    // }
+    // else if (password != confirm_password) {
+    //     flashMessage(res, 'error', 'Password does not match confirmation_password');
+    //     isValid = false;
+    // }
+    // else {
+    //     var salt = bcrypt.genSaltSync(10);
+    //     var hash = bcrypt.hashSync(password, salt);
+    //     User.update({
+    //         password: hash
+    //     }, { where: { id: req.user.id } })
+    // }
 }
+
+// if (!isValid) {
+//     res.redirect('settings');
+//     return;
+// } else {
+//     flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
+//     res.redirect('/logout');
+// }
+
+
+// if (name.length > 0 && email.length > 0 && password.length > 0 && confirm_password.length > 0) {
+//     if (password.length < 5 || confirm_password.length < 5) {
+//         flashMessage(res, 'error', 'Password must be at least 5 characters');
+//         isValid = false;
+//     }
+//     else if (password != confirm_password) {
+//         flashMessage(res, 'error', 'Password does not match confirmation_password');
+//         isValid = false;
+//     }
+//     else if (getUser) {
+//         flashMessage(res, 'error', 'Email is already in use!');
+//         isValid = false;
+//     }
+//     if (!isValid) {
+//         res.redirect('settings');
+//         return;
+//     } else {
+//         var salt = bcrypt.genSaltSync(10);
+//         var hash = bcrypt.hashSync(password, salt);
+//         User.update({
+//             name: name,
+//             email: email.toLowerCase(),
+//             password: hash,
+//         }, { where: { id: req.user.id } }).then((userObject) => {
+//             console.log(userObject);
+//             flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
+//             res.redirect('/logout');
+//         }).catch((errors) => {
+//             console.log(errors);
+//         })
+//     }
+// } else {
+//     flashMessage(res, 'success', "No Changes! Please fulfill all the above fields", 'fas fa-sign-in-alt', true);
+//     res.redirect('settings');
+// }
+
 
 
 

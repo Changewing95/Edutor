@@ -99,14 +99,14 @@ exports.CreateUser = async (req, res, next) => {
         let user = await User.create({ name, email, password: hash, roles: student, otp: secret.ascii })
         Email.sendMail(email, user.verification_code).then((result) => {
             console.log(result);
+            var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
+                res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
+            });
             // flashMessage(res, 'success', "Student Successfully Registered! Please proceed to verify your email") 
         }).catch((error) => {
             console.log(error)
         });
-        var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
-            res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
 
-        });
 
         // return res.render('auth/registration/register_user');
 
