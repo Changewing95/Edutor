@@ -63,6 +63,12 @@ router.put('/profilePictureUpload', async (req, res) => {
 })
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> e5997682c753954c1110fa2d8678bb1d34321896
 router.get('/display', async (req, res) => {
     // await User.findOne({ where: { id: req.user.id } }).then((user) => {
     //     if (user) {

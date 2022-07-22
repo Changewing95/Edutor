@@ -122,14 +122,19 @@ exports.CreateTutor = async (req, res) => {
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(password, salt);
-        let user = await User.create({ name, email, password: hash, roles: tutor })
+        var secret = speakeasy.generateSecret({
+            name: email
+        })
+        let user = await User.create({ name, email, password: hash, roles: tutor,  otp: secret.ascii })
         Email.sendMail(email, user.verification_code).then((result) => {
             console.log(result)
         }).catch((error) => {
             console.log(error)
         });
-        res.render('auth/registration/verify_email', { currentpage: { register: true } })
-        // return res.render('auth/registration/register_tutor');
+        var otp = qrcode.toDataURL(secret.otpauth_url, function (err, data) {
+            res.render('auth/registration/google_authenticator', { currentpage: { register: true }, qrcode: data })
+
+        });        // return res.render('auth/registration/register_tutor');
     }
     catch (err) {
         res.send("Error")

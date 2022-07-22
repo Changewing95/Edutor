@@ -62,7 +62,7 @@
   </div>
 
 
-  <div>
+<div class=" container-fluid justify-content-center chart-container" style="position: relative; height:10vh; width:50vw">
     <canvas id="myChart"></canvas>
   </div>
 
@@ -130,18 +130,6 @@
   );
 
 
-  const socket = io();
-
-  var someValue = "Singapore";
-
-  socket.emit('add', someValue);
-
-  socket.on('update', (arr) => {
-    countries = arr;
-    chart.data.labels.push(arr);
-    chart.update();
-
-  });
 
 
   function getStatistic() {
@@ -161,7 +149,7 @@
   $(document).ready(() => {
     getStatistic()
     // Setting how long to send request to client side, now its every 10 second one live update
-    setInterval(getStatistic, 100000)
+    setInterval(getStatistic, 10000)
 
   })
 

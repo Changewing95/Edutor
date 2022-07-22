@@ -5,15 +5,22 @@ const ensureAuthenticated = require('../helpers/checkAuthentication');
 const Tutorial = require('../models/Tutorial')
 const User = require('../models/User')
 const Procyon = require('procyon')
+const { Op } = require("sequelize");
 
 
 
-router.get('/', (req, res) => {
-	const title = 'Video Jotter';
+router.get('/', async (req, res) => {
+	const title = "Edutor"
+	// var ListOfTut = await Tutorial.findAll({
+	// 	where: {
+	// 	  title: {
+	// 		[Op.or]: JSON.parse(req.user.interest)
+	// 	  }
+	// 	}
+	//   })
+	//   console.log(ListOfTut)
 	// renders views/index.handlebars, passing title as an object
-	res.render('home', {
-		title: title
-	})
+	res.render('home', { title: title })
 });
 
 
