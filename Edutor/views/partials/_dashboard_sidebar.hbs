@@ -9,12 +9,9 @@
 
 <body>
 
-<<<<<<< HEAD
     <div style="background: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
-=======
 
     <div style="background: {{#if_eq user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
->>>>>>> master
         class="sidebar">
         <div class="logo-details">
             <i class='bx  icon'></i>
@@ -40,11 +37,8 @@
             </li>
             <li>
                 <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}  {{/if_equal}}"
-<<<<<<< HEAD
                     href="/dashboard/allorders">
-=======
                     href="#">
->>>>>>> master
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Order</span>
                 </a>
