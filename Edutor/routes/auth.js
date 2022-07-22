@@ -5,18 +5,27 @@ const UserController = require('../Controller/validate');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const flashMessage = require('../helpers/messenger');
+const Email = require('../config/mail');
+var address = require('address');
+var axios = require('axios');
+var Country = require('../models/Country');
+var zipcodes = require('zipcodes');
+var Location = require('../helpers/location');
 
 
-router.get('/login', (req,res) => {
-	res.render('auth/registration/login', {currentpage: {
-		login: true
-	}});
+
+router.get('/login', (req, res) => {
+	res.render('auth/registration/login', {
+		currentpage: {
+			login: true
+		}
+	});
 });
 
 
 
 // Three middleware for login post to check requirements and to authorised user and lastly passport authenticate middleware to authorise user access
-router.post('/login', UserController.validate('Validation'), UserController.AuthoriseUser,passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), UserController.CheckIfVerified, (req,res) => {
+router.post('/login', passport.authenticate('local', { failureRedirect: 'login', failureFlash: true }), (req, res) => {
 	flashMessage(res, 'success', 'Successfully login!')
 	res.redirect('/');
 });
@@ -27,7 +36,7 @@ router.post('/login', UserController.validate('Validation'), UserController.Auth
 //  Getting the route register that contains buttons to both tutor and student
 router.get('/register', (req, res) => {
 	// renders views/index.handlebars, passing title as an object
-	res.render('auth/registration/register', {currentpage: {register: true}})
+	res.render('auth/registration/register', { currentpage: { register: true } })
 });
 
 
@@ -35,13 +44,18 @@ router.get('/register', (req, res) => {
 
 //  Getting student registration page
 
-router.get('/register_user',(req,res) => {
-	console.log("h");
-	res.render('auth/registration/register_user', {currentpage: {register: true}})
+router.get('/register_user', async (req, res) => {
+	res.render('auth/registration/register_user', { currentpage: { register: true } })
 
 });
 
-router.post('/register_user', UserController.validate('Validation'), UserController.AuthoriseUser, UserController.CreateUser);
+router.post('/register_user', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateUser, Location.getLocation);
+
+
+router.get('/location_specific_service', )
+
+
+
 
 
 
@@ -49,23 +63,23 @@ router.post('/register_user', UserController.validate('Validation'), UserControl
 
 //  Getting Tutor registration page
 
-router.get('/register_tutor',(req,res) => {
+router.get('/register_tutor', (req, res) => {
 
-	res.render('auth/registration/register_tutor', {currentpage: {register: true}})
+	res.render('auth/registration/register_tutor', { currentpage: { register: true } })
 
 });
 
 //  Posting Tutor
 
-router.post('/register_tutor', UserController.validate('Validation'), UserController.AuthoriseUser, UserController.CreateTutor);
+router.post('/register_tutor', UserController.validate('Register_Validation'), UserController.AuthoriseUser, UserController.CreateTutor);
 
 
 
-router.get('/validate/:id', async (req,res) => {
+router.get('/validate/:id', async (req, res) => {
 	let id = req.params.id
 	let user = await User.findOne({ where: { verification_code: id } });
-	if(user) {
-		user.update({verified: "yes"})
+	if (user) {
+		user.update({ verified: "yes" })
 		console.log(user);
 		console.log(user.verified);
 	}
@@ -74,6 +88,22 @@ router.get('/validate/:id', async (req,res) => {
 });
 
 
+router.get('/verify_email', (req, res) => {
+
+	res.render('auth/registration/verify_email', { currentpage: { register: true } })
+
+});
+
+
+
+router.get('/google_authenticator', (req, res) => {
+
+	res.render('auth/registration/google_authenticator', { currentpage: { register: true } })
+
+});
+
+
+router.get('/create_admin', UserController.CreateAdmin);
 
 
 

@@ -3,8 +3,12 @@ const ensureAuthenticated = require('../helpers/auth');
 const router = express.Router();
 // const moment = require('moment');
 const Tutorial = require('../models/Tutorial');
-// const fs = require('fs');
-// const upload = require('../helpers/imageUpload');
+const fs = require('fs');
+const upload = require('../helpers/uploadImage');
+const uploadVideo = require('../helpers/VideoUpload');
+const flashMessage = require('../helpers/messenger');
+const path = require('path')
+
 
 //TO DO:
 //1. Retrieve only the tutorials with the current userID (under findall, retrieve when.....- refer to practical)
@@ -22,69 +26,62 @@ router.get('/main', ensureAuthenticated, (req, res) => {
 
 
 router.get('/create', (req, res) => {
+    req.session.video = null
     res.render('tutor/addTutorial');
 });
-// TO DO:
-//1. SAVE THE USER ID TGT WITH THE INFO SO CAN RETRIEVE ACCORDING TO CORRECT USER
-//2. fixx image display
-//3. Fix video display
+
+
+
 router.post('/create', async function (req, res) {
-    let title = req.body.title;
-    let description = req.body.description;
-    let author = req.body.author;
-    // let date = moment(req.body.date, 'DD/MM/YYYY');
-    let category = req.body.category;
-    let price = req.body.price;
-    let image = req.body.image;
-    let video = req.body.video;
-    let userId = req.user.id;
-    Tutorial.create(
-        { title, description, author, category, price, image, video, userId }
-        )
-        .then((tutorials) => {
-        console.log(tutorials.toJSON());
-        res.redirect('/tutor/tutorial/main');
-        })
-        .catch(err => console.log(err))
+
+    if (!fs.existsSync('./public/uploads/' + req.user.id)) {
+        fs.mkdirSync('./public/uploads/' + req.user.id, {
+            recursive:
+                true
         });
+    }
 
-    //     Tutorial.create(
-    //         { title, description, author, category, price, thumbnail, video }
-    //         )
-    //         .then((tutorials) => {
-    //         console.log(tutorials.toJSON());
-    //         res.redirect('/tutor/tutorial/main');
-    //         })
-    //         .catch(err => console.log(err))
-    //         });
-    // let { title, description, author, category, price, image, video } = req.body;
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
+        else {
 
-    // let userId = req.user.id;
+            console.log(req.files);
+            var imageUpload = req.files['tutorialImageUpload'][0].filename
+            var videoUpload = req.files['tutorialVideoUpload'][0].filename
+            let title = req.body.title;
+            let description = req.body.description;
+            let author = req.body.author;
+            // let date = moment(req.body.date, 'DD/MM/YYYY');
+            let category = req.body.category;
+            let price = req.body.price;
+            // let tutorialImageURL = req.body.tutorialImageURL;
+            let video1 = req.session.video;
+            let userId = req.user.id;
+            const message = 'Tutorial successfully uploaded';
+            flashMessage(res, 'success', message);
+            Tutorial.create(
+                { title, description, author, category, price, tutorialImageURL: imageUpload, video:videoUpload , userId }
+            )
+                .then((tutorials) => {
 
-    // const message = 'Tutorial slot successfully submitted';
-    // flashMessage(res, 'success', message);
+                    console.log(tutorials.toJSON());
+                    res.redirect('/tutor/tutorial/main');
+                })
+                .catch(err => console.log(err))
+        }
+    });
 
-    // let tutorial = await Tutorial.create({ title, description, author, category, price, image, video });
 
-    // IMAGE UPLOAD: TO-FIX
-    // Creates user id directory for upload if not exist
-    // if (!fs.existsSync('./public/uploads/' + 1)) {
-    //     fs.mkdirSync('./public/uploads/' + 1, {
-    //         recursive:
-    //             true
-    //     });
-    // }
-    // upload(req, res, (err) => {
-    //     if (err) {
-    //         // e.g. File too large
-    //         res.json({ file: '/img/no-image.jpg, err:err' });
-    //     }
-    //     else {
-    //         res.json({ file: `/uploads/$req.user.id/${req.file.filename}` });
-    //     }
-    // });
-//     res.redirect('/tutor/tutorial/main');
-// });
+});
+
+
+router.get('/get-video/:fileName', (req, res) => {
+    res.sendFile(`uploads/${req.user.id}/${req.params.fileName}`, { root: 'public' })
+})
+
 
 
 
@@ -92,7 +89,6 @@ router.post('/create', async function (req, res) {
 //NEED TO DO:
 //1. Retrieve the specific Tutorial ID that the user clicks (under findall, retrieve when.....- refer to practical)
 router.get('/display/:id', (req, res) => {
-
     Tutorial.findByPk(req.params.id)
         .then((tutorials) => {
             res.render('tutor/detailedTutorial', { tutorials });
@@ -109,19 +105,63 @@ router.get('/editTutorial/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
+//ORIGINAL (BUT IMAGE ISNT UPDATING)
+// router.post('/editTutorial/:id', (req, res) => {
+//     // let { title, description, author, category, price, tutorialImageURL: req.file.filename, video } = req.body;
+//     let title = req.body.title;
+//     let description = req.body.description;
+//     let author = req.body.author;
+//     // let date = moment(req.body.date, 'DD/MM/YYYY');
+//     let category = req.body.category;
+//     let price = req.body.price;
+//     let tutorialImageURL = req.body.tutorialImageURL;
+//     let video = req.body.video;
+//     Tutorial.update(
+//         { title, description, author, category, price, tutorialImageURL, video },
+//         { where: { id: req.params.id } }
+//     )
+//         .then((result) => {
+//             console.log(result[0] + ' video updated');
+//             res.redirect('/tutor/tutorial/main');
+//         })
+//         .catch(err => console.log(err));
+// });
 
-router.post('/editTutorial/:id', (req, res) => {
-    let { title, description, author, category, price, image, video } = req.body;
-    Tutorial.update(
-        { title, description, author, category, price, image, video },
-        { where: { id: req.params.id } }
-    )
-        .then((result) => {
-            console.log(result[0] + ' video updated');
-            res.redirect('/tutor/tutorial/main');
-        })
-        .catch(err => console.log(err));
+//TRY UPDATE WITH WHAT JEREMY SAID
+router.post('/editTutorial/:id', async (req, res) => {
+    let tutorial = await Tutorial.findByPk(req.params.id);
+    var file = tutorial.tutorialImageURL;
+    upload(req, res, (err) => {
+        if (err) {
+            // e.g. File too large
+            res.json({ file: '/uploads/profile/profile.png', err: err });
+        }
+        else {
+            let title = req.body.title;
+            let description = req.body.description;
+            let author = req.body.author;
+            let category = req.body.category;
+            let price = req.body.price;
+            let video = req.body.video;
+            if (req.file) {
+                file = req.file.filename;
+            }
+            const message = 'Tutorial successfully edited';
+            flashMessage(res, 'success', message);
+            Tutorial.update(
+                { title, description, author, category, price, tutorialImageURL: file, video }, { where: { id: req.params.id } }
+            )
+                .then((tutorials) => {
+
+                    // console.log(tutorials.toJSON());
+                    res.redirect('/tutor/tutorial/main');
+                })
+                .catch(err => console.log(err))
+        }
+    });
+
 });
+
 
 
 router.get('/deleteTutorial/:id', async function

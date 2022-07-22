@@ -1,25 +1,28 @@
 <head>
     <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/formfield.css">
+    <link rel="stylesheet" href="/css/formfield.css">
 </head>
 
 <body>
     <div class="container">
         <div class="title">Avaliable Courses</div>
         <div class="content">
-            <form method="POST" action="#">
+            <form method="POST"  id="my-form"  enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
-                        <input type="text" name="title" placeholder="Enter Title of course" class="form-control" required>
+                        <input type="text" name="title" placeholder="Enter Title of course" class="form-control"
+                            required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">author</span>
-                        <input type="text" name="author" placeholder="Enter Author name of course" class="form-control" required>
+                        <input type="text" name="author" placeholder="Enter Author name of course" class="form-control"
+                            required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Description</span>
-                        <input type="text" name="description" class="form-control" placeholder="Enter description of course" required>
+                        <input type="text" name="description" class="form-control"
+                            placeholder="Enter description of course" required>
                     </div>
                     {{!-- <div class="input-box mb-3">
                         <span class="details">Date</span>
@@ -27,13 +30,14 @@
                     </div> --}}
                     <div class="input-box mb-3">
                         <span class="details">Category</span>
-                        <input type="text" name="category" list="categories" class="form-control"
+                        <select name="category" list="categories" class="form-control"
                             placeholder="Enter category of course" required>
                         <datalist id="categories">
-                            <option value="Beginner Level">
-                            <option value="Intermediate Level">
-                            <option value="Advance Level">
+                            <option value="Beginner Level">Beginner Level</option>
+                            <option value="Intermediate Level">Intermediate Level</option>
+                            <option value="Advance Level">Advance Level</option>
                         </datalist>
+                        </select>
                     </div>
 
                     <div class="input-box mb-3">
@@ -42,15 +46,38 @@
                     </div>
                 </div>
                 <div class="input-box mb-3">
-                    <span class="details">Upload Thumbnail</span>
-                    <input type="file" name="image"  accept="image/*" class="form-control"
-                        required>
+                    {{!-- <div class="custom-file mb-2">
+                        <input type="file" class="custom-file-input" id="tutorialImageUpload" name="tutorialImageUpload"
+                            accept="image/png,image/jpeg,image/jpg,image/gif">
+                        <label class="custom-file-label" for="customFile">Choose File</label>
+                    </div> --}}
+
                 </div>
                 <div class="input-box mb-3">
-                    <span class="details">Upload Tutorial Video</span>
-                    <input type="file" name="video" accept="video/*" class="form-control"
-                        required>
+                    <div class="custom-file mb-2">
+                        <input type="file" class="custom-file-input" id="tutorialImageUpload" name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                        <label class="custom-file-label" for="customFile">Choose File</label>
+                    </div>
+                    <div class="text-danger small mb-2" id="posterErr" style="display:none"></div>
+                    {{!-- <span class="details">Image</span>
+                    <div class="custom-file mb-2">
+                        <input type="file" class="form-control custom-file-input" id="tutorialImageURL"
+                            name="tutorialImageURL" accept="image/png,image/jpeg,image/jpg,image/gif">
+                        <label class="custom-file-label" for="customFile">Choose File</label>
+                    </div>
+                    <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
+                    <img id="consultation" src="/profile/profile.png" height="100" width="100" alt="Consulation"
+                        class="border img-thumbnail img-fluid"> --}}
+                    {{!—- Hidden field to submit URL of poster to the server --}}
+                    {{!-- <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"> --}}
                 </div>
+
+                 <div class="input-box mb-3">
+                    <span class="details">Upload Tutorial Video</span>
+                    <input type="file" name="tutorialVideoUpload" accept="video/*" class="form-control">
+
+                </div>  
+
                 <div class="button">
                     <input type="submit">
                 </div>
@@ -59,5 +86,19 @@
     </div>
 
 </body>
+<script>
+
+const uploadButton = document.querySelector('#upload-btn');
+ uploadButton.addEventListener('click', (e) => {
+  const form = document.querySelector('#my-form');
+  const formData = new FormData(form);
+  fetch('http://localhost:5000/tutor/tutorial/upload-video', {
+     method: 'POST',
+     body: formData,
+  });
+ });
+
+
+</script>
 
 </html>

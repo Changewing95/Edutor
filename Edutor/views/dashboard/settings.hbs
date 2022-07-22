@@ -16,8 +16,7 @@
 
                 <img src="/dashboard/display" width="200px" height="200px" alt="...">
                 <input type="file" name="profilePictureUpload" id="insert_image" class='hidden' />
-                <label style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save" for="insert_image">CHANGE
-                    PROFILE</label>
+                <label style=" font-size: 18px;" class=" btn btn-success btn-lg  button_save" for="insert_image">CHANGE IMAGE</label>
 
             </div>
         </div>
@@ -65,18 +64,18 @@
                         <div class="form-group">
                             <label for="register-tutor-email"><i class="fa fa-envelope" aria-hidden="true"></i>
                                 Email</label>
-                            <input type="email" name="email" value="{{email}}"
+                            <input type="email" name="email" 
                                 class="form-control form-control-lg border border-dark" id="register-tutor-email"
-                                aria-describedby="emailHelp" placeholder="Email">
+                                aria-describedby="emailHelp" placeholder="{{email}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="register-tutor-username"> <i class="fa fa-user" aria-hidden="true"></i>
                                 Username</label>
-                            <input type="username" name="name" value="{{name}}"
+                            <input type="username" name="name"
                                 class="form-control form-control-lg border border-dark" id="register-tutor-username"
-                                placeholder="Username">
+                                placeholder="{{name}}">
                         </div>
                     </div>
                     <div class="col-lg-6">
