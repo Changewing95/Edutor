@@ -9,7 +9,8 @@
 
 <body>
 
-    <div style="background: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+
+    <div style="background: {{#if_eq user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
         class="sidebar">
         <div class="logo-details">
             <i class='bx  icon'></i>

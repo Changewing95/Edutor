@@ -110,7 +110,6 @@
                         <video width="320" height="240" controls>
                             <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
                         </video>
-
 {{!-- 
                         <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
                         <img id="consultation" src="{{ tutorials.tutorialImageURL }}" height="100" width="100"
@@ -129,10 +128,8 @@
             </form>
         </div>
     </div>
-
 </body>
 <script>
-
 const uploadButton = document.querySelector('#upload-btn');
  uploadButton.addEventListener('click', (e) => {
   const form = document.querySelector('#my-form');
@@ -142,8 +139,5 @@ const uploadButton = document.querySelector('#upload-btn');
      body: formData,
   });
  });
-
-
 </script>
-
 </html>

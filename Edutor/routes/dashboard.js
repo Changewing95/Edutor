@@ -10,10 +10,20 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
+var Country = require('../models/Country');
+const Validate = require('../Controller/validate');
 
 
-router.get('/overview', ensureAuthenticated, (req, res) => {
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
+router.get('/overview', ensureAuthenticated, async (req, res) => {
+    let studentCount = await User.count({
+        where: { roles: "student" }
+    })
+    let tutorCount = await User.count({
+        where: { roles: "tutor" }
+    })
+    // let getCountry = await User.findOne({where: {}})
+
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
 });
 
 
@@ -34,50 +44,23 @@ router.get('/settings/delete_student', ensureAuthenticated, UserController.Delet
 
 
 // UPDATE
-router.post('/settings', ensureAuthenticated, UserController.CheckIfUserExists, UserController.UpdateUser);
+router.post('/settings', ensureAuthenticated, UserController.UpdateUser);
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
 router.put('/profilePictureUpload', async (req, res) => {
-    // Creates user id directory for upload if not exist
-    // FileUpload(req, res, (err) => {
-    //     if (err) {
-    //         console.log("error1")
-    //         res.json({ file: '/img/no-image.jpg', err: err });
-    //     } else {
-    //         console.log(req.file);
-    //         if (req.file === undefined) {
-    //             console.log("error2")
-    //             res.json({ file: '/img/no-image.jpg', err: err });
-    //         } else {
-    //             console.log("success")
-    //             res.json({ file: `${req.file.filename}` });
-    //             User.update({
-    //                 profile_pic: req.file.filename
-    //             }, { where: { id: req.user.id } }).then(() => {
-    //                 res.redirect('settings');
-    //             }).catch((errors) => {
-    //                 console.log(errors);
-    //             })
-    //         }
-    //     }
-    // });
     var profile_id = uuid.v1();
     User.update({
         profile_pic: profile_id
-    }, { where: { id: req.user.id } }).then(() => {
-        res.redirect('settings');
-    }).catch((errors) => {
-        console.log(errors);
+    }, { where: { id: req.user.id } }).then((value) => {
+        pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
+            if (!error) {
+                console.log('no error')
+                res.status(200).json();
+            }
+        });
     })
-
-    pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
-        if(!error) {
-            res.send("succaess");
-        }
-    });
 })
-
 
 
 router.get('/display', async (req, res) => {
@@ -98,6 +81,32 @@ router.get('/display', async (req, res) => {
 
 
 
+
+// async function getsAllStudent() {
+//    await User.count({
+//     where: { roles: "student" }
+//   }).then((count) => {
+//     console.log(count)
+//     return count
+//   })
+
+// }
+
+
+router.get('/statistic', (req, res) => {
+
+    Country.findAll({
+        // where: { userId: req.user.id },
+    })
+        .then((countries) => {
+            // pass object to consultation.hbs
+            res.json(countries.map((country) => {
+                return { country: country.country, count: country.count, country_length: country.length }
+            }))
+        })
+        .catch(err => console.log(err));
+
+});
 
 
 

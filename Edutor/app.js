@@ -10,10 +10,43 @@ const passport = require('passport');
 const passportConfig = require('./config/passport');
 const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
-
-
-
 const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http)
+const { spawn } = require("child_process");
+
+
+
+
+
+// io.on("connection",function(socket){
+// 	console.log("The number of connected sockets: "+socket.adapter.sids.size);
+// 	io.sockets.emit('studentCount', {studentCount: socket.adapter.sids.size})
+// });
+
+
+// var studentCount = 0
+// io.sockets.on('connection', function (socket) {
+// 	studentCount++
+// 	io.sockets.emit('studentCount', {studentCount: studentCount});
+	
+// 	socket.on('disconnect', function () {
+// 		studentCount--
+// 		io.sockets.emit('studentCount', {studentCount: studentCount});
+// 		console.log('disconnect');
+// 	})
+// })
+
+// const chartArray = [];
+
+// io.on('connection', (socket) => {
+//     socket.on('add', (data) => {
+//         chartArray.push(data);
+//     }); 
+
+//     setInterval(function() {
+//         socket.emit('update', chartArray);}, 30000);
+// });
 
 
 // app.engine('handlebars', engine({
@@ -26,7 +59,11 @@ app.engine('hbs', engine({
 		helpers,
 		replaceCommas: helpers.replaceCommas,
 		if_equal: helpers.isEqualHelperHandlerbar,
-		formatDate: helpers.formatDate
+		formatDate: helpers.formatDate,
+		if_equal: helpers.isEqualHelperHandlerbar,
+		replaceCommas: helpers.replaceCommas,
+		formatDate: helpers.formatDate,
+		if_eq: helpers.if_eq
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
@@ -34,6 +71,31 @@ app.engine('hbs', engine({
 
 }));
 app.set('view engine', 'hbs');
+
+
+// REDIS DATABASE FOR RECOMMENDATION
+
+// const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
+
+// ls.stdout.on("data", data => {
+// 	console.log(`stdout: ${data}`);
+// });
+
+// ls.stderr.on("data", data => {
+// 	console.log(`stderr: ${data}`);
+// });
+
+// ls.on('error', (error) => {
+// 	console.log(`error: ${error.message}`);
+// });
+
+// ls.on("close", code => {
+// 	console.log(`child process exited with code ${code}`);
+// });
+
+
+// 
+
 
 
 // Express middleware to parse HTTP body in order to read HTTP data
@@ -113,6 +175,7 @@ const cartRoute = require('./routes/cart');
 const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
 const fileUpload = require('express-fileupload');
+const adminRoute = require('./routes/admin');
 
 
 
@@ -124,6 +187,7 @@ app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
+app.use('/admin', adminRoute);
 
 app.use(fileUpload());
 
@@ -134,3 +198,6 @@ const port = 5000;
 app.listen(port, () => {
 	console.log(`Server started on port ${port}`);
 });
+
+
+// http.listen(port, () => console.log(`Listening on port ${port}`));
