@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{{!-- hello testing --}}
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="/css/formfield.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Event Creation</div>
+        <div class="content">
+            <form method="POST" enctype="multipart/form-data" action="">
+                <div class="user-details mb-3">
+                    <div class="input-box mb-3">
+                        <span class="details">Title</span>
+                        <input type="text" placeholder="Enter Event Title" name="title" id="title"
+                            onblur="initialisedTitle()" class="form-control" required>
+                    </div>
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Image</span>
+                        <input type="file" placeholder="Enter Image" name="image" class="form-control"
+                            accept="image/png, image/jpeg, image/jpg" required>
+                    </div> --}}
+
+                    <div class="input-box mb-3">
+                        <span class="details">Upload File</span>
+
+                        <div class="custom-file mb-2">
+                            <input type="file" class="custom-file-input" id="posterUpload" name="posterUpload"
+                                accept="image/png,image/jpeg,image/jpg,image/gif">
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+                        </div>
+                        <div class="text-danger small mb-2" id="posterErr" style="display:none"></div>
+                        {{!—- Hidden field to submit URL of poster to the server --}}
+                        {{!-- <input id="posterURL" type="hidden" name="posterURL"> --}}
+
+                    </div>
+                    {{!-- <div class="input-box mb-3">
+                        <span class="details">Image Upload</span>
+
+                        <div class="custom-file mb-2">
+
+                            <input type="file" class="custom-file-input" id="eventimage" name="eventimage"
+                                accept="image/png,image/jpeg,image/jpg,image/gif">
+                            <label class="custom-file-label" for="customFile">Choose File</label>
+                        </div>
+
+                    </div>
+                    <div class="text-danger small mb-2" id="eventimageErr" style="display:none"></div> --}}
+                    <div class="input-box mb-3">
+                        <label for="description" class="details">Description</label>
+                        <textarea class="form-control" placeholder="Enter description of course" id="description"
+                            name="description" rows="5" maxlength="2000"></textarea>
+                        {{!-- <span class="details">Description</span>
+                        <input type="text" class="form-control" placeholder="Enter description of course"
+                            name="description" required> --}}
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Start Date</span>
+                        <input id="datepicker" class="form-control" name="startdate" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">End Date</span>
+                        <input class="form-control" id="datepick" name="enddate" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Start time</span>
+                        <input type="text" class="form-control" name="starttime" placeholder="Enter start time"
+                            required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">End time</span>
+                        <input type="text" class="form-control" name="endtime" placeholder="Enter end time" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <span class="details">Max No. of People</span>
+                        <input type="text" class="form-control" name="people"
+                            placeholder="Enter number of people between 100-200" required>
+                    </div>
+
+                    <div class="input-box mb-3">
+                        <span class="details">Price</span>
+                        <input type="text" class="form-control" name="price"
+                            placeholder="Enter price" required>
+                    </div>
+                    <div class="input-box mb-3">
+                        <label for="status">Online/In Person:</label>
+                        <select name="status">
+                            <option value="In Person">In Person</option>
+                            <option value="Online">Online</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    $('#datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        value: moment().format('DD/MM/YYYY')
+    });
+    $('#datepick').datepicker({
+        format: "dd/mm/yyyy",
+        value: moment().format('DD/MM/YYYY')
+    });
+</script>
+
+</html>

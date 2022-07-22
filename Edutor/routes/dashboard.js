@@ -11,16 +11,36 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
-const app = express();
+// const app = express();
 
 
-// for video conference
-const server = require("http").Server(app); 	// for socket.io
-const io = require("socket.io")(server);		// for socket.io
-const stream = require('../public/js/stream');
+// // for video conference
+// const server = require("http").Server(app); 	// for socket.io
+// const io = require("socket.io")(server);		// for socket.io
+// const stream = require('../public/js/stream');
 
-router.get('/overview', ensureAuthenticated, (req, res) => {
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
+// router.get('/overview', ensureAuthenticated, (req, res) => {
+//     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
+const OrderItems = require('../models/OrderItems');
+const Order = require('../models/Order');
+var Country = require('../models/Country');
+const Validate = require('../Controller/validate');
+
+
+
+
+
+
+router.get('/overview', ensureAuthenticated, async (req, res) => {
+    let studentCount = await User.count({
+        where: { roles: "student" }
+    })
+    let tutorCount = await User.count({
+        where: { roles: "tutor" }
+    })
+    // let getCountry = await User.findOne({where: {}})
+
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
 });
 
 
@@ -41,7 +61,69 @@ router.get('/settings/delete_student', ensureAuthenticated, UserController.Delet
 
 
 // UPDATE
-router.post('/settings', ensureAuthenticated, UserController.CheckIfUserExists, UserController.UpdateUser);
+router.post('/settings', ensureAuthenticated, UserController.UpdateUser);
+
+
+// PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
+router.put('/profilePictureUpload', async (req, res) => {
+    var profile_id = uuid.v1();
+    User.update({
+        profile_pic: profile_id
+    }, { where: { id: req.user.id } }).then((value) => {
+        pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
+            if (!error) {
+                console.log('no error')
+                res.status(200).json();
+            }
+        });
+    })
+})
+
+
+router.get('/display', async (req, res) => {
+    // await User.findOne({ where: { id: req.user.id } }).then((user) => {
+    //     if (user) {
+    //         console.log(user.profile_pic);
+    //         res.sendFile(resolve(`./public/images/profilepictures/${user.profile_pic}.png`))
+    //     } else {
+    //         res.send("no access");
+    //     }
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
+    res.sendFile(resolve(`./public/images/profilepictures/${req.user.profile_pic}.png`))
+
+
+});
+
+
+
+
+// async function getsAllStudent() {
+//    await User.count({
+//     where: { roles: "student" }
+//   }).then((count) => {
+//     console.log(count)
+//     return count
+//   })
+
+// }
+
+
+router.get('/statistic', (req, res) => {
+
+    Country.findAll({
+        // where: { userId: req.user.id },
+    })
+        .then((countries) => {
+            // pass object to consultation.hbs
+            res.json(countries.map((country) => {
+                return { country: country.country, count: country.count, country_length: country.length }
+            }))
+        })
+        .catch(err => console.log(err));
+
+});
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
@@ -79,7 +161,7 @@ router.put('/profilePictureUpload', async (req, res) => {
     })
 
     pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
-        if (!error) {
+        if(!error) {
             res.send("succaess");
         }
     });
@@ -103,44 +185,81 @@ router.get('/display', async (req, res) => {
 
 });
 
+router.get('/allorders', (req, res) => {
 
-// router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
-//     Consultation.findByPk(req.params.id)
-//         .then((consultation) => {
-//             if (!consultation) {
-//                 flashMessage(res, 'error', 'Consultation not found');
-//                 res.redirect('/dashboard/settings');
-//                 return;
-//             }
-//             if (req.user.id != consultation.userId) {
-//                 flashMessage(res, 'error', 'Unauthorised access');
-//                 res.redirect('/dashboard/settings');
-//                 return;
-//             }
+    OrderItems.findAll({
+        where:{
+            tutor_id: req.user.id,
+            status: "ok"
+        },
+        order: [ [ 'id', 'DESC' ]]
+    })
+        .then((orders) => {
+            // pass object to listVideos.handlebar
+            console.log(orders);
+            res.render('dashboard/allorders',{ layout: 'main2', orders});
+    })
+        .catch(err => console.log(err));
+});
 
-//             res.render('consultation/callroom', { consultation });
-//         })
-//         .catch(err => console.log(err));
-//     // res.render("consultation/callroom");
-// })
+router.get('/vieworder/:id', (req, res) => {
+    Order.findAll({
+        where:{
+            order_id: req.params.id,
+            
+        },
+        order: [ [ 'id', 'DESC' ]]
+    })
+        .then((order) => {
+            var oid = req.params.id;
+            console.log(order);
+            res.render('dashboard/editorder', {layout: 'main2',order,oid:oid});
+        })
+        .catch(err => console.log(err));
+});
 
+router.get('/deleteorder/:id', (req, res) => {
+    OrderItems.update(
+        {
+            status:"no",
+        },
+        { where: { orderId: req.params.id } } //req.params.id is the user id of the person who created this video
+    )
+        .then((result) => {
+            console.log(result[0] + ' video updated');
+            res.redirect('/dashboard/allorders');
+        })
+        .catch(err => console.log(err));
+});
 
-// router.get('/consultation', ensureAuthenticated, (req, res) => {
-//     Consultation.findAll({
-//         where: { userId: req.user.id },
-//         order: [['date']],
-//         raw: true
-//     })
-//         .then((consultations) => {
-//             // pass object to consultation.hbs
-//             res.render('dashboard/dashboardOverview', { consultations, layout: 'main2' });
-//         })
-//         .catch(err => console.log(err));
-//     // res.render('tutor/consultation');
-// });
+router.get('/student/yourorders', (req, res) => {
+    Order.findAll({ 
+        where:{
+            userId: req.user.id,
+        },
+        order: [ [ 'id', 'DESC' ]]
+    })
+        .then((orders) => {
+            res.render('dashboard/student/yourorders',{orders});
+        })
+        .catch(err => console.log(err));
+});
 
-// io.of('/stream').on('connection', stream);
-
+router.get('/vieworder/:id', (req, res) => {
+    OrderItems.findAll({
+        where:{
+            orderId: req.params.id,
+            status: "ok"
+        },
+        order: [ [ 'id', 'DESC' ]]
+    })
+        .then((orderitems) => {
+            var oid = req.params.id; //order_id
+            console.log(orderitems);
+            res.render('dashboard/student/orderdetail', {orderitems,oid:oid});
+        })
+        .catch(err => console.log(err));
+});
 
 
 module.exports = router;

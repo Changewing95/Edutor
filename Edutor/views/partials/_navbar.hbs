@@ -7,21 +7,19 @@
     }
 </style>
 
-<nav style="background-color: {{#if_equal user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+<nav style="background-color: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
     class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">All
-        Courses<span class="sr-only">(current)</span></a>
+    
     {{#if_equal user.roles "tutor"}}
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/consultation/main">Consultation Slot</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">All Coursesz<span class="sr-only">(current)</span></a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/tutor/consultation/main">Consultation Slot</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Events</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/review/listReview">Review</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"href="/tutor/review/listReview">Review</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/coupon/vouchers/">Discount Vouchers</a>
+
     {{else}}
-    {{!-- <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/tutor/review/listReview">View
-        Feedback</a> --}}
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/student/tutorial/main">All courses</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/review/main">Leave Feedback</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
@@ -38,7 +36,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav ml-auto">
+            {{#if_equal user.roles "student"}}
+            <li class="nav-item">
+                <a class="nav-link" id="smallfont" href="/cart" style="margin-top: 33%;"><i class="fa fa-shopping-cart" style="font-size: 20px;" aria-hidden="true"></i></a>
+            </li>
+            {{/if_equal}}
+
             {{#if user}}
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false"><img src="/dashboard/display" width="50" height="50">
@@ -54,6 +59,7 @@
             <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
                 <a class="dropdown-item" href="#">My account</a>
                 <a class="dropdown-item" href="/dashboard/overview">Dashboard</a>
+                <a class="dropdown-item" href="/dashboard/student/yourorders">Your Orders</a>
                 <a class="dropdown-item" href="/logout">Log out</a>
             </div>
             </li>

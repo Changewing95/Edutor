@@ -1,19 +1,74 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
-const app = express();
+// const app = express();
 const Consultation = require('../models/Booking');
+const ensureAuthenticated = require('../helpers/checkAuthentication');
+const Tutorial = require('../models/Tutorial')
+const User = require('../models/User')
+const Procyon = require('procyon')
+const { Op } = require("sequelize");
 
 
 
-
-router.get('/', (req, res) => {
-	const title = 'Video Jotter';
+router.get('/', async (req, res) => {
+	const title = "Edutor"
+	// var ListOfTut = await Tutorial.findAll({
+	// 	where: {
+	// 	  title: {
+	// 		[Op.or]: JSON.parse(req.user.interest)
+	// 	  }
+	// 	}
+	//   })
+	//   console.log(ListOfTut)
 	// renders views/index.handlebars, passing title as an object
-	res.render('home', {
-		title: title
-	})
+	res.render('home', { title: title })
 });
+
+
+router.get('/recommender', ensureAuthenticated, async (req, res) => {
+	User.update({ isNew: "no" }, { where: { id: req.user.id } })
+	await Tutorial.findAll().then((tutorial) => {	
+		res.render('recommender', {categories: tutorial, layout: null})
+	});
+
+});
+
+
+router.post('/recommender', async (req, res) => {
+	let { package } = req.body;
+	// console.log(package);
+	var Student = new Procyon({
+		className: 'user'
+	})
+
+	for (var i in package) {
+		let name = package[i]
+		await Student.liked(req.user.id, name)
+		// console.log(package[i]);
+	}
+	await Student.recommendFor(req.user.id, 10).then((recommendation) => {
+		var results = JSON.stringify(recommendation);
+		User.update({
+			interest: results
+		}, { where: { id: req.user.id } }).then(() => {
+			res.redirect('/')
+		}).catch((errors) => {
+			console.log(errors);
+		})
+
+	})
+
+});
+
+
+
+
+
+
+
+
+
 
 router.post('/flash', (req, res) => {
 	const message = 'This is an important message';
@@ -36,10 +91,10 @@ router.get('/logout', (req, res) => {
 });
 
 
-// for video conference
-const server = require("http").Server(app); 	// for socket.io
-const io = require("socket.io")(server);		// for socket.io
-const stream = require('../public/js/stream');
+// // for video conference
+// const server = require("http").Server(app); 	// for socket.io
+// const io = require("socket.io")(server);		// for socket.io
+// const stream = require('../public/js/stream');
 
 router.get('/vidroom/:id', function (req, res) {
 	Consultation.findByPk(req.params.id)
@@ -62,6 +117,6 @@ router.get('/vidroom/:id', function (req, res) {
 })
 
 
-io.of('/stream').on('connection', stream);
+// io.of('/stream').on('connection', stream);
 
 module.exports = router;

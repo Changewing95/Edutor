@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
-
+const moment = require('moment');
+const sequelize = require('sequelize');
 
 // Create users table in MySQL Database
 const Consultation = db.define('consultations',

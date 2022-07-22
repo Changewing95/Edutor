@@ -1,0 +1,155 @@
+<style>
+  #example1 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 2px grey;
+    margin: 15px;
+  }
+  #example3 {
+    padding: 15px 70% 15px 15px;
+    box-shadow: 0px 0.5px 2px grey;
+  }
+
+  #example2 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 3px grey;
+  }
+  .button {
+    background-color: #5CBF8F; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .table-condensed td {
+    border: none !important;
+    }
+
+  .select-wrap {
+    border: 1px solid #777;
+    width:150px;
+    background-color:#fff;
+    position:relative;
+  }
+  .select-wrap label{
+    font-size:8px;
+    text-transform: uppercase;
+    color: #777;
+    padding: 0 8px; 
+    margin-top: -1%; 
+    position: absolute;
+    top:6px;
+  }
+
+  select{
+    background-color: #fff;
+    border:0px;
+    height:40px;
+    font-size: 16px;
+    padding-left: 3%;
+    padding-top: 4%;
+    font-size: 13px;
+    margin-right: 4%;
+  }
+
+    label {
+        display: block;
+    }
+
+    input[type="radio"]{
+        width: auto;
+        display: inline;
+    }
+
+
+</style>
+
+<div class="row" style="width:120%; margin-left:-10%">
+  <h2 style="font-size: 22px; margin-top: 15px;"><b>Checkout</b></h2>
+  <div class="table-responsive cart_info">
+    <table class="table table-condensed">
+      <tbody>
+        <h3 style="font-size:15px; margin-top: 15px;"><b>1. Order Items</b></h3>
+        <tr>
+          <td style="width: 50%;">
+              <form action="/checkout/place_order" method="POST">
+
+            {{#each cart}}
+            <div id="example2" style="margin-left:4px;">
+              <h5 style="text-align:left;font-size:12px;">{{title}}<br><span style="font-size:9px;">A course by {{author}}</span></h5>
+              <h6 style="text-align:right;margin-top:-5%;"><b>{{price}}</b></h6>
+              <input type="hidden" name="tutorID" id="tutorID" value="{{userId}}">
+            </div>  
+            <br>
+            {{/each}}
+            <br>
+                <h3 style="font-size:15px; margin-left:-2%;margin-top: 15px;margin-bottom:15px;"><b>2. Payment</b></h3>
+              {{#if orders}}
+                {{#each orders}}
+                <input type="hidden" name="oid" id="oid" value="{{increaseOID order_id 1}}">
+                {{/each}}
+              {{else}}
+                  <input type="hidden" name="oid" id="oid" value="1">
+              {{/if}}
+
+
+
+              {{#if user}}
+              <div>
+                  <label>Name</label>
+                  <input type="text" name="cust_name" id="cust_name" value="{{user.name}}" disabled />
+                </div>
+                <br>
+              {{/if}}
+
+
+                <div class="select-wrap">
+                  <label>Country</label>
+                  <select name="country" id="country" style="width: 100%;">
+                    <option name="country" value="">---</option>
+                    <option name="country" value="Singapore">Singapore</option>
+                  </select>
+                </div>
+
+                <br>
+
+                <label id="example3"><input type ="radio" name="paym" id="paym" value="CreditCard" onclick="text(0)">&nbsp;Credit Card</label>
+                <label id="example3"><input type ="radio" name="paym" id="paym" value="Paypal" onclick="text(1)">&nbsp;Paypal</label>
+{{!-- 
+                <div class="form-group" style="margin-top: 3%;">
+                  <label for="exampleInputEmail1"></label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div> --}}
+
+          </td>
+
+          <td style="padding-left: 20%;">
+          <table style="width: 100%; margin-left:3%">
+              <tbody style="font-size: 14px;">
+                  <div id="example1" style="margin-left: -7px;margin-top:-7%">
+                      <span style="font-size:16px;font-weight:bold;">Summary:</span><br>
+                      <span style="font-size:13px;margin-top:2%;">Total: SGD {{total}}</span><br>
+                      <hr>
+                      <h6 style="font-size:11px;margin-top:-3%;font-weight:400;">Edutor is required by law to collect applicable transaction taxes for purchases made in certain tax jurisdictions.<br>
+                      By completing your purchase you agree to these Terms of Service.</h6>
+                        <input type="hidden" name="cartTotal" value="{{total}}">
+                        <button type="submit" style="font-weight:bold;" class="button">Checkout</button>
+                      </form>
+                  </div>
+              </tbody>
+          </table>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -13,11 +13,45 @@ passportConfig.localStrategy(passport);
 // const stream = require('/public/js/stream');
 const stream = require('../Edutor/public/js/stream');
 
+// for socket.io
 const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http)
+const { spawn } = require("child_process");
 app.use(express.static(__dirname + '/public'));
 
-const http = require("http").Server(app); 	// for socket.io
-const io = require("socket.io")(http);		// for socket.io
+
+
+
+
+// io.on("connection",function(socket){
+// 	console.log("The number of connected sockets: "+socket.adapter.sids.size);
+// 	io.sockets.emit('studentCount', {studentCount: socket.adapter.sids.size})
+// });
+
+
+// var studentCount = 0
+// io.sockets.on('connection', function (socket) {
+// 	studentCount++
+// 	io.sockets.emit('studentCount', {studentCount: studentCount});
+	
+// 	socket.on('disconnect', function () {
+// 		studentCount--
+// 		io.sockets.emit('studentCount', {studentCount: studentCount});
+// 		console.log('disconnect');
+// 	})
+// })
+
+// const chartArray = [];
+
+// io.on('connection', (socket) => {
+//     socket.on('add', (data) => {
+//         chartArray.push(data);
+//     }); 
+
+//     setInterval(function() {
+//         socket.emit('update', chartArray);}, 30000);
+// });
 
 
 // app.engine('handlebars', engine({
@@ -29,44 +63,47 @@ const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
-		replaceCommas: helpers.replaceCommas,
-		if_equal: helpers.isEqualHelperHandlerbar,
-		formatDate: helpers.formatDate,
 		formatRating: helpers.formatRating,
 		radioCheck: helpers.radioCheck,
 		calculateTotalRating: helpers.calculateTotalRating,
 		avgRating: helpers.avgRating,
+		formatDate: helpers.formatDate,
+		if_equal: helpers.isEqualHelperHandlerbar,
+		replaceCommas: helpers.replaceCommas,
+		if_eq: helpers.if_eq,
+		increaseOID: helpers.increaseOID,
 	},
-	// room: {
-	// 	room,
-	// 	generateRandomString: room.generateRandomString,
-	// 	closeVideo: room.closeVideo,
-	// 	pageHasFocus: room.pageHasFocus,
-	// 	getQString: room.getQString,
-	// 	userMediaAvailable: room.userMediaAvailable,
-	// 	getUserFullMedia: room.getUserFullMedia,
-	// 	getUserAudio: room.getUserAudio,
-	// 	shareScreen: room.shareScreen,
-	// 	addChat: room.addChat,
-	// 	getIceServer: room.getIceServer,
-	// 	toggleChatNotificationBadge: room.toggleChatNotificationBadge,
-	// 	replaceTrack: room.replaceTrack,
-	// 	toggleShareIcons: room.toggleShareIcons,
-	// 	toggleVideoBtnDisable: room.toggleVideoBtnDisable,
-	// 	maximiseStream: room.maximiseStream,
-	// 	singleStreamToggleMute: room.singleStreamToggleMute,
-	// 	saveRecordedStream: room.saveRecordedStream,
-	// 	toggleModel: room.toggleModel,
-	// 	setLocalStream: room.setLocalStream,
-	// 	adjustVideoElemSize: room.adjustVideoElemSize,
-	// 	createDemoRemotes: room.createDemoRemotes
-	// },
 	defaultLayout: 'main',
 	extname: '.hbs',
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 
 }));
 app.set('view engine', 'hbs');
+
+
+// REDIS DATABASE FOR RECOMMENDATION
+
+// const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
+
+// ls.stdout.on("data", data => {
+// 	console.log(`stdout: ${data}`);
+// });
+
+// ls.stderr.on("data", data => {
+// 	console.log(`stderr: ${data}`);
+// });
+
+// ls.on('error', (error) => {
+// 	console.log(`error: ${error.message}`);
+// });
+
+// ls.on("close", code => {
+// 	console.log(`child process exited with code ${code}`);
+// });
+
+
+// 
+
 
 
 // Express middleware to parse HTTP body in order to read HTTP data
@@ -104,6 +141,8 @@ app.use(session({
 }));
 
 
+
+
 const flash = require('connect-flash');
 app.use(flash());
 
@@ -139,13 +178,21 @@ const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
-const tutorialRoute = require('./routes/tutorTutorial');
+
+const fileUpload = require('express-fileupload');
+//ruri
+const vourcherRoute = require('./routes/vouchers');
 const cartRoute = require('./routes/cart');
+const checkRoute = require('./routes/checkout');
+const eventRoute = require('./routes/tutorEvent');
+const studenteventRoute = require('./routes/studentEvent');
+const tutorialRoute = require('./routes/tutorTutorial');
 const studbookingRoute = require('./routes/studentConsultation');
+const studentTutorialRoute = require('./routes/studentTutorial');
+const adminRoute = require('./routes/admin');
 const studreviewRoute = require('./routes/review');
 const tutorreviewRoute = require('./routes/tutorReview');
 const { Http2ServerRequest } = require('http2');
-
 
 
 
@@ -154,19 +201,29 @@ app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
+
+//chonks
+// app.use('/coupon/voucher', vourcherRoute);
+app.use('/cart', cartRoute);
+app.use('/checkout', checkRoute);
+app.use('/tutor/event', eventRoute);
+app.use('/student/event', studenteventRoute);
+app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
+app.use('/student/tutorial', studentTutorialRoute);
+app.use('/admin', adminRoute);
 app.use('/student/review', studreviewRoute);
 app.use('/tutor/review', tutorreviewRoute)
-
-
+app.use(fileUpload());
 
 
 const port = 5000;
 
 // Starts the server and listen to port
-// app.listen(port, () => {
-// 	console.log(`Server started on port ${port}`);
-// });
+app.listen(port, () => {
+	console.log(`Server started on port ${port}`);
+});
 
-http.listen(port, () => console.log(`Listening on port ${port}`));
+
+// http.listen(port, () => console.log(`Listening on port ${port}`));

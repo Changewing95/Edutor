@@ -11,6 +11,7 @@ const Tutorial = db.define('tutorial',
         category: { type: Sequelize.STRING },
         price: { type: Sequelize.STRING },
         image: { type: Sequelize.STRING },
+        tutorialImageURL: { type: Sequelize.STRING },
         video: { type: Sequelize.STRING },
 
     });

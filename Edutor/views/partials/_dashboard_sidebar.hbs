@@ -9,7 +9,9 @@
 
 <body>
 
-    <div style="background: {{#if_equal user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+    <div style="background: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+
+    <div style="background: {{#if_eq user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
         class="sidebar">
         <div class="logo-details">
             <i class='bx  icon'></i>
@@ -18,14 +20,15 @@
         </div>
         <ul class="nav-list">
             <li>
-                <a style=" background: {{#if_equal user.roles "tutor"}} {{else}} {{/if_equal}}" href="/">
+                <a style=" background: {{#if_equal  user.roles "tutor"}} {{else}}  {{/if_equal}}"
+                    href="/">
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Home</span>
                 </a>
                 <span class="tooltip">Home</span>
             </li>
             <li class="{{#if currentpage.overview}}active{{/if}}">
-                <a style="background: {{#if_equal user.roles "tutor"}} {{else}} {{/if_equal}}"
+                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}}  {{/if_equal}}"
                     href="/dashboard/overview">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Overview</span>
@@ -33,14 +36,17 @@
                 <span class="tooltip">Overview</span>
             </li>
             <li>
-                <a style="background: {{#if_equal user.roles "tutor"}} {{else}} {{/if_equal}}" href="#">
+                <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}  {{/if_equal}}"
+                    href="/dashboard/allorders">
+                    href="#">
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Order</span>
                 </a>
                 <span class="tooltip">Order</span>
             </li>
             <li>
-                <a style="background: {{#if_equal user.roles "tutor"}} {{else}} {{/if_equal}}"href="#">
+                <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}
+                    {{/if_equal}}"href="#">
                     <i class='bx bx-user'></i>
                     <span class="links_name">Profile</span>
                 </a>
@@ -55,7 +61,7 @@
                 <span class="tooltip">Consultation Slot</span>
             </li>
             <li class="{{#if currentpage.settings}}active{{/if}}">
-                <a style="background: {{#if_equal user.roles "tutor"}} {{else}} {{/if_equal}}"
+                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}} {{/if_equal}}"
                     href="/dashboard/settings">
                     <i class='bx bx-cog'></i>
                     <span class="links_name">Setting</span>
