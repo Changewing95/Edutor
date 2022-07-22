@@ -25,11 +25,7 @@ router.get('/login', (req, res) => {
 
 
 // Three middleware for login post to check requirements and to authorised user and lastly passport authenticate middleware to authorise user access
-<<<<<<< HEAD
-router.post('/login', UserController.validate('Validation'), UserController.AuthoriseUser,passport.authenticate('local', {failureRedirect: 'login', failureFlash : true}), UserController.CheckIfVerified, (req,res) => {
-=======
 router.post('/login', passport.authenticate('local', { failureRedirect: 'login', failureFlash: true }), (req, res) => {
->>>>>>> master
 	flashMessage(res, 'success', 'Successfully login!')
 	res.redirect('/');
 });
