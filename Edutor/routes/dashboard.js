@@ -12,6 +12,9 @@ var uuid = require('uuid');
 const { pipeline } = require('stream');
 const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
+var Country = require('../models/Country');
+const Validate = require('../Controller/validate');
+
 
 
 
@@ -26,7 +29,7 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     })
     // let getCountry = await User.findOne({where: {}})
 
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
 });
 
 
