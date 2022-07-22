@@ -6,10 +6,6 @@ const Tutorial = require('../models/Tutorial');
 // const fs = require('fs');
 // const upload = require('../helpers/uploadImage');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 router.get('/main', ensureAuthenticated, (req, res) => {
     Tutorial.findAll({
         
@@ -17,17 +13,11 @@ router.get('/main', ensureAuthenticated, (req, res) => {
     })
         .then((tutorials) => {
             // pass object to listVideos.handlebar
-<<<<<<< HEAD
-            console.log(tutorials);
-=======
->>>>>>> master
             res.render('tutor/studentTutorial', { tutorials });
         })
         .catch(err => console.log(err));
 });
 
-<<<<<<< HEAD
-=======
 router.get('/display/:id', (req, res) => {
 
     Tutorial.findByPk(req.params.id)
@@ -49,7 +39,6 @@ router.get('/get-video/:userId/:fileName', async (req, res) => {
     console.log(req.params.userId);
     res.sendFile(`uploads/${req.params.userId}/${req.params.fileName}`, { root: 'public' })
 })
->>>>>>> master
 
 module.exports = router;
 

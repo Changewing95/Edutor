@@ -10,17 +10,11 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
-<<<<<<< HEAD
 const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
 
 
 
-router.get('/overview', ensureAuthenticated, (req, res) => {
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
-=======
-var Country = require('../models/Country');
-const Validate = require('../Controller/validate');
 
 
 router.get('/overview', ensureAuthenticated, async (req, res) => {
@@ -33,7 +27,6 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     // let getCountry = await User.findOne({where: {}})
 
     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
->>>>>>> master
 });
 
 
@@ -54,9 +47,6 @@ router.get('/settings/delete_student', ensureAuthenticated, UserController.Delet
 
 
 // UPDATE
-<<<<<<< HEAD
-router.post('/settings', ensureAuthenticated, UserController.CheckIfUserExists, UserController.UpdateUser);
-=======
 router.post('/settings', ensureAuthenticated, UserController.UpdateUser);
 
 
@@ -120,7 +110,6 @@ router.get('/statistic', (req, res) => {
         .catch(err => console.log(err));
 
 });
->>>>>>> master
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY

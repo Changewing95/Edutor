@@ -191,7 +191,7 @@ app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 
 //ruri
-app.use('/coupon/voucher', vourcherRoute);
+// app.use('/coupon/voucher', vourcherRoute);
 app.use('/cart', cartRoute);
 app.use('/checkout', checkRoute);
 app.use('/tutor/event', eventRoute);
