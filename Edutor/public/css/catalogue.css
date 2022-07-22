@@ -2,6 +2,14 @@ body {
     font-family: "Poppins", sans-serif;
     color: #444444;
 }
+.container{
+    height:auto;
+}
+
+.types{
+    font-style: italic;
+    margin:20px;
+    }
 
 a,
 a:hover {

@@ -12,10 +12,12 @@ const replaceCommas = function (value) {
 const isEqualHelperHandlerbar = function(a, b, opts) {
     if (a == b) {
         return opts.fn(this) 
-    } else { 
+    } 
+    else { 
         return opts.inverse(this) 
     } 
 }
+
 
 
 const Multiply = function(a, b) {

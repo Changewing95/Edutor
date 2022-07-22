@@ -18,6 +18,7 @@ const { spawn } = require("child_process");
 
 
 
+
 // io.on("connection",function(socket){
 // 	console.log("The number of connected sockets: "+socket.adapter.sids.size);
 // 	io.sockets.emit('studentCount', {studentCount: socket.adapter.sids.size})
@@ -56,6 +57,9 @@ const helpers = require('./helpers/handlebars');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
+		replaceCommas: helpers.replaceCommas,
+		if_equal: helpers.isEqualHelperHandlerbar,
+		formatDate: helpers.formatDate,
 		if_equal: helpers.isEqualHelperHandlerbar,
 		replaceCommas: helpers.replaceCommas,
 		formatDate: helpers.formatDate,
@@ -129,6 +133,8 @@ app.use(session({
 }));
 
 
+
+
 const flash = require('connect-flash');
 app.use(flash());
 
@@ -167,6 +173,8 @@ const dashboardRoute = require('./routes/dashboard');
 const tutorialRoute = require('./routes/tutorTutorial');
 const cartRoute = require('./routes/cart');
 const studbookingRoute = require('./routes/studentConsultation');
+const studentTutorialRoute = require('./routes/studentTutorial');
+const fileUpload = require('express-fileupload');
 const adminRoute = require('./routes/admin');
 
 
@@ -178,9 +186,10 @@ app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
 app.use('/student/consultation', studbookingRoute);
+app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
 
-
+app.use(fileUpload());
 
 
 const port = 5000;

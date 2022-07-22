@@ -4,7 +4,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" style="height:700px;">
         <div class="title">Avaliable Courses</div>
         <div class="content">
             <form method="POST"  id="my-form"  enctype="multipart/form-data" action="#">
@@ -36,6 +36,7 @@
                             <option value="Beginner Level">Beginner Level</option>
                             <option value="Intermediate Level">Intermediate Level</option>
                             <option value="Advance Level">Advance Level</option>
+                            <option value="Others">Others</option>
                         </datalist>
                         </select>
                     </div>
@@ -54,6 +55,7 @@
 
                 </div>
                 <div class="input-box mb-3">
+                    <span class="details">Upload Thumbnail</span>
                     <div class="custom-file mb-2">
                         <input type="file" class="custom-file-input" id="tutorialImageUpload" name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">Choose File</label>
@@ -87,7 +89,6 @@
 
 </body>
 <script>
-
 const uploadButton = document.querySelector('#upload-btn');
  uploadButton.addEventListener('click', (e) => {
   const form = document.querySelector('#my-form');
@@ -97,8 +98,6 @@ const uploadButton = document.querySelector('#upload-btn');
      body: formData,
   });
  });
-
-
 </script>
 
 </html>
