@@ -19,7 +19,7 @@ router.get('/settings', (req, res) => {
     })
         .then((consultations) => {
             // pass object to consultation.hbs
-            res.render('dashboard/consultationOverview', { consultations });
+            res.render('dashboard/consultationOverview', { consultations, layout: 'main2' });
         })
         .catch(err => console.log(err));
     // res.render('tutor/consultation');

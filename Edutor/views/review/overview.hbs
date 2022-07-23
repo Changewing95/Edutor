@@ -68,11 +68,11 @@
             </div>
         </div>
 
-        {{!-- <div class="row">
+        <div class="row">
             <div class="col-sm-6">
                 <div class="rating-block">
                     <h4>Average user rating</h4>
-                    <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
+                    <h2 class="bold padding-bottom-7">{{ratingAvg}} <small>/ 5</small></h2>
                     <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                     </button>
@@ -90,7 +90,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-sm-6">
+            {{!-- <div class="col-sm-6">
                 <h4>Rating breakdown</h4>
                 <div class="pull-left">
                     <div class="pull-left" style="width:35px; line-height:1;">
@@ -167,8 +167,8 @@
                     </div>
                     <div class="pull-right" style="margin-left:10px;">0</div>
                 </div>
-            </div>
-        </div> --}}
+            </div> --}}
+        </div>
 
         <div class="row">
             <div class="col-sm-12">
@@ -181,7 +181,7 @@
                             {{!-- <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
                             --}}
                             <div class="review-block-name"><a href="#">User name</a></div>
-                            <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}<br />1 day ago</div>
+                            <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}</div>
                         </div>
                         <div class="col-sm-6">
                             <div class="review-block-rate">

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../models/Review');
 const flashMessage = require('../helpers/messenger');
+const db = require('../config/DBConfig');
+const Sequelize = require('sequelize');
+const sequelize = require('../config/DBConfig');
 
 // for validation
 // const ensureAuthenticated = require('../helpers/auth');
@@ -10,9 +13,13 @@ const flashMessage = require('../helpers/messenger');
 // REVIEW
 // ROUTES (GET)
 // for tutors
-router.get('/listReview', (req, res) => {
+router.get('/listReview', async (req, res) => {
     Review.findAll({
         // where: { userId: req.user.id },
+        attributes: [
+            'title', 'category', 'image', 'rating', 'description', 'createdAt',
+            [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('rating')), 2), 'ratingAvg',]
+        ],
         order: [['title']],
         raw: true
     })
@@ -22,6 +29,7 @@ router.get('/listReview', (req, res) => {
         })
         .catch(err => console.log(err));
 });
+
 
 // ROUTES (POST)
 

@@ -1,107 +1,134 @@
 <head>
-
-    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="common.js"></script>
+    <script src="/js/croppie.js"></script>
     <style>
-        .btn-grey {
-            background-color: #D8D8D8;
-            color: #FFF;
-        }
-
-        .rating-block {
-            background-color: #FAFAFA;
-            border: 1px solid #EFEFEF;
-            padding: 15px 15px 20px 15px;
-            border-radius: 3px;
-        }
-
-        .bold {
-            font-weight: 700;
-        }
-
-        .padding-bottom-7 {
-            padding-bottom: 7px;
-        }
-
-        .review-block {
-            background-color: #FAFAFA;
-            border: 1px solid #EFEFEF;
+        #example1 {
             padding: 15px;
-            border-radius: 3px;
-            margin-bottom: 15px;
+            box-shadow: 0px 0.5px 2px grey;
+            margin: 15px;
         }
 
-        .review-block-name {
-            font-size: 12px;
-            margin: 10px 0;
+        .button {
+            background-color: #5CBF8F;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 10px 130px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
         }
 
-        .review-block-date {
-            font-size: 12px;
+        .table-condensed td {
+            border: none !important;
         }
 
-        .review-block-rate {
+        .select-wrap {
+            border: 1px solid #777;
+            width: 150px;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .select-wrap label {
+            font-size: 8px;
+            text-transform: uppercase;
+            color: #777;
+            padding: 0 8px;
+            margin-top: -1%;
+            position: absolute;
+            top: 6px;
+        }
+
+        select {
+            background-color: #fff;
+            border: 0px;
+            height: 40px;
+            font-size: 16px;
+            padding-left: 3%;
+            padding-top: 4%;
             font-size: 13px;
-            margin-bottom: 15px;
+            margin-right: 4%;
         }
 
-        .review-block-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 10px;
+        label {
+            display: block;
         }
 
-        .review-block-description {
-            font-size: 13px;
+        input[type="radio"] {
+            width: auto;
+            display: inline;
         }
     </style>
+
 </head>
 
-<body>
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-12">
-                <hr />
-                <div class="review-block">
-                    {{#if consultations}}
-                    {{#each consultations}}
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <img src="{{consultationURL}}" class="img-rounded">
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="review-block-title">{{title}}</div>
-                            <br>
-                            <div class="review-block-category">{{formatDate date 'DD MMM YYYY'}}, {{formatDate
-                                start_time 'HH:mm'}} to {{formatDate end_time
-                                'HH:mm'}}</div>
-                            <br>
-                            <div class="review-block-description">{{description}}</div>
-                        </div>
-                        <div class="col-sm-3">
-                            <a href="/vidroom/{{id}}" class="btn btn-primary" style="width:170px">Enter Call
+<div class="container-fluid dashboard">
+    <div class="container mt-5" style="margin-left:-10%">
+        <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;">consultations</h1>
+        <div id="example1" style="margin-left: -7px;width:120%;padding-top:3%;padding-bottom:3%;padding-right:3%;">
+            <table>
+                <tr>
+                    <td style="width: 30%;">
+                        <h6 style="font-size: 13px;">Title </h6>
+                        <hr>
+                    </td>
+                    <td style="width: 20%;">
+                        <h6 style="font-size: 13px;">Date</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 11%;">
+                        <h6 style="font-size: 13px;">Time</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 13%;">
+                        <h6 style="font-size: 13px;">Price</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 15%;">
+                        <h6 style="font-size: 13px;">Link</h6>
+                        <hr>
+                    </td>
+                </tr>
+                {{#if consultations}}
+                {{#each consultations}}
+                <tr>
+                    <td style="width: 35%;">
+                        <h6 style="font-size: 13px;">{{title}}</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 20%;">
+                        <h6 style="font-size: 13px;">{{formatDate date 'DD MMM YYYY'}}</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 20%;">
+                        <h6 style="font-size: 13px">{{formatDate start_time 'HH:mm'}} to {{formatDate
+                            end_time 'HH:mm'}}</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 15%;">
+                        <h6 style="font-size: 13px;">{{price}}</h6>
+                        <hr>
+                    </td>
+                    <td style="width: 20%;">
+                        <a href="/dashboard/vieworder/{{orderId}}">
+                            <a href="/vidroom/{{id}}" style="width:170px; font-size: 15px; margin-top: 50px">Enter
+                                Call
                                 Room</a>
-                        </div>
+                            <hr style="margin-top:7%;">
+                    </td>
+                </tr>
+                {{/each}}
+                {{/if}}
 
-                    </div>
-                    <hr />
-                    {{/each}}
-                    {{else}}
-                    <div class="row justify-content-center text-center">
-                        <div>
-                            <div class="header">
-                                <h2>You have yet to receive any review.</h2>
-                                <hr>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{/if}}
-                </div>
-            </div>
+            </table>
         </div>
 
-    </div> <!-- /container -->
-
     </div>
-</body>
+</div>
+
+</section>
