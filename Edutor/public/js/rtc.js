@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
 
         var pc = [];
 
-        let socket = io('/stream');
+        let socket = io();
 
         var socketId = '';
         var randomNumber = `__${h.generateRandomString()}__${h.generateRandomString()}__`;
@@ -34,18 +34,16 @@ window.addEventListener('load', () => {
         //Get user video by default
         getAndSetUserStream();
 
-
+        console.log(randomNumber)
         socket.on('connect', () => {
             //set socketId
             socketId = socket.io.engine.id;
             document.getElementById('randomNumber').innerText = randomNumber;
 
-
             socket.emit('subscribe', {
                 room: room,
                 socketId: socketId
             });
-
 
             socket.on('new user', (data) => {
                 socket.emit('newUserStart', { to: data.socketId, sender: socketId });
