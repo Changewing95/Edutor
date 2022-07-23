@@ -26,7 +26,7 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     })
     // let getCountry = await User.findOne({where: {}})
 
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
 });
 
 
