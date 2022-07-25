@@ -11,6 +11,7 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const sequelize = require('sequelize');
+const Op = require('sequelize').Op;
 const moment = require('moment');
 // const app = express();
 
@@ -140,21 +141,33 @@ router.get('/statistic', (req, res) => {
 
 
 router.get('/statisticForOrders', (req, res) => {
-
     Order.findAll({
+        attributes: ['createdAt'],
+        group: moment( ['createdAt']).format('MM/DD/YYYY'),
         raw: true,
-        // where: { userId: req.user.id },
-    })
-        .then((orders) => {
-            console.log(Object.keys(orders).length);
-            // pass object to consultation.hbs
-            res.json(orders.map((order) => {
-                var createAt = order['createdAt']
-                console.log( moment(createAt).format('DD/MM/YYYY'))
-                // return { country: country.country, count: country.count, country_length: country.length }
-            }))
-        })
-        .catch(err => console.log(err));
+        where: {
+            createdAt : { [Op.gt] : moment().format('YYYY-MM-DD 00:00')},
+            createdAt : { [Op.lte] : moment().format('YYYY-MM-DD 23:59')}
+        }
+      }).then((order) => {
+        console.log(order);
+      });
+
+    // Order.findAll({
+    //     raw: true,
+    //     distinct: true
+    //     // where: { userId: req.user.id },
+    // })
+    //     .then((orders) => {
+    //         console.log(Object.keys(orders).length);
+    //         // pass object to consultation.hbs
+    //         res.json(orders.map((order) => {
+    //             var createAt = order['createdAt']
+    //             console.log( moment(createAt).format('MM/DD/YYYY'))
+    //             // return { country: country.country, count: country.count, country_length: country.length }
+    //         }))
+    //     })
+    //     .catch(err => console.log(err));
 
 });
 

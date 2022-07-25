@@ -2,6 +2,7 @@
   <link rel="stylesheet" href="/css/dashboard.css">
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 </head>
 
@@ -65,7 +66,8 @@
   <div class=" container-fluid justify-content-center chart-container"
     style="position: relative; height:10vh; width:50vw">
     <canvas id="myChart"></canvas>
-    <canvas id="myChartV2"></canvas>
+    <canvas id="lastSevenDaysOverview"></canvas>
+
   </div>
 
 
@@ -140,34 +142,67 @@
 
 let start = new Date(),
   end = new Date();
-
 start.setDate(start.getDate() - 7); // set to 'now' minus 7 days.
 start.setHours(0, 0, 0, 0); // set to midnight.
 
-  const labelsForOrders = []
-  const DataForOrders = []
-  const configv2 = {
-    type: 'line',
-     options: {
+var OrdersChart = new Chart(document.getElementById("lastSevenDaysOverview"), {
+  type: "line",
+  data: {
+    datasets: [{
+        label: 'Orders',
+        data: [{
+          x: new Date('07-18-2022'),
+          y: 0
+        }, {
+          x: new Date('07-19-2022'),
+          y: 10
+        }, {
+          x: new Date('7-20-2022'),
+          y: 66
+        }, {
+          x: new Date('7-21-2022'),
+          y: 66
+        }, {
+          x: new Date('7-22-2022'),
+          y: 66
+        }, {
+          x: new Date('7-23-2022'),
+          y: 66
+        }, {
+          x: new Date('7-24-2022'),
+          y: 66
+        }, {
+          x: new Date('7-25-2022'),
+          y: 66
+        }],
+        borderColor: '#ff3366',
+        backgroundColor: '#ff3366',
+      },
+    ]
+  },
+  options: {
+    interaction: {
+      mode: 'index',
+      intersect: true,
+    },
+    responsive: true,
     scales: {
-      xAxes: [{
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      x: {
         type: "time",
+        min: start,
+        max: end,
         time: {
-          min: start,
-          max: end,
           unit: "day"
         }
-      }]
-    }
+      }
+    },
   }
-  };
-
-
-
-  var chart2 = new Chart(
-    document.getElementById('myChartV2'),
-    configv2
-  )
+});
 
 
 
@@ -175,6 +210,7 @@ start.setHours(0, 0, 0, 0); // set to midnight.
 
   {{!-- function getStatisticForOrder() {
         $.get('/dashboard/statisticForOrders', (res) => {
+    OrdersChart.data.datasets[0].data[i] = 
       console.log(res);
 
     })
