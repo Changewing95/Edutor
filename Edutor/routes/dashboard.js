@@ -10,7 +10,8 @@ const { nextTick } = require('process');
 const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
-const { pipeline } = require('stream');
+const sequelize = require('sequelize');
+const moment = require('moment');
 // const app = express();
 
 
@@ -25,6 +26,7 @@ const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
 var Country = require('../models/Country');
 const Validate = require('../Controller/validate');
+const { stringify } = require('querystring');
 
 
 
@@ -38,9 +40,18 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     let tutorCount = await User.count({
         where: { roles: "tutor" }
     })
+    const totalAmount = await Order.findAll({
+        attributes: [
+          'totalPrice',
+          [sequelize.fn('sum', sequelize.col('totalPrice')), 'total_amount'],
+        ],
+        raw: true
+      });
     // let getCountry = await User.findOne({where: {}})
+    console.log(totalAmount[0]['total_amount'])
+    // console.log(totalAmount[0]['dataValues']['total_amount'])
 
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, netAmount: totalAmount[0]['total_amount'] });
 });
 
 
@@ -113,6 +124,7 @@ router.get('/display', async (req, res) => {
 router.get('/statistic', (req, res) => {
 
     Country.findAll({
+        raw: true,
         // where: { userId: req.user.id },
     })
         .then((countries) => {
@@ -124,6 +136,30 @@ router.get('/statistic', (req, res) => {
         .catch(err => console.log(err));
 
 });
+
+
+
+router.get('/statisticForOrders', (req, res) => {
+
+    Order.findAll({
+        raw: true,
+        // where: { userId: req.user.id },
+    })
+        .then((orders) => {
+            console.log(Object.keys(orders).length);
+            // pass object to consultation.hbs
+            res.json(orders.map((order) => {
+                var createAt = order['createdAt']
+                console.log( moment(createAt).format('DD/MM/YYYY'))
+                // return { country: country.country, count: country.count, country_length: country.length }
+            }))
+        })
+        .catch(err => console.log(err));
+
+});
+
+
+
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY

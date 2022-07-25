@@ -1,4 +1,5 @@
 const express = require('express');
+const { request } = require('http');
 const router = express.Router();
 const Cart = require('../models/Cart');
 const User = require('../models/User');
@@ -56,7 +57,7 @@ router.post('/addtoCart', (req,res) => {
     var author = req.body.author;
     var tutorid = req.body.tutorid;
     var current_student = req.user.id;
-
+// sus kitten
     // creating cart here
     var cart = req.session.cart;
     //use findOrCreate here later
@@ -75,6 +76,7 @@ router.post('/addtoCart', (req,res) => {
     var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid};
 
     if(req.session.cart){
+        // req.session.destroy()
         var cart = req.session.cart;
 
         if(!isProductinCart(cart,id)){
