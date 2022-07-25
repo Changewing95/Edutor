@@ -56,22 +56,11 @@ router.post('/addtoCart', (req,res) => {
     var author = req.body.author;
     var tutorid = req.body.tutorid;
     var current_student = req.user.id;
-
-    // creating cart here
-    var cart = req.session.cart;
-    //use findOrCreate here later
-    Cart.create(
-        { student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author}
-    )
-        .then((carts) => {
-
-            console.log(carts.toJSON());
-            res.redirect('/cart');
-        })
-        .catch(err => console.log(err))
-
-    // end creating cart
-
+    
+    Cart.findOrCreate({
+        where: {student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author}
+    })
+    
     var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid};
 
     if(req.session.cart){

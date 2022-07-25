@@ -198,6 +198,7 @@ app.use('/tutor/event', eventRoute);
 app.use('/student/event', studenteventRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
+app.use('/vouchers', vourcherRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
