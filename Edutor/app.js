@@ -10,17 +10,11 @@ const passport = require('passport');
 const passportConfig = require('./config/passport');
 const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
-// const stream = require('/public/js/stream');
-const stream = require('../Edutor/public/js/stream');
 
-// for socket.io
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
 const { spawn } = require("child_process");
-const fileUpload = require('express-fileupload');
-
-app.use(express.static(__dirname + '/public'));
 
 
 
@@ -61,21 +55,9 @@ app.use(express.static(__dirname + '/public'));
 // 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
 // }));
 const helpers = require('./helpers/handlebars');
-// const room = require('./public/js/helpers');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
-		replaceCommas: helpers.replaceCommas,
-		if_equal: helpers.isEqualHelperHandlerbar,
-		formatDate: helpers.formatDate,
-		if_equal: helpers.isEqualHelperHandlerbar,
-		replaceCommas: helpers.replaceCommas,
-		formatDate: helpers.formatDate,
-		if_eq: helpers.if_eq,
-		formatRating: helpers.formatRating,
-		radioCheck: helpers.radioCheck,
-		calculateTotalRating: helpers.calculateTotalRating,
-		avgRating: helpers.avgRating,
 		formatDate: helpers.formatDate,
 		if_equal: helpers.isEqualHelperHandlerbar,
 		replaceCommas: helpers.replaceCommas,
@@ -187,10 +169,8 @@ const mainRoute = require('./routes/main');
 const authRoute = require('./routes/auth');
 const bookingRoute = require('./routes/tutorConsultation');
 const dashboardRoute = require('./routes/dashboard');
-const eventRoute = require('./routes/tutorEvent');
-const studenteventRoute = require('./routes/studentEvent');
-const tutorialRoute = require('./routes/tutorTutorial');
 
+const fileUpload = require('express-fileupload');
 //ruri
 const vourcherRoute = require('./routes/vouchers');
 const cartRoute = require('./routes/cart');
@@ -200,12 +180,7 @@ const studenteventRoute = require('./routes/studentEvent');
 const tutorialRoute = require('./routes/tutorTutorial');
 const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
-const fileUpload = require('express-fileupload');
-// const adminRoute = require('./routes/admin');
 const adminRoute = require('./routes/admin');
-const studreviewRoute = require('./routes/review');
-const tutorreviewRoute = require('./routes/tutorReview');
-const { Http2ServerRequest } = require('http2');
 
 
 
@@ -213,11 +188,9 @@ app.use('/', mainRoute);
 app.use('/auth', authRoute);
 app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
-app.use('/tutor/event', eventRoute);
-app.use('/student/event', studenteventRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 
-//chonks
+//ruri
 // app.use('/coupon/voucher', vourcherRoute);
 app.use('/cart', cartRoute);
 app.use('/checkout', checkRoute);
@@ -225,12 +198,11 @@ app.use('/tutor/event', eventRoute);
 app.use('/student/event', studenteventRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
+app.use('/vouchers', vourcherRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
 
-app.use('/student/review', studreviewRoute);
-app.use('/tutor/review', tutorreviewRoute)
 app.use(fileUpload());
 
 

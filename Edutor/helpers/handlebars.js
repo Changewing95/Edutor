@@ -41,15 +41,12 @@ const isEqualHelperHandlerbar = function(a, b, opts) {
     } 
 }
 
-<<<<<<< HEAD
-=======
 const increaseOID = function(a,b) {
     return a+b;
 }
   
 
 
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 
 
 const Multiply = function(a, b) {
@@ -68,8 +65,4 @@ const if_eq = function () {
 
 
 
-<<<<<<< HEAD
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq};
-=======
 module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq,increaseOID, Multiply, radioCheck, formatRating, calculateTotalRating, avgRating};
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004

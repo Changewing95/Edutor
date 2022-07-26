@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User')
 const flashMessage = require('../helpers/messenger');
 const UserController = require('../Controller/User');
-const Consultation = require('../models/Booking');
 const FileUpload = require('../helpers/imageUpload');
 const ensureAuthenticated = require('../helpers/checkAuthentication');
 const { nextTick } = require('process');
@@ -11,22 +10,6 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
-<<<<<<< HEAD
-var Country = require('../models/Country');
-const Validate = require('../Controller/validate');
-
-
-=======
-// const app = express();
-
-
-// // for video conference
-// const server = require("http").Server(app); 	// for socket.io
-// const io = require("socket.io")(server);		// for socket.io
-// const stream = require('../public/js/stream');
-
-// router.get('/overview', ensureAuthenticated, (req, res) => {
-//     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
 const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
 var Country = require('../models/Country');
@@ -37,7 +20,6 @@ const Validate = require('../Controller/validate');
 
 
 
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 router.get('/overview', ensureAuthenticated, async (req, res) => {
     let studentCount = await User.count({
         where: { roles: "student" }
@@ -47,11 +29,7 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     })
     // let getCountry = await User.findOne({where: {}})
 
-<<<<<<< HEAD
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, Country: Country });
-=======
     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount });
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 });
 
 
@@ -73,8 +51,6 @@ router.get('/settings/delete_student', ensureAuthenticated, UserController.Delet
 
 // UPDATE
 router.post('/settings', ensureAuthenticated, UserController.UpdateUser);
-<<<<<<< HEAD
-=======
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
@@ -137,23 +113,49 @@ router.get('/statistic', (req, res) => {
         .catch(err => console.log(err));
 
 });
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 
 
 // PROFILE PICTURE UPLOAD // Advanced Feature - JEREMY
 router.put('/profilePictureUpload', async (req, res) => {
+    // Creates user id directory for upload if not exist
+    // FileUpload(req, res, (err) => {
+    //     if (err) {
+    //         console.log("error1")
+    //         res.json({ file: '/img/no-image.jpg', err: err });
+    //     } else {
+    //         console.log(req.file);
+    //         if (req.file === undefined) {
+    //             console.log("error2")
+    //             res.json({ file: '/img/no-image.jpg', err: err });
+    //         } else {
+    //             console.log("success")
+    //             res.json({ file: `${req.file.filename}` });
+    //             User.update({
+    //                 profile_pic: req.file.filename
+    //             }, { where: { id: req.user.id } }).then(() => {
+    //                 res.redirect('settings');
+    //             }).catch((errors) => {
+    //                 console.log(errors);
+    //             })
+    //         }
+    //     }
+    // });
     var profile_id = uuid.v1();
     User.update({
         profile_pic: profile_id
-    }, { where: { id: req.user.id } }).then((value) => {
-        pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
-            if (!error) {
-                console.log('no error')
-                res.status(200).json();
-            }
-        });
+    }, { where: { id: req.user.id } }).then(() => {
+        res.redirect('settings');
+    }).catch((errors) => {
+        console.log(errors);
     })
+
+    pipeline(req, fs.createWriteStream(resolve(`./public/images/profilepictures/${profile_id}.png`)), (error) => {
+        if(!error) {
+            res.send("succaess");
+        }
+    });
 })
+
 
 
 router.get('/display', async (req, res) => {
@@ -205,34 +207,6 @@ router.get('/vieworder/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
-<<<<<<< HEAD
-// async function getsAllStudent() {
-//    await User.count({
-//     where: { roles: "student" }
-//   }).then((count) => {
-//     console.log(count)
-//     return count
-//   })
-
-// }
-
-
-router.get('/statistic', (req, res) => {
-
-    Country.findAll({
-        // where: { userId: req.user.id },
-    })
-        .then((countries) => {
-            // pass object to consultation.hbs
-            res.json(countries.map((country) => {
-                return { country: country.country, count: country.count, country_length: country.length }
-            }))
-        })
-        .catch(err => console.log(err));
-
-});
-
-=======
 router.get('/deleteorder/:id', (req, res) => {
     OrderItems.update(
         {
@@ -275,7 +249,6 @@ router.get('/vieworder/:id', (req, res) => {
         })
         .catch(err => console.log(err));
 });
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 
 
 module.exports = router;

@@ -93,7 +93,6 @@ router.get('/verify_email', (req, res) => {
 	res.render('auth/registration/verify_email', { currentpage: { register: true } })
 
 });
-<<<<<<< HEAD
 
 
 
@@ -105,8 +104,6 @@ router.get('/google_authenticator', (req, res) => {
 
 
 router.get('/create_admin', UserController.CreateAdmin);
-=======
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 
 
 

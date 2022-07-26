@@ -417,8 +417,4 @@ router.post('/upload', (req, res) => {
 
 
 
-<<<<<<< HEAD
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004

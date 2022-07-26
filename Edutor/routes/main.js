@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const flashMessage = require('../helpers/messenger');
-<<<<<<< HEAD
-=======
 // const app = express();
 const Consultation = require('../models/Booking');
->>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 const ensureAuthenticated = require('../helpers/checkAuthentication');
 const Tutorial = require('../models/Tutorial')
 const User = require('../models/User')
