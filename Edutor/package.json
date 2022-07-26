@@ -43,7 +43,6 @@
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "peer": "^0.6.1",
     "procyon": "^0.0.4",
     "qrcode": "^1.5.0",
     "request": "^2.88.2",
