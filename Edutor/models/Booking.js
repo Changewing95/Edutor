@@ -6,6 +6,11 @@ const sequelize = require('sequelize');
 // Create users table in MySQL Database
 const Consultation = db.define('consultations',
     {
+        id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            primaryKey: true
+        },
         title: { type: Sequelize.STRING },
         consultationURL: { type: Sequelize.STRING },
         price: { type: Sequelize.FLOAT },

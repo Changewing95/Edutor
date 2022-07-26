@@ -24,6 +24,15 @@ router.get('/listConsultations', (req, res) => {
         .catch(err => console.log(err));
 });
 
+// display detailed information of slot detail
+router.get('/display/:id', (req, res) => {
+
+    Consultation.findByPk(req.params.id)
+        .then((consultation) => {
+            res.render('consultation/detailedConsultation', { consultation });
+        })
+        .catch(err => console.log(err));
+});
 
 
 // CODING LOGIC (CRUD)

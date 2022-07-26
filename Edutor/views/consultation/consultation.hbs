@@ -29,9 +29,8 @@
                     {{!-- change the image via the css thr --}}
                     <div id="product-{{id}}" class="single-product">
                         <div class="part-1">
-                            <img src="{{consultationURL}}" class="product-{{id}} part-1 consultationImage123" style="">
+                            <img src="{{consultationURL}}" class="product-{{id}} part-1 consultationImage123">
                             <ul>
-                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
                                 <li><a href="/tutor/consultation/editConsultation/{{id}}"><i
                                             class="fas fa-edit"></i></a></li>
                                 <li><a href="/tutor/consultation/deleteConsultation/{{id}}"><i
@@ -41,11 +40,11 @@
                             </ul>
                         </div>
                         <div class="part-2">
-                            <h3 class="product-title">{{replaceCommas title}}</h3>
-                            <h3 class="product-price">${{replaceCommas price}}</h3>
-                            <br>
+                            <h3 class="product-title">{{ title}}</h3>
+                            <h3 class="product-price">${{ price}}</h3>
+
                             <h4>Description: </h4>
-                            <p class="product-description">{{replaceCommas description}}</p>
+                            <p class="product-description">{{ description}}</p>
                             <h4>Date: </h4>
                             <p class="product-date">{{ formatDate date 'DD MMM YYYY'}}</p>
                             <h4>Time</h4>

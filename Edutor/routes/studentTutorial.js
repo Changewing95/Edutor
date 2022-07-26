@@ -6,7 +6,10 @@ const Tutorial = require('../models/Tutorial');
 // const fs = require('fs');
 // const upload = require('../helpers/uploadImage');
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3fae673e13a527d88a5bd4962e7c1121696fd004
 router.get('/main', ensureAuthenticated, (req, res) => {
     Tutorial.findAll({
         

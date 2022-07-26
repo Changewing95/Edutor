@@ -1,0 +1,76 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/singleTutorial.css">
+    <style>
+        .consultationURL {}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {{!-- {{#each consultation}} --}}
+        <div class="title">{{consultation.title}}</div>
+        <div class="content card card-cover h-70 overflow-hidden" style="border-radius: 25px">
+            <div class="row">
+                {{!-- left-content --}}
+                <div class="col-sm-6 align-items-start" style="padding: 50px; align-items: left;">
+                    <div class="d-flex flex-column">
+                        <img class="card-img" src="{{consultation.consultationURL}}" style="border-radius: 25px">
+                    </div>
+                    {{!-- description --}}
+                    <div class="d-flex flex-column" style="padding-top: 30px">
+                        <h5>Description</h5>
+                        <p>{{consultation.description}}</p>
+                    </div>
+                </div>
+
+                {{!-- right content --}}
+                <div class="col-sm-6 align-items-start" style="text-align:left padding: 50px">
+                    {{!-- title --}}
+                    <div class="d-flex flex-column">
+                        <h4 class="card-title">{{consultation.title}}</h4>
+                    </div>
+                    {{!-- author/ user name --}}
+                    <div class="d-flex flex-column">
+                        <h4>Author</h4>
+                        <p class="card-text">{{consultation.userName}} display username here, after integration.</p>
+                    </div>
+                    {{!-- date and time --}}
+                    <div class="d-flex flex-column">
+                        <h4>Date and Time</h4>
+                        <div class="d-flex flex-row">
+                            <div>
+                                <p><strong>Date</strong></p>
+                                <p class="card-text">{{formatDate consultation.date 'DD/MM/YYYY'}} </p>
+                            </div>
+                            <div>
+                                <p><strong>Time</strong></p>
+                                <p class="card-text">{{ formatDate
+                                    consultation.start_time 'HH:mm'}} to {{formatDate consultation.end_time 'HH:mm'}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- price --}}
+                    <div class="d-flex flex-column">
+                        <h4>Price</h4>
+                        <p class="card-text">${{consultation.price}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hstack gap-1 d-flex justify-content-end" style="padding: 30px">
+                <div class="col-sm-3">
+                    <a href="#" class="btn btn-primary" style="width:170px">Buy Now</a>
+                </div>
+                <div class="col-sm-3">
+                    <a href="#" class="btn btn-primary" style="width:170px">Add to cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- {{/each}} --}}
+    </div>
+
+</body>
+
+</html>
