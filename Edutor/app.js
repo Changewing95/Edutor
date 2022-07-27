@@ -12,12 +12,11 @@ const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
 // const stream = require('/public/js/stream');
 const { spawn } = require("child_process");
-
-// for socket.io
 const app = express();
 app.use(express.static(__dirname + '/public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
+
 
 
 
@@ -33,7 +32,7 @@ var io = require('socket.io')(http)
 // io.sockets.on('connection', function (socket) {
 // 	studentCount++
 // 	io.sockets.emit('studentCount', {studentCount: studentCount});
-	
+
 // 	socket.on('disconnect', function () {
 // 		studentCount--
 // 		io.sockets.emit('studentCount', {studentCount: studentCount});
@@ -58,19 +57,15 @@ var io = require('socket.io')(http)
 // 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar
 // }));
 const helpers = require('./helpers/handlebars');
-// const room = require('./public/js/helpers');
 app.engine('hbs', engine({
 	helpers: {
 		helpers,
-		formatRating: helpers.formatRating,
-		radioCheck: helpers.radioCheck,
-		calculateTotalRating: helpers.calculateTotalRating,
-		avgRating: helpers.avgRating,
 		formatDate: helpers.formatDate,
 		if_equal: helpers.isEqualHelperHandlerbar,
 		replaceCommas: helpers.replaceCommas,
 		if_eq: helpers.if_eq,
 		increaseOID: helpers.increaseOID,
+		formatRating: helpers.formatRating,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
@@ -188,10 +183,9 @@ const studenteventRoute = require('./routes/studentEvent');
 const tutorialRoute = require('./routes/tutorTutorial');
 const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
+const studentReviewRoute = require('./routes/review');
+const tutorReviewRoute = require('./routes/tutorReview');
 const adminRoute = require('./routes/admin');
-const studreviewRoute = require('./routes/review');
-const tutorreviewRoute = require('./routes/tutorReview');
-const { Http2ServerRequest } = require('http2');
 
 
 
@@ -201,7 +195,7 @@ app.use('/tutor/consultation', bookingRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 
-//chonks
+//ruri
 // app.use('/coupon/voucher', vourcherRoute);
 app.use('/cart', cartRoute);
 app.use('/checkout', checkRoute);
@@ -209,11 +203,13 @@ app.use('/tutor/event', eventRoute);
 app.use('/student/event', studenteventRoute);
 app.use('/tutor/tutorial', tutorialRoute);
 app.use('/cart', cartRoute);
+app.use('/vouchers', vourcherRoute);
 app.use('/student/consultation', studbookingRoute);
 app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
-app.use('/student/review', studreviewRoute);
-app.use('/tutor/review', tutorreviewRoute)
+app.use('/tutor/review', tutorReviewRoute);
+app.use('/student/review', studentReviewRoute);
+
 app.use(fileUpload());
 
 const stream = require('./public/js/stream');

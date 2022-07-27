@@ -2,6 +2,92 @@ const multer = require('multer');
 const path = require('path');
 
 
+// Set Storage Engine
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, '../public/eventuploads/' + 1 + '/');
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, 1 + '-' + Date.now() +
+//             path.extname(file.originalname));
+//     }
+// });
+
+
+
+
+
+// Clara
+// Set Storage Engine
+// const tutorialImageStorage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, './public/uploads/' + req.user.id + '/');
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, req.user.id + '-' + Date.now() +
+//             path.extname(file.originalname));
+//     }
+// });
+// // Check File Type
+// function tutorialImageCheckFileType(file, callback) {
+//     // Allowed file extensions
+//     const tutorialImagefiletypes = /jpeg|jpg|png|gif/;
+//     // Test extension
+//     const tutorialImageExtname =
+//         filetypes.test(path.extname(file.originalname).toLowerCase());
+//     // Test mime
+//     const tutorialImageMimetype = filetypes.test(file.mimetype);
+//     if (tutorialImageMimetype && tutorialImageExtname) {
+//         return callback(null, true);
+//     }
+//     else {
+//         callback({ message: 'Images Only' });
+//     }
+// }
+// // Define Upload Function
+// const tutorialImageUpload = multer({
+//     storage: tutorialImageStorage,
+//     limits: { fileSize: 1000000 }, // 1MB
+//     fileFilter: (req, file, callback) => {
+//         tutorialImageCheckFileType(file, callback);
+//     }
+// }).single('tutorialImageUpload'); // Must be the name as the HTML file upload input
+// module.exports = upload;
+// const tutorialImageStorage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, './public/uploads/' + req.user.id + '/');
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, req.user.id + '-' + Date.now() +
+//             path.extname(file.originalname));
+//     }
+// });
+
+// // Check File Type 
+// function tutorialImageCheckFileType(file, callback) {
+//     // Allowed file extensions 
+//     const filetypes1 = /jpeg|jpg|png|gif/;
+//     // Test extension 
+//     const extname1 = filetypes1.test(path.extname(file.originalname).toLowerCase());
+//     // Test mime 
+//     const mimetype1 = filetypes1.test(file.mimetype1);
+//     if (mimetype1 && extname1) {
+//         return callback(null, true);
+//     }
+//     else {
+//         callback({ message: 'Images Only' });
+//     }
+// }
+
+// // Define Upload Function
+// const tutorialImageUpload = multer({
+//     storage: tutorialImageStorage,
+//     limits: { fileSize: 1000000 }, // 1MB
+//     fileFilter: (req, file, callback) => {
+//         tutorialImageCheckFileType(file, callback);
+//     }
+// }).single('tutorialImageUpload'); // Must be the name as the HTML file upload input 
 
 // Clara 
 // Set Storage Engine
@@ -178,26 +264,6 @@ const upload = multer({
 // End
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // 
 
 // const multer = require('multer');
@@ -280,7 +346,6 @@ const upload = multer({
 
 // };
 
-// >>>>>>> master
 
 module.exports = upload;
 // module.exports = tutorialImageUpload;

@@ -10,21 +10,27 @@
 <nav style="background-color: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
     class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
-    
+
     {{#if_equal user.roles "tutor"}}
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">All Coursesz<span class="sr-only">(current)</span></a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/tutor/consultation/main">Consultation Slot</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" href="/tutor/tutorial/main" id="smallfont">Your
+        courses<span class="sr-only">(current)</span></a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
+        href="/tutor/consultation/main">Consultation slots</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Events</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"href="/tutor/review/listReview">Review</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/coupon/vouchers/">Discount Vouchers</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
+        href="/tutor/review/listReview">View Review</a>
+
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/vouchers/">Discount
+        Vouchers</a>
 
     {{else}}
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/student/tutorial/main">All courses</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
-        href="/student/review/main">Leave Feedback</a>
+        href="/student/tutorial/main">All courses</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/consultation/listConsultations">Book Tutors</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="#">Book Events</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
+        href="/student/review/main">Review</a>
 
 
     {{/if_equal}}
@@ -38,7 +44,8 @@
         <ul class="navbar-nav ml-auto">
             {{#if_equal user.roles "student"}}
             <li class="nav-item">
-                <a class="nav-link" id="smallfont" href="/cart" style="margin-top: 33%;"><i class="fa fa-shopping-cart" style="font-size: 20px;" aria-hidden="true"></i></a>
+                <a class="nav-link" id="smallfont" href="/cart" style="margin-top: 33%;"><i class="fa fa-shopping-cart"
+                        style="font-size: 20px;" aria-hidden="true"></i></a>
             </li>
             {{/if_equal}}
 

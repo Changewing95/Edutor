@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User')
 const flashMessage = require('../helpers/messenger');
 const UserController = require('../Controller/User');
-const Consultation = require('../models/Booking');
 const FileUpload = require('../helpers/imageUpload');
 const ensureAuthenticated = require('../helpers/checkAuthentication');
 const { nextTick } = require('process');
@@ -11,16 +10,6 @@ const resolve = require('path').resolve;
 const fs = require('fs');
 var uuid = require('uuid');
 const { pipeline } = require('stream');
-// const app = express();
-
-
-// // for video conference
-// const server = require("http").Server(app); 	// for socket.io
-// const io = require("socket.io")(server);		// for socket.io
-// const stream = require('../public/js/stream');
-
-// router.get('/overview', ensureAuthenticated, (req, res) => {
-//     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
 const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
 var Country = require('../models/Country');
