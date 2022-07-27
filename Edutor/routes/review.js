@@ -6,10 +6,22 @@ const fetch = require('isomorphic-fetch')
 const { stringify } = require('querystring');
 const fs = require('fs');
 const upload = require('../helpers/reviewImageUpload');
+const OrderItems = require('../models/OrderItems');
 
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 
+router.get('/noreviews', ensureAuthenticated, (req, res) => {
+    OrderItems.findAll({
+        where: { userId: req.user.id },
+        order: [['createdAt']],
+        raw: true
+    })
+        .then((orders) => {
+            res.render('something here', { orders });
+        })
+        .catch(err => console.log(err));
+})
 
 // REVIEW
 // for students
@@ -22,6 +34,19 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .then((reviews) => {
             // pass object to review.hbs
             res.render('review/review', { reviews });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/choose', ensureAuthenticated, (req, res) => {
+    Review.findAll({
+        where: { userId: req.user.id },
+        order: [['createdAt']],
+        raw: true
+    })
+        .then((reviews) => {
+            // pass object to review.hbs
+            res.render('review/choose', { reviews });
         })
         .catch(err => console.log(err));
 });

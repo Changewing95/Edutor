@@ -1,0 +1,126 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/catalogue.css">
+
+    <style>
+        .card {
+            border-radius: 5px;
+            background-color: #fff;
+            padding-left: 60px;
+            padding-right: 60px;
+            margin-top: 30px;
+            padding-top: 30px;
+            padding-bottom: 30px
+        }
+
+        td {
+            padding-bottom: 10px
+        }
+
+        .star-active {
+            color: #FBC02D;
+            margin-top: 10px;
+            margin-bottom: 10px
+        }
+
+        .star-inactive {
+            color: #CFD8DC;
+            margin-top: 10px;
+            margin-bottom: 10px
+        }
+
+        .blue-text {
+            color: #0091EA
+        }
+
+        .content {
+            font-size: 18px
+        }
+
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 100%;
+            margin-right: 30px
+        }
+
+        /*
+        .pic {
+            width: 200px;
+            height: 250px;
+            margin-right: 10px
+        }
+        */
+
+        .vote {
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div>
+                    <div class="">
+                        <div class="header">
+                            <h2>Your Given Reviews</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="col-md-8 col-lg-6">
+                        <a href="/student/review/create">
+                            <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Add new Review</p>
+                        </a>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-10 col-12 text-center mb-5">
+                        {{#if reviews}}
+                        {{#each reviews}}
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-sm-8 align-items-start">
+                                    <div class="d-flex flex-column text-left">
+                                        <div style="margin-top: 20px">
+                                            <h2 class="content">Review Title</h3>
+                                                <p class="mt-2 mb-0 text-left" style="padding: 0px; margin: 0px">
+                                                    {{title}}
+                                                </p>
+                                        </div>
+                                        <div style="margin-top: 15px">
+                                            <h4 class="content">Category</h4>
+                                            <p class="content">{{category}}</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="blue-text">"{{rating}}"</h4>
+                                        </div>
+                                        <div>
+                                            <h4 class="content">Description</h4>
+                                            <p class="content">{{description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img class="img-fluid rounded float-end" style="margin-top: 10px" src="{{image}}">
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div class="row justify-content-center text-center">
+                            <div>
+                                <div class="header">
+                                    <h2>You have yet to make any review.</h2>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
