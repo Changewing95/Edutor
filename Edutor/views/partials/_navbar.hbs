@@ -7,7 +7,7 @@
     }
 </style>
 
-<nav style="background-color: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
+<nav style="background-color: {{#if_eq  user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
     class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
 

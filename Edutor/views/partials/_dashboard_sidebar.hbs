@@ -8,9 +8,6 @@
 </head>
 
 <body>
-
-    <div style="background: {{#if_equal  user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_equal}}"
-
     <div style="background: {{#if_eq user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
         class="sidebar">
         <div class="logo-details">
@@ -38,7 +35,6 @@
             <li>
                 <a style="background: {{#if_equal  user.roles "tutor"}}  {{else}}  {{/if_equal}}"
                     href="/dashboard/allorders">
-                    href="#">
                     <i class='bx bx-cart-alt'></i>
                     <span class="links_name">Order</span>
                 </a>
