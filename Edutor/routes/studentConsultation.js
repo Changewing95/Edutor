@@ -1,19 +1,13 @@
-const moment = require('moment');
 const express = require('express');
+const ensureAuthenticated = require('../helpers/auth');
 const router = express.Router();
 const Consultation = require('../models/Booking');
-const flashMessage = require('../helpers/messenger');
-// for file upload
-const fs = require('fs');
-const upload = require('../helpers/imageUpload');
-// for validation
-// const ensureAuthenticated = require('../helpers/auth');
+
 
 // ROUTING: 
 // route to catalogue for consultation
-router.get('/listConsultations', (req, res) => {
+router.get('/listConsultations', ensureAuthenticated, (req, res) => {
     Consultation.findAll({
-        // where: { userId: req.user.id },
         order: [['date']],
         raw: true
     })
@@ -33,9 +27,6 @@ router.get('/display/:id', (req, res) => {
         })
         .catch(err => console.log(err));
 });
-
-
-// CODING LOGIC (CRUD)
 
 
 

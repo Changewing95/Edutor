@@ -10,11 +10,13 @@ const passport = require('passport');
 const passportConfig = require('./config/passport');
 const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
-
+// const stream = require('/public/js/stream');
+const { spawn } = require("child_process");
 const app = express();
+app.use(express.static(__dirname + '/public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
-const { spawn } = require("child_process");
+
 
 
 
@@ -205,13 +207,17 @@ app.use('/admin', adminRoute);
 
 app.use(fileUpload());
 
+const stream = require('./public/js/stream');
+io.on('connection', stream);
+
 
 const port = 5000;
 
 // Starts the server and listen to port
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
-});
+// app.listen(port, () => {
+// 	console.log(`Server started on port ${port}`);
+// });
 
+http.listen(port, () => console.log(`Listening on port ${port}`));
 
 // http.listen(port, () => console.log(`Listening on port ${port}`));
