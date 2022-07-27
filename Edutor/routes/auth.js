@@ -107,4 +107,15 @@ router.get('/create_admin', UserController.CreateAdmin);
 
 
 
+router.get('/google_authenticator', (req, res) => {
+
+	res.render('auth/registration/google_authenticator', { currentpage: { register: true } })
+
+});
+
+
+router.get('/create_admin', UserController.CreateAdmin);
+
+
+
 module.exports = router;
