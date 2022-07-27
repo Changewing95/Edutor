@@ -104,11 +104,6 @@ router.get('/vidroom/:id', function (req, res) {
 				res.redirect('/tutor/consultation/settings');
 				return;
 			}
-			if (req.user.id != consultation.userId) {
-				flashMessage(res, 'error', 'Unauthorised access');
-				res.redirect('/tutor/consultation/settings');
-				return;
-			}
 
 			res.render('consultation/callroom', { consultation });
 		})

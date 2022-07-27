@@ -80,9 +80,6 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let description = req.body.description;
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
-    // if (start_time > end_time) {
-    //     flashMessage(res, 'error', message);
-    // }
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
     let userId = req.user.id
 
