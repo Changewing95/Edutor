@@ -2,7 +2,8 @@
   <link rel="stylesheet" href="/css/dashboard.css">
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 </head>
 
@@ -65,7 +66,6 @@
 
   <div class=" container-fluid justify-content-center chart-container"
     style="position: relative; height:10vh; width:50vw">
-    <canvas id="myChart"></canvas>
     <canvas id="lastSevenDaysOverview"></canvas>
 
   </div>
@@ -79,164 +79,112 @@
 <script>
 
 
-{{!-- DemographyChart --}}
-  {{!-- const labels = []
-  const datas = []
-  var config = {
-    type: 'bar',
+
+
+  const Orderlabels = []
+
+  let start = new Date(),
+    end = new Date();
+  start.setDate(start.getDate() - 7); // set to 'now' minus 7 days.
+  start.setHours(0, 0, 0, 0); // set to midnight.
+
+  var OrdersChart = new Chart(document.getElementById("lastSevenDaysOverview"), {
+    type: "line",
     data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Demography Of Registered Users",
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)'
-          ], data: [],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)'
-          ],
-          borderWidth: 1,
-        }
+      labels: Orderlabels,
+      datasets: [{
+        label: 'Orders',
+        data: [
+          {
+
+          }, {
+
+          }, {
+
+          }, {
+
+          }, {
+
+          }, {
+
+          }, {
+
+          }, {
+
+          }
+        ],
+        borderColor: '#ff3366',
+        backgroundColor: '#ff3366',
+      },
       ]
     },
     options: {
+      interaction: {
+        mode: 'index',
+        intersect: true,
+      },
+      responsive: true,
+      scales: {
+        y: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+        },
+        x: {
+          type: "time",
+          min: start,
+          max: end,
+          time: {
+            unit: "day"
+          }
+        }
+      },
       plugins: {
         tooltip: {
           callbacks: {
-            label: (context) => {
-              return `${context.raw[0]} Users from ${context.label}`
+            title: (context) => {
+              return `${context[0].raw['y']} Order`;
 
             }
           }
         }
       },
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
     }
-  }
-
-  var chart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
-   --}}
+  });
 
 
 
-{{!-- Order Purchased Chart --}}
 
-let start = new Date(),
-  end = new Date();
-start.setDate(start.getDate() - 7); // set to 'now' minus 7 days.
-start.setHours(0, 0, 0, 0); // set to midnight.
 
-var OrdersChart = new Chart(document.getElementById("lastSevenDaysOverview"), {
-  type: "line",
-  data: {
-    datasets: [{
-        label: 'Orders',
-        data: [{
-          x: new Date('07-18-2022'),
-          y: 0
-        }, {
-          x: new Date('07-19-2022'),
-          y: 10
-        }, {
-          x: new Date('7-20-2022'),
-          y: 66
-        }, {
-          x: new Date('7-21-2022'),
-          y: 66
-        }, {
-          x: new Date('7-22-2022'),
-          y: 66
-        }, {
-          x: new Date('7-23-2022'),
-          y: 66
-        }, {
-          x: new Date('7-24-2022'),
-          y: 66
-        }, {
-          x: new Date('7-25-2022'),
-          y: 66
-        }],
-        borderColor: '#ff3366',
-        backgroundColor: '#ff3366',
-      },
-    ]
-  },
-  options: {
-    interaction: {
-      mode: 'index',
-      intersect: true,
-    },
-    responsive: true,
-    scales: {
-      y: {
-        type: 'linear',
-        display: true,
-        position: 'left',
-      },
-      x: {
-        type: "time",
-        min: start,
-        max: end,
-        time: {
-          unit: "day"
-        }
+
+  function getStatisticForOrder() {
+    $.get('/dashboard/statisticForOrders', (res) => {
+      counter = 0
+      var keys = Object.keys(res['b']);
+      for (var i = 0; i < keys.length; i++) {
+        OrdersChart.data.datasets[0].data[i]['x'] = new Date(keys[i]);
+        OrdersChart.data.datasets[0].data[i]['y'] = res['b'][keys[i]];
       }
-    },
-  }
-});
 
+      OrdersChart.update()
 
-
-
-
-  {{!-- function getStatisticForOrder() {
-        $.get('/dashboard/statisticForOrders', (res) => {
-    OrdersChart.data.datasets[0].data[i] = 
-      console.log(res);
 
     })
   }
 
 
-  function getStatistic() {
-    $.get('/dashboard/statistic', (res) => {
-      console.log(res);
-      for (var i = 0; i < res.length; i++) {
-        chart.data.labels[i] = [res[i]['country']]
-        chart.data.datasets[0].data[i] = [res[i]['count']];
-      }
 
 
 
-      chart.update();
 
-    })
-  }
+
+
   $(document).ready(() => {
-    getStatistic()
+    getStatisticForOrder()
     // Setting how long to send request to client side, now its every 10 second one live update
-    setInterval(getStatistic, 10000)
+    setInterval(getStatisticForOrder, 10000)
 
-  }) --}}
+  })
 
 
 </script>
