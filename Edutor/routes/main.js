@@ -96,7 +96,7 @@ router.get('/logout', (req, res) => {
 // const io = require("socket.io")(server);		// for socket.io
 // const stream = require('../public/js/stream');
 
-router.get('/vidroom/:id', function (req, res) {
+router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
 	Consultation.findByPk(req.params.id)
 		.then((consultation) => {
 			if (!consultation) {
