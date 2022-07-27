@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User')
 const flashMessage = require('../helpers/messenger');
 const UserController = require('../Controller/User');
-const Consultation = require('../models/Booking');
 const FileUpload = require('../helpers/imageUpload');
 const ensureAuthenticated = require('../helpers/checkAuthentication');
 const { nextTick } = require('process');
@@ -24,6 +23,7 @@ const { pipeline } = require('stream');
 
 // router.get('/overview', ensureAuthenticated, (req, res) => {
 //     res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true } });
+
 const OrderItems = require('../models/OrderItems');
 const Order = require('../models/Order');
 var Country = require('../models/Country');

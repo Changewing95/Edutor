@@ -72,42 +72,17 @@
                 </div>
                 <div class="container">
                     <div class="col-md-8 col-lg-6">
-                        <a href="/student/review/create">
+                        {{!-- <a href="/student/review/create">
                             <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Add new Review</p>
-                        </a>
+                        </a> --}}
+                        <a href="/student/review/choose" class="btn btn-primary"><span><i class="fa fa-plus"
+                                    aria-hidden="true"></i></span> New Review</a>
+
                     </div>
                     <div class="col-xl-12 col-lg-12 col-md-10 col-12 text-center mb-5">
                         {{#if reviews}}
                         {{#each reviews}}
                         <div class="card">
-                            <div class="row d-flex">
-                                <div class=""> <img class="profile-pic" src="https://i.imgur.com/V3ICjlm.jpg"> </div>
-                                <div class="d-flex flex-column">
-                                    <h3 class="mt-2 mb-0">User name</h3>
-                                    <div>
-                                        <p class="text-left"><span class="text-muted">{{rating}}.0</span>
-                                            {{!-- <span class="fa fa-star star-active ml-3"></span> <span
-                                                class="fa fa-star star-active"></span> <span
-                                                class="fa fa-star star-active"></span>
-                                            <span class="fa fa-star star-active"></span> <span
-                                                class="fa fa-star star-inactive"></span> --}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="ml-auto">
-                                    <p class="text-muted pt-5 pt-sm-3">{{formatDate updatedAt 'DD MMM YYYY'}}</p>
-                                    <div class="fa-icons row d-flex justify-content-end">
-                                        <div style="margin-right: 20px">
-                                            <a href="/student/review/editReview/{{id}}"><i class="fas fa-edit fa-lg"
-                                                    style="width: 30px; height: 30px"></i></a>
-                                        </div>
-                                        <div style="margin-right: 20px">
-                                            <a href="/student/review/deleteReview/{{id}}"><i class="fa fa-trash fa-lg"
-                                                    style="width: 30px; height: 30px"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-sm-8 align-items-start">
                                     <div class="d-flex flex-column text-left">
@@ -128,12 +103,33 @@
                                             <h4 class="content">Description</h4>
                                             <p class="content">{{description}}</p>
                                         </div>
+                                        <div>
+                                            <p class="text-muted pt-5 pt-sm-3">Date of Review: {{formatDate updatedAt
+                                                'DD MMM YYYY'}}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <img class="img-fluid rounded float-end" style="margin-top: 10px" src="{{image}}">
                                 </div>
                             </div>
+                            <div class="row d-flex">
+                                <div class="ml-auto" style="padding-top: 10px">
+                                    <div class="fa-icons row d-flex justify-content-end">
+                                        <div style="margin-right: 20px;">
+                                            <a href="/student/review/editReview/{{id}}" class="btn btn-info"><i
+                                                    class="fas fa-edit fa-md"></i>
+                                                Edit Review</a>
+                                        </div>
+                                        <div style="margin-right: 20px">
+                                            <a href="/student/review/deleteReview/{{id}}" class="btn btn-danger"><i
+                                                    class="fa fa-trash fa-md"></i> Delete Review</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         {{/each}}
                         {{else}}

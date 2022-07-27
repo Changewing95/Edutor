@@ -28,8 +28,8 @@ router.get('/', async (req, res) => {
 
 router.get('/recommender', ensureAuthenticated, async (req, res) => {
 	User.update({ isNew: "no" }, { where: { id: req.user.id } })
-	await Tutorial.findAll().then((tutorial) => {	
-		res.render('recommender', {categories: tutorial, layout: null})
+	await Tutorial.findAll().then((tutorial) => {
+		res.render('recommender', { categories: tutorial, layout: null })
 	});
 
 });
@@ -96,16 +96,11 @@ router.get('/logout', (req, res) => {
 // const io = require("socket.io")(server);		// for socket.io
 // const stream = require('../public/js/stream');
 
-router.get('/vidroom/:id', function (req, res) {
+router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
 	Consultation.findByPk(req.params.id)
 		.then((consultation) => {
 			if (!consultation) {
 				flashMessage(res, 'error', 'Consultation not found');
-				res.redirect('/tutor/consultation/settings');
-				return;
-			}
-			if (req.user.id != consultation.userId) {
-				flashMessage(res, 'error', 'Unauthorised access');
 				res.redirect('/tutor/consultation/settings');
 				return;
 			}

@@ -57,26 +57,21 @@
                 {{!-- file upload --}}
                 <div class="hstack gap-3 d-flex ">
                     <div class="input-box mb-6">
+                        {{!-- left, product name --}}
+                        <div>
+                            <div class="input-box mb-3">
+                                <label class="details" class="font-italic" for="prod_name">Leaving Review For:</label>
+                                <input class="form-control" id="prod_name" name="prod_name" rows="1" maxlength="100"
+                                    value="{{prod_name}}" readonly></input>
+                            </div>
+                        </div>
+
                         {{!-- left, title --}}
                         <div>
                             <div class="input-box mb-3">
                                 <label class="details" class="font-italic" for="title">Title</label>
                                 <input class="form-control" id="title" name="title" rows="1" maxlength="100"
                                     placeholder="Enter feedback title here"></input>
-                            </div>
-                        </div>
-                        {{!-- left, category --}}
-                        <div>
-                            <div class="input-box mb-3">
-                                <span class="details">Category</span>
-                                <input type="text" name="category" list="categories" class="form-control"
-                                    placeholder="Enter category of course" required>
-                                <datalist id="categories">
-                                    <option value="Tutorial Packages"></option>
-                                    <option value="Consultation"></option>
-                                    <option value="Event"></option>
-                                    <option value="General"></option>
-                                </datalist>
                             </div>
                         </div>
                         {{!-- left vertical column, file upload --}}
