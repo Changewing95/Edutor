@@ -66,44 +66,35 @@
                 <div>
                     <div class="">
                         <div class="header">
-                            <h2>Your Given Reviews</h2>
+                            <h2>Your Purchased Product</h2>
                         </div>
                     </div>
                 </div>
                 <div class="container">
-                    <div class="col-md-8 col-lg-6">
-                        <a href="/student/review/create">
-                            <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Add new Review</p>
-                        </a>
-                    </div>
                     <div class="col-xl-12 col-lg-12 col-md-10 col-12 text-center mb-5">
-                        {{#if reviews}}
-                        {{#each reviews}}
+                        {{#if orders}}
+                        {{#each orders}}
                         <div class="card">
                             <div class="row">
                                 <div class="col-sm-8 align-items-start">
                                     <div class="d-flex flex-column text-left">
-                                        <div style="margin-top: 20px">
-                                            <h2 class="content">Review Title</h3>
-                                                <p class="mt-2 mb-0 text-left" style="padding: 0px; margin: 0px">
-                                                    {{title}}
-                                                </p>
+                                        {{!-- <div style="margin-top: 20px">
+                                            <p class="mt-2 mb-0 text-left" style="padding: 0px; margin: 0px">
+                                                {{prod_name}}
+                                            </p>
+                                        </div> --}}
+                                        <div>
+                                            <h4 class="blue-text">{{prod_name}}</h4>
                                         </div>
                                         <div style="margin-top: 15px">
-                                            <h4 class="content">Category</h4>
-                                            <p class="content">{{category}}</p>
-                                        </div>
-                                        <div>
-                                            <h4 class="blue-text">"{{rating}}"</h4>
-                                        </div>
-                                        <div>
-                                            <h4 class="content">Description</h4>
-                                            <p class="content">{{description}}</p>
+                                            <p class="content">Tutor: {{tutor_id}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <img class="img-fluid rounded float-end" style="margin-top: 10px" src="{{image}}">
+                                    <a href="/student/review/create/{{prod_name}}" class="btn btn-primary"
+                                        style="width:170px; font-size: 15px;">Leave
+                                        Review</a>
                                 </div>
                             </div>
                         </div>

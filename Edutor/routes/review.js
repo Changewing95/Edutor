@@ -1,27 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Review = require('../models/Review');
 const flashMessage = require('../helpers/messenger');
 const fetch = require('isomorphic-fetch')
 const { stringify } = require('querystring');
 const fs = require('fs');
 const upload = require('../helpers/reviewImageUpload');
+// models
+const Review = require('../models/Review');
+const Order = require('../models/Order');
 const OrderItems = require('../models/OrderItems');
+
+// for raw sql
+const db = require('../config/DBConfig');
+const { QueryTypes } = require('sequelize');
+
 
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 
-router.get('/noreviews', ensureAuthenticated, (req, res) => {
-    OrderItems.findAll({
-        where: { userId: req.user.id },
-        order: [['createdAt']],
-        raw: true
-    })
-        .then((orders) => {
-            res.render('something here', { orders });
-        })
-        .catch(err => console.log(err));
-})
 
 // REVIEW
 // for students
@@ -38,30 +34,31 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/choose', ensureAuthenticated, (req, res) => {
-    Review.findAll({
-        where: { userId: req.user.id },
-        order: [['createdAt']],
-        raw: true
+router.get('/choose', ensureAuthenticated, async (req, res) => {
+    OrderItems.findAll({
+        where: {
+            cust_name: req.user.name,
+        },
+        order: [['id']]
     })
-        .then((reviews) => {
-            // pass object to review.hbs
-            res.render('review/choose', { reviews });
+        .then((orders) => {
+            res.render('review/choose', { orders });
         })
         .catch(err => console.log(err));
 });
 
-router.get('/create', ensureAuthenticated, (req, res) => {
-    res.render('review/addReview');
+router.get('/create/:prod_name', ensureAuthenticated, async (req, res) => {
+    const productname = (req.params).prod_name
+
+    // sql query
+    let prod_name = await db.query(`SELECT title
+                                    FROM tutorials
+                                    WHERE title = '${productname}'`, { type: QueryTypes.SELECT });
+
+    res.render('review/addReview', { prod_name: prod_name[0].title });
 });
 
 router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
-    // Review.findByPk(req.params.id)
-    //     .then((review) => {
-    //         res.render('review/editReview', { review });
-    //     })
-    //     .catch(err => console.log(err));
-
     Review.findByPk(req.params.id)
         .then((review) => {
             if (!review) {
@@ -84,7 +81,7 @@ router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
 
 // ROUTES (POST)
 // CREATE
-router.post('/create', ensureAuthenticated, async (req, res) => {
+router.post('/create/:prod_num', ensureAuthenticated, async (req, res) => {
     // title, image, rating, description, category
     let title = req.body.title;
     let image = req.body.reviewURL;

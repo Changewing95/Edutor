@@ -74,7 +74,7 @@
             <div class="col-sm-6">
                 <div class="rating-block">
                     <h4>Average user rating</h4>
-                    <h2 class="bold padding-bottom-7">{{avgRating.avgRating}} <small>/ 5</small></h2>
+                    <h2 class="bold padding-bottom-7">{{formatRating avgRating.avgRating}} <small>/ 5</small></h2>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -89,7 +89,8 @@
                         {{!-- progress bar --}}
                         <div class="progress" style="height:12px; margin:5px 0;">
                             <div class="progress-bar" role="progressbar" style="width: {{percentage5}}%;"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentage5}}%</div>
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{formatRating percentage5}}%
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-left:10px;">{{rating5.rate5}}</div>
@@ -104,7 +105,8 @@
                         {{!-- progress bar --}}
                         <div class="progress" style="height:12px; margin:5px 0;">
                             <div class="progress-bar" role="progressbar" style="width: {{percentage4}}%;"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentage4}}%</div>
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{formatRating percentage4}}%
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-left:10px;">{{rating4.rate4}}</div>
@@ -119,7 +121,8 @@
                         {{!-- progress bar --}}
                         <div class="progress" style="height:12px; margin:5px 0;">
                             <div class="progress-bar" role="progressbar" style="width: {{percentage3}}%;"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentage3}}%</div>
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{formatRating percentage3}}%
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-left:10px;">{{rating3.rate3}}</div>
@@ -134,7 +137,8 @@
                         {{!-- progress bar --}}
                         <div class="progress" style="height:12px; margin:5px 0;">
                             <div class="progress-bar" role="progressbar" style="width: {{percentage2}}%;"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentage2}}%</div>
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{formatRating percentage2}}%
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-left:10px;">{{rating2.rate2}}</div>
@@ -149,7 +153,8 @@
                         {{!-- progress bar --}}
                         <div class="progress" style="height:12px; margin:5px 0;">
                             <div class="progress-bar" role="progressbar" style="width: {{percentage1}}%;"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percentage1}}%</div>
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{formatRating percentage1}}%
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right" style="margin-left:10px;">{{rating1.rate1}}</div>
