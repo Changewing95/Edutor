@@ -17,6 +17,7 @@ const { QueryTypes } = require('sequelize');
 
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
+const { Console } = require('console');
 
 
 // REVIEW
@@ -37,7 +38,7 @@ router.get('/main', ensureAuthenticated, (req, res) => {
 router.get('/choose', ensureAuthenticated, async (req, res) => {
     OrderItems.findAll({
         where: {
-            cust_name: req.user.name,
+            cust_id: req.user.id,
         },
         order: [['id']]
     })
@@ -50,12 +51,23 @@ router.get('/choose', ensureAuthenticated, async (req, res) => {
 router.get('/create/:prod_name', ensureAuthenticated, async (req, res) => {
     const productname = (req.params).prod_name
 
+    // OrderItems.findAll({
+    //     where: {
+    //         prod_name: productname,
+    //     },
+    //     order: [['id']]
+    // })
+    //     .then((orders) => {
+    //         res.render('review/addReview', { orders });
+    //     })
+    //     .catch(err => console.log(err));
+
     // sql query
     let prod_name = await db.query(`SELECT title
                                     FROM tutorials
                                     WHERE title = '${productname}'`, { type: QueryTypes.SELECT });
-
-    res.render('review/addReview', { prod_name: prod_name[0].title });
+    console.log(prod_name)
+    res.render('review/addReview', { prod_name: prod_name[0] });
 });
 
 router.get('/editReview/:id', ensureAuthenticated, (req, res) => {

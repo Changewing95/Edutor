@@ -66,6 +66,7 @@ app.engine('hbs', engine({
 		if_eq: helpers.if_eq,
 		increaseOID: helpers.increaseOID,
 		formatRating: helpers.formatRating,
+		radioCheck: helpers.radioCheck,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
@@ -159,7 +160,7 @@ app.use(function (req, res, next) {
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 // Connects to MySQL database
-DBConnection.setUpDB(false); // To set up database with new tables
+DBConnection.setUpDB(true); // To set up database with new tables
 
 // app.use(function (req, res, next) {
 // 	res.locals.messages = req.flash('message');
