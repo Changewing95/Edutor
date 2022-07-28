@@ -5,7 +5,7 @@ const db = require('../config/DBConfig');
 const Event = db.define('Event',
     {
         title: { type: Sequelize.STRING },
-        //image: { type: Sequelize.STRING},
+
         eventURL: { type: Sequelize.STRING },
 
         description: { type: Sequelize.STRING },
@@ -16,6 +16,7 @@ const Event = db.define('Event',
         people: { type: Sequelize.STRING },
         status: { type: Sequelize.STRING },
         price: { type: Sequelize.STRING },
+        userId: {type: Sequelize.STRING }
 
     });
 
