@@ -1,0 +1,134 @@
+<style>
+  #example1 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 2px grey;
+    margin: 15px;
+  }
+  #example3 {
+    padding: 15px 70% 15px 15px;
+    box-shadow: 0px 0.5px 2px grey;
+  }
+
+  #example2 {
+    padding: 15px;
+    box-shadow: 0px 0.5px 3px grey;
+  }
+  .button {
+    background-color: #1E63CB; /* Blue */
+    border: none;
+    color: white;
+    padding: 10px 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .table-condensed td {
+    border: none !important;
+    }
+
+  .select-wrap {
+    border: 1px solid #777;
+    width:150px;
+    background-color:#fff;
+    position:relative;
+  }
+  .select-wrap label{
+    font-size:8px;
+    text-transform: uppercase;
+    color: #777;
+    padding: 0 8px; 
+    margin-top: -1%; 
+    position: absolute;
+    top:6px;
+  }
+
+  select{
+    background-color: #fff;
+    border:0px;
+    height:40px;
+    font-size: 16px;
+    padding-left: 3%;
+    padding-top: 4%;
+    font-size: 13px;
+    margin-right: 4%;
+  }
+
+    label {
+        display: block;
+    }
+
+    input[type="radio"]{
+        width: auto;
+        display: inline;
+    }
+
+
+</style>
+
+<div class="row" style="width:120%; margin-left:-10%">
+  <h2 style="font-size: 22px; margin-top: 15px;"><b>Create new voucher</b></h2>
+  <div class="table-responsive cart_info">
+    <table class="table table-condensed">
+      <tbody>
+        <tr>
+          <td style="width: 50%;">
+              <form action="/vouchers/create" method="POST">
+
+              {{#if user}}
+                <div>
+                  <label>Tutor</label>
+                  <input type="text" name="tutor_created" id="tutor_created" value="{{user.name}}" disabled />
+                </div>
+                <br>
+              {{/if}}
+
+                <div>
+                  <label>Voucher Code</label>
+                  <input type="text" name="voucher_code" id="voucher_code" />
+                </div>
+                <br>
+
+
+             </td>
+
+            <td style="padding-left:10px;">
+                          <div>
+                  <label>Voucher Name</label>
+                  <input type="text" name="voucher_name" id="voucher_name" />
+                </div>
+                <br>
+
+                
+                <label for="basic-addon1" class="form-label">Voucher Amount</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">SGD</span>
+                    <input type="number" id="voucher_amount" name="voucher_amount" oninput="validate(this)" class="form-control" aria-label="Voucher Amount" aria-describedby="basic-addon1">
+                </div>
+                <br>
+                
+
+
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+        <button type="submit" style="font-weight:bold;width:99%;" class="button">Create this voucher</button>
+        </form>
+    </table>
+  </div>
+</div>
+
+
+<script>
+     <script>
+
+      var validate = function(e) {
+          var t = e.value;
+          e.value = (t.indexOf(".") >= 0) ? (t.substr(0, t.indexOf(".")) + t.substr(t.indexOf("."), 3)) : t;
+      }
+  </script>
+</script>

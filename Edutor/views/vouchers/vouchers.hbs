@@ -1,6 +1,6 @@
 <style>
   #example1 {
-    padding: 15px;
+    padding: 30px;
     box-shadow: 0px 0.5px 3px grey;
     margin: 15px;
   }
@@ -25,52 +25,25 @@
 </style>
 
 <div class="row" style="width:120%; margin-left:-10%">
-  <h2 style="font-size: 22px; margin-top: 15px;"><b>Shopping Cart</b></h2>
+  <h2 style="font-size: 22px; margin-top: 15px;"><b>Your vouchers</b></h2>
+
+  <a href="/vouchers/create" style="font-size: 13px; margin-top: 25px;margin-left:-12.5%;text-decoration: underline;"><br><span><i class="fa fa-plus-circle" aria-hidden="true"></i></span>&nbsp; Create new voucher</a>
   <div class="table-responsive cart_info">
     <table class="table table-condensed">
       <tbody>
         <tr>
           <td style="width: 70%;">
-            {{#if cartitems}}
-            <span style="font-size:14px; margin-left:-1%">{{cartCount}} items in cart</span>
-            {{#each cartitems}}
+            {{#if vouchersbythisuser}}
+            {{#each vouchersbythisuser}}
             <div id="example1" style="margin-left: -7px;">
-              <img src="/uploads/{{tutor_ID}}/{{image}}"class="product-{{product_ID}} part-1 consultationImage123" style="width=50px;height:50px;">
-              <h5 style="text-align: left;">{{product_name}}<br><span style="font-size:13px;">A course by {{author}}</span></h5>
+              <h5 style="text-align: left;">{{voucher_code}}<br><span style="font-size:13px;">Voucher Name: {{voucher_name}}</span></h5>
               <form action="/cart/delete-cart" method="POST">
-                <input type="hidden" name="productID" value="{{product_ID}}">
-                <button type="submit" style="float:right;margin-top:-10%;border:none;background-color:white;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <input type="hidden" name="voucherID" value="{{id}}">
+                <button type="submit" style="float:right;border:none;background-color:white;"><i class="fa fa-trash" aria-hidden="true"></i></button>
               </form>
-              <h4 style="text-align:right; color:green;margin-top:-5%;"><b>{{price}}</b></h4>
+              <h4 style="text-align:right; color:green;margin-top:-5%;"><b>{{discount}}</b></h4>
             </div>
             {{/each}}
-          </td>
-
-          <td>
-            <table style="width: 100%; margin-left:3%">
-              <tbody style="font-size: 14px;">
-                  <tr>
-                      <span style="font-size:14px;margin-top:50%;margin-left:6%;">Summary:</span><br>
-                      <td>Sub Total</td>
-                      <td> SGD {{total}}</td>
-                  </tr>
-                  <tr>
-                      <td>Discount</td>
-                      <td>SGD 0.00</td>
-                  </tr>
-                  <tr>
-                      <td>Total</td>
-                      <td><b><span style="font-size:19px;color:green">SGD {{total}}</span></b></td>    
-                  </tr>
-                  <tr>
-                      <td colspan=2>
-                        <form action="/checkout" method="GET">
-                          <button style="font-weight:bold;" class="button">Checkout</button>
-                        </form>
-                      </td>
-                  </tr>
-                </tbody>
-              </table>
           </td>
         </tr>
             {{!-- <td>{{name}}</td>
@@ -80,7 +53,7 @@
 
 
           {{else}}
-          <h4 style="font-size: 14px;margin-left:-0.9%">Nothing in your cart. Toots!</h4>
+          <h4 style="font-size: 14px;margin-left:-0.9%;margin-top:20px;">No vouchers created by you yet!</h4>
           {{/if}}
 
 

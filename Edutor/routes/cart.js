@@ -1,5 +1,4 @@
 const express = require('express');
-const { request } = require('http');
 const router = express.Router();
 const Cart = require('../models/Cart');
 const User = require('../models/User');
@@ -57,32 +56,17 @@ router.post('/addtoCart', (req,res) => {
     var author = req.body.author;
     var tutorid = req.body.tutorid;
     var current_student = req.user.id;
-// sus kitten
-    // creating cart here
-//     var cart = req.session.cart;
-//     //use findOrCreate here later
-//     Cart.create(
-//         { student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author}
-//     )
-//         .then((carts) => {
-
-//             console.log(carts.toJSON());
-//             res.redirect('/cart');
-//         })
-//         .catch(err => console.log(err))
-
-    // end creating cart
-
+    var prodType = req.body.productType;
+    var product_item = req.body.product_item
 
     
     Cart.findOrCreate({
-        where: {student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author}
+        where: {student_ID: current_student, tutor_ID:tutorid, product_ID: id, product_name: title,  price: price, image: image, author:author, product_type:prodType, product_item: product_item}
     })
     
-    var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid};
+    var addingProd = {id:id, title:title, author:author,price:price,image:image,tutorid:tutorid, product_item: product_item, prodType: prodType};
 
     if(req.session.cart){
-        // req.session.destroy()
         var cart = req.session.cart;
 
         if(!isProductinCart(cart,id)){
