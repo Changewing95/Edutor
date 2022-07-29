@@ -66,6 +66,7 @@ app.engine('hbs', engine({
 		if_eq: helpers.if_eq,
 		increaseOID: helpers.increaseOID,
 		formatRating: helpers.formatRating,
+		radioCheck: helpers.radioCheck,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',

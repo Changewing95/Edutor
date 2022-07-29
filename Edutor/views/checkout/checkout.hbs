@@ -78,11 +78,12 @@
           <td style="width: 50%;">
               <form action="/checkout/place_order" method="POST">
 
-            {{#each cart}}
+            {{#each cartitems}}
             <div id="example2" style="margin-left:4px;">
-              <h5 style="text-align:left;font-size:12px;">{{title}}<br><span style="font-size:9px;">A course by {{author}}</span></h5>
+              <h5 style="text-align:left;font-size:12px;">{{product_name}}<br><span style="font-size:9px;">A {{product_type}} by {{author}}</span></h5>
               <h6 style="text-align:right;margin-top:-5%;"><b>{{price}}</b></h6>
               <input type="hidden" name="tutorID" id="tutorID" value="{{userId}}">
+              <input type="hidden" name="tutorID" id="tutorID" value="{{product_item}}">
             </div>  
             <br>
             {{/each}}

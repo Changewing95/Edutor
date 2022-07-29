@@ -9,8 +9,11 @@ const Voucher = db.define('voucher',
             autoIncrement: true,
             allowNull: false
            },
+        voucher_code:{type: Sequelize.STRING},
+        voucher_name:{type: Sequelize.STRING},
         tutor_ID:{type: Sequelize.STRING},
-        discount: { type: Sequelize.DECIMAL(8,2)},
+        tutor_name:{type: Sequelize.STRING},
+        discount: { type: Sequelize.DECIMAL(8,2)}
     });
     
     

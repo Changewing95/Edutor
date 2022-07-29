@@ -6,11 +6,13 @@ const Event = require('../models/Event');
 const path = require('path')
 const fs = require('fs');
 const upload = require('../helpers/eventimageupload');
+const ensureAuthenticated = require('../helpers/auth');
 
 
-router.get('/main', (req, res) => {
+
+router.get('/main', ensureAuthenticated, (req, res) => {
     Event.findAll({
-        //where: { userId: req.user.id },
+        where: { userId: req.user.id },
         //order: [['startdate']],
         raw: true
     })
@@ -21,7 +23,7 @@ router.get('/main', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', ensureAuthenticated,(req, res) => {
     res.render('tutor/addEvent');
 });
 // router.post('/create', (req, res) => {
@@ -65,9 +67,9 @@ router.get('/create', (req, res) => {
 
 
 
-router.post('/create', (req, res) => {
-    if (!fs.existsSync('../public/eventuploads/')) {
-        fs.mkdirSync('../public/eventuploads/' + { recursive: true });
+router.post('/create', ensureAuthenticated, (req, res) => {
+    if (!fs.existsSync('./public/eventuploads/')) {
+        fs.mkdirSync('./public/eventuploads/' + { recursive: true });
     }
     upload(req, res, (err) => {
         if (err) {
@@ -90,11 +92,11 @@ router.post('/create', (req, res) => {
             let status = req.body.status;
             let price = req.body.price;
 
-            //let userId = req.user.id;
+            let userId = req.user.id;
             
         
             Event.create(
-                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price }
+                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price,userId }
             )
                 .then((event) => {
                     console.log(event.toJSON());
@@ -109,7 +111,7 @@ router.post('/create', (req, res) => {
 });
 
 
-router.get('/editEvent/:id', (req, res) => {
+router.get('/editEvent/:id', ensureAuthenticated, (req, res) => {
     Event.findByPk(req.params.id)
         .then((event) => {
             if (!event) {
@@ -122,7 +124,7 @@ router.get('/editEvent/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.post('/editEvent/:id', (req, res) => {
+router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     // let image = req.body.image
     let description = req.body.description;
@@ -133,10 +135,10 @@ router.post('/editEvent/:id', (req, res) => {
     let people = req.body.people;
     let status = req.body.status;
     let price = req.body.price;
-    //let userId = req.user.id;
+    let userId = req.user.id;
 
     Event.update(
-        { title, description, startdate, enddate, starttime, endtime, people, status,price },
+        { title, description, startdate, enddate, starttime, endtime, people, status,price,userId},
         { where: { id: req.params.id } }
 
     )
@@ -148,7 +150,7 @@ router.post('/editEvent/:id', (req, res) => {
 
 });
 
-router.get('/deleteEvent/:id', async function
+router.get('/deleteEvent/:id',  ensureAuthenticated, async function
     (req, res) {
     try {
         let event = await Event.findByPk(req.params.id);
