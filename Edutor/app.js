@@ -160,7 +160,7 @@ app.use(function (req, res, next) {
 const flashMessenger = require('flash-messenger');
 app.use(flashMessenger.middleware);
 // Connects to MySQL database
-DBConnection.setUpDB(true); // To set up database with new tables
+DBConnection.setUpDB(false); // To set up database with new tables
 
 // app.use(function (req, res, next) {
 // 	res.locals.messages = req.flash('message');

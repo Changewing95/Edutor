@@ -31,7 +31,7 @@ function cartCount(cart,req){
 
 
 router.get('/', (req,res,next) =>{
- 
+    // req.session.destroy()
     Cart.findAll({
         where: { student_ID: req.user.id },
         raw: true

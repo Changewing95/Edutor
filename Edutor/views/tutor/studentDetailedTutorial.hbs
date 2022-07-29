@@ -37,7 +37,17 @@
 
                 <div class="button">
                     <input type="button" class="buyButton" value="Buy now">
-                    <input type="button" class="cartButton" value="Add to cart">
+                    <form action="/cart/addtoCart" method="POST">
+                    <input type="hidden" name="id" value={{id}}> 
+                    <input type="hidden" name="title" value={{title}}> 
+                    <input type="hidden" name="price" value={{price}}> 
+                    <input type="hidden" name="author" value={{author}}> 
+                    <input type="hidden" name="tutorid" value={{userId}}> 
+                    <input type="hidden" name="image" value={{tutorialImageURL}}> 
+                    <input type="hidden" name="product_item" value={{video}}> 
+                    <input type="hidden" name="productType" value="course">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+                </form>
                 </div>
                 <div>
                     <h4>Author</h4>
