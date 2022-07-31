@@ -17,16 +17,17 @@ const radioCheck = function (value, radioValue) {
 const formatRating = function (value) {
     const value123 = value;
     return value123.toFixed(2);
+
 };
 
 
 const isEqualHelperHandlerbar = function (a, b, opts) {
     if (a == b) {
-        return opts.fn(this) 
-    } 
-    else { 
-        return opts.inverse(this) 
-    } 
+        return opts.fn(this)
+    }
+    else {
+        return opts.inverse(this)
+    }
 }
 
 const increaseOID = function (a, b) {
@@ -45,8 +46,8 @@ const if_eq = function () {
     const args = Array.prototype.slice.call(arguments, 0, -1);
     const options = arguments[arguments.length - 1];
     const allEqual = args.every(function (expression) {
-          return args[0] === expression;
-      });
+        return args[0] === expression;
+    });
 
     return allEqual ? options.fn(this) : options.inverse(this);
 };
