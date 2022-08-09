@@ -84,11 +84,9 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
         flashMessage(res, 'error', 'Enter valid Start and End time!');
         res.redirect('/tutor/consultation/create');
     }
-    else {
-        if (price > 0) {
-            flashMessage(res, 'error', 'Price cannot be negative!');
-            res.redirect('/tutor/consultation/create');
-        }
+    if (price < 0) {
+        flashMessage(res, 'error', 'Price cannot be negative!');
+        res.redirect('/tutor/consultation/create');
     }
 
     // recaptcha -- advanced feature
@@ -135,6 +133,19 @@ router.post('/editConsultation/:id', ensureAuthenticated, async (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm');
     let date = moment(req.body.consultDate, 'DD/MM/YYYYs');
     let userId = req.user.id;
+
+    // validation
+    if (start_time > end_time) {
+        if (price < 0) {
+            flashMessage(res, 'error', 'Price cannot be negative!');
+        }
+        flashMessage(res, 'error', 'Enter valid Start and End time!');
+        res.redirect('/tutor/consultation/create');
+    }
+    if (price < 0) {
+        flashMessage(res, 'error', 'Price cannot be negative!');
+        res.redirect('/tutor/consultation/create');
+    }
 
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
