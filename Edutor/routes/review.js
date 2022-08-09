@@ -67,7 +67,7 @@ router.get('/create/:prod_name', ensureAuthenticated, async (req, res) => {
                                     FROM tutorials
                                     WHERE title = '${productname}'`, { type: QueryTypes.SELECT });
     console.log(prod_name)
-    res.render('review/addReview', { prod_name: prod_name[0] });
+    res.render('review/addReview', { prod_name: prod_name[0].title });
 });
 
 router.get('/editReview/:id', ensureAuthenticated, (req, res) => {

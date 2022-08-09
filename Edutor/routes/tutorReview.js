@@ -46,6 +46,7 @@ router.get('/listReview', async (req, res) => {
     const percentage3 = calculatePercentage(rating3Count[0].rate3, totalCount[0].totalrating);
     const percentage2 = calculatePercentage(rating2Count[0].rate2, totalCount[0].totalrating);
     const percentage1 = calculatePercentage(rating1Count[0].rate1, totalCount[0].totalrating);
+    const avgpercentage = calculatePercentage(avgRating[0].avgRating, 5)
 
 
     // query for all reviews
@@ -61,7 +62,7 @@ router.get('/listReview', async (req, res) => {
             res.render('review/overview.hbs', {
                 reviews, avgRating: avgRating[0], rating5: rating5Count[0], rating4: rating4Count[0],
                 rating3: rating3Count[0], rating2: rating2Count[0], rating1: rating1Count[0],
-                percentage5, percentage4, percentage3, percentage2, percentage1
+                percentage5, percentage4, percentage3, percentage2, percentage1, avgpercentage
             });
         })
         .catch(err => console.log(err));

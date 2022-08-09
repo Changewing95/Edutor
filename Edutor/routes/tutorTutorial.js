@@ -106,7 +106,7 @@ router.get('/create', (req, res) => {
 //             res.json({ file: '/uploads/profile/profile.png', err: err });
 //         }
 //         else {
-           
+
 //             let title = req.body.title;
 //             let description = req.body.description;
 //             let author = req.body.author;
@@ -117,7 +117,7 @@ router.get('/create', (req, res) => {
 //             let video = req.body.video;
 //             let userId = req.user.id;
 
-        
+
 //                 // res.json({
 //                 //     file: `/uploads/${req.user.id}/${req.file.filename}`
 
@@ -194,7 +194,7 @@ router.post('/create', async function (req, res) {
         else {
 
             console.log(req.files);
-            var imageUpload = req.files['tutorialImageUpload'][0].filename
+            var imageUpload = `/uploads/${req.user.id}/` + req.files['tutorialImageUpload'][0].filename
             var videoUpload = req.files['tutorialVideoUpload'][0].filename
             let title = req.body.title;
             let description = req.body.description;
@@ -208,7 +208,7 @@ router.post('/create', async function (req, res) {
             const message = 'Tutorial successfully uploaded';
             flashMessage(res, 'success', message);
             Tutorial.create(
-                { title, description, author, category, price, tutorialImageURL: imageUpload, video:videoUpload , userId }
+                { title, description, author, category, price, tutorialImageURL: imageUpload, video: videoUpload, userId }
             )
                 .then((tutorials) => {
 
@@ -294,19 +294,19 @@ router.post('/editTutorial/:id', async (req, res) => {
             //many key value pair and many index so the index to find attribute
             //.filename is part of the attribute
             if (req.files['tutorialImageUpload']) {
-                
+
                 // console.log(req.file
-                Imagefile = req.files['tutorialImageUpload'][0].filename
+                Imagefile = `/uploads/${req.user.id}/` + req.files['tutorialImageUpload'][0].filename
                 // Imagefile = "hi"
             }
             if (req.files['tutorialVideoUpload']) {
-                VideoFile = req.files['tutorialVideoUpload'] [0].filename
+                VideoFile = req.files['tutorialVideoUpload'][0].filename
 
             }
             const message = 'Tutorial successfully edited';
             flashMessage(res, 'success', message);
             Tutorial.update(
-                { title, description, author, category, price, tutorialImageURL: Imagefile, video:VideoFile }, { where: { id: req.params.id } }
+                { title, description, author, category, price, tutorialImageURL: Imagefile, video: VideoFile }, { where: { id: req.params.id } }
             )
                 .then((tutorials) => {
 
