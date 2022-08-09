@@ -9,6 +9,7 @@ const upload = require('../helpers/imageUpload');
 const { stringify } = require('querystring');
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
+const { start } = require('repl');
 
 
 router.get('/settings', (req, res) => {
@@ -22,7 +23,6 @@ router.get('/settings', (req, res) => {
             res.render('dashboard/consultationOverview', { consultations, layout: 'main2' });
         })
         .catch(err => console.log(err));
-    // res.render('tutor/consultation');
 });
 
 router.get('/main', ensureAuthenticated, (req, res) => {
@@ -36,7 +36,6 @@ router.get('/main', ensureAuthenticated, (req, res) => {
             res.render('consultation/consultation', { consultations });
         })
         .catch(err => console.log(err));
-    // res.render('tutor/consultation');
 });
 
 
@@ -45,12 +44,6 @@ router.get('/create', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/editConsultation/:id', ensureAuthenticated, (req, res) => {
-    // Consultation.findByPk(req.params.id)
-    //     .then((consultation) => {
-    //         res.render('consultation/editConsultation', { consultation });
-    //     })
-    //     .catch(err => console.log(err));
-
     Consultation.findByPk(req.params.id)
         .then((consultation) => {
             if (!consultation) {
@@ -82,6 +75,21 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
     let userId = req.user.id
+
+    // validation -- for price and time
+    if (start_time > end_time) {
+        if (price < 0) {
+            flashMessage(res, 'error', 'Price cannot be negative!');
+        }
+        flashMessage(res, 'error', 'Enter valid Start and End time!');
+        res.redirect('/tutor/consultation/create');
+    }
+    else {
+        if (price > 0) {
+            flashMessage(res, 'error', 'Price cannot be negative!');
+            res.redirect('/tutor/consultation/create');
+        }
+    }
 
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
