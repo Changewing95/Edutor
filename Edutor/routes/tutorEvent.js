@@ -23,7 +23,7 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/create', ensureAuthenticated,(req, res) => {
+router.get('/create', ensureAuthenticated, (req, res) => {
     res.render('tutor/addEvent');
 });
 // router.post('/create', (req, res) => {
@@ -80,7 +80,12 @@ router.post('/create', ensureAuthenticated, (req, res) => {
         else {
 
             console.log(req.files['posterUpload'][0].filename)
-            var eventlink = req.files['posterUpload'][0].filename
+
+            // note from yl to dylan:
+            // change to " `/eventuploads/${req.user.id}/` +" once u add in userid to file path 
+            // take note of the '', its not the usual '' but the slanted ``
+            var eventlink = '/eventuploads/1/' + req.files['posterUpload'][0].filename
+
             let title = req.body.title;
             // let image = req.body.image
             let description = req.body.description;
@@ -93,18 +98,18 @@ router.post('/create', ensureAuthenticated, (req, res) => {
             let price = req.body.price;
 
             let userId = req.user.id;
-            
-        
+
+
             Event.create(
-                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price,userId }
+                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price, userId }
             )
                 .then((event) => {
                     console.log(event.toJSON());
                     res.redirect('/tutor/event/main');
                 })
                 .catch(err => console.log(err))
-                // res.json({ file: `/eventuploads/${req.file.filename}` });
-            
+            // res.json({ file: `/eventuploads/${req.file.filename}` });
+
         }
     });
 
@@ -127,6 +132,10 @@ router.get('/editEvent/:id', ensureAuthenticated, (req, res) => {
 router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     // let image = req.body.image
+
+    // from yl, to dylan: add in " '/eventuploads/1/' + " after u implement updating of image. 
+    // another note: change to " `/eventuploads/${req.user.id}/` +" once u add in userid to file path 
+    
     let description = req.body.description;
     let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
     let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
@@ -138,7 +147,7 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
     let userId = req.user.id;
 
     Event.update(
-        { title, description, startdate, enddate, starttime, endtime, people, status,price,userId},
+        { title, description, startdate, enddate, starttime, endtime, people, status, price, userId },
         { where: { id: req.params.id } }
 
     )
@@ -150,7 +159,7 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
 
 });
 
-router.get('/deleteEvent/:id',  ensureAuthenticated, async function
+router.get('/deleteEvent/:id', ensureAuthenticated, async function
     (req, res) {
     try {
         let event = await Event.findByPk(req.params.id);
