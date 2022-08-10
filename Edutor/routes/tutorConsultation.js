@@ -74,7 +74,8 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
-    let userId = req.user.id
+    let userId = req.user.id;
+    let roomURL = 'http://localhost:5000/vidroom/';
 
     // validation -- for price and time
     if (start_time > end_time) {
@@ -113,7 +114,7 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
         const message = 'Consultation slot successfully submitted';
         flashMessage(res, 'success', message);
 
-        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, userId })
+        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, roomURL, userId })
             .then((consultation) => {
                 console.log(consultation.toJSON());
                 res.redirect('/tutor/consultation/main');

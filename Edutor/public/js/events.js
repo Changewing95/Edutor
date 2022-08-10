@@ -39,14 +39,19 @@ window.addEventListener('load', () => {
 
             //create room link
             let roomLink = `${location}?room=${roomName.trim().replace(' ', '_')}_${helpers.generateRandomString()}`;
+            console.log('event.js line 42',roomLink);
 
             //show message with link to room
             document.querySelector('#room-created').innerHTML = `Room successfully created. Click <a href='${roomLink}'>here</a> to enter room. 
                 Share the room link with your partners.`;
 
+            // inserting the url link to the hidden form field
+            document.querySelector('#roomURL').setAttribute('value', roomLink);
+            console.log(document.querySelector('#roomURL'));
+
             //empty the values
-            document.querySelector('#room-name').value = '';
-            document.querySelector('#your-name').value = '';
+            // document.querySelector('#room-name').value = '';
+            // document.querySelector('#your-name').value = '';
         }
 
         else {

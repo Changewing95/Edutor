@@ -13,7 +13,7 @@ const flashMessage = require('../helpers/messenger');
 // ROUTING:
 router.get('/settings', ensureAuthenticated, async (req, res) => {
     //  todo: query for roomURL after saving the room url to the db
-    let consult_detail = await db.query(`SELECT prod_name, date, start_time, end_time
+    let consult_detail = await db.query(`SELECT prod_name, date, start_time, end_time, roomURL
                                     FROM orderitems oi
                                     INNER JOIN consultations c
                                     ON oi.tutor_id = c.userId

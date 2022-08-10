@@ -96,7 +96,7 @@ router.get('/logout', (req, res) => {
 // const io = require("socket.io")(server);		// for socket.io
 // const stream = require('../public/js/stream');
 
-router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
+router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 	Consultation.findByPk(req.params.id)
 		.then((consultation) => {
 			if (!consultation) {
@@ -109,6 +109,23 @@ router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
 		})
 		.catch(err => console.log(err));
 	// res.render("consultation/callroom");
+})
+
+router.post('/vidroom/:id/', function (req, res) {
+	var something = req.params;
+	let link = req.body.roomURL;
+
+	flashMessage(res, 'info', something);
+	Consultation.update(
+		{ roomURL: link },
+		{ where: { id: `${req.params.id}` } }
+	)
+		.then((result) => {
+			console.log(result[0] + ' consultation updated');
+			flashMessage(res, 'success', 'roomurl saved!');
+			res.redirect(`${link}`);
+		})
+		.catch(err => console.log(err));
 })
 
 

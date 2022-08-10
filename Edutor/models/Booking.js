@@ -18,7 +18,7 @@ const Consultation = db.define('consultations',
         date: { type: Sequelize.DATE },
         start_time: { type: Sequelize.DATE },
         end_time: { type: Sequelize.DATE },
-        // roomURL: {type: Sequelize.STRING},
+        roomURL: {type: Sequelize.STRING},
     });
 
 module.exports = Consultation;
