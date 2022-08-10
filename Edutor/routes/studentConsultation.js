@@ -5,6 +5,9 @@ const Consultation = require('../models/Booking');
 const OrderItems = require('../models/OrderItems');
 const db = require('../config/DBConfig');
 const { QueryTypes } = require('sequelize');
+const moment = require('moment');
+const flashMessage = require('../helpers/messenger');
+
 
 
 // ROUTING:
@@ -15,7 +18,16 @@ router.get('/settings', ensureAuthenticated, async (req, res) => {
                                     INNER JOIN consultations c
                                     ON oi.tutor_id = c.userId
                                     WHERE cust_id = '${req.user.id}' and prodType = 'consultation session' 
-                                    GROUP BY oi.prod_name`, { type: QueryTypes.SELECT });
+                                    GROUP BY oi.prod_name
+                                    ORDER BY date`, { type: QueryTypes.SELECT });
+
+    consult_detail.forEach(element => {
+        var date = element.date;
+        var iscurrentDate = moment(date).isSame(new Date(), "day");
+        if (iscurrentDate) {
+            flashMessage(res, 'success', `You have a ${element.prod_name} consultation today!`);
+        }
+    });
 
     res.render('dashboard/student/consultationview', { consult_detail, layout: 'main2' });
 });

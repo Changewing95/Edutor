@@ -54,15 +54,6 @@
             font-size: 13px;
             margin-right: 4%;
         }
-
-        label {
-            display: block;
-        }
-
-        input[type="radio"] {
-            width: auto;
-            display: inline;
-        }
     </style>
 
 </head>
@@ -73,19 +64,19 @@
         <div id="example1" style="margin-left: -7px;width:120%;padding-top:3%;padding-bottom:3%;padding-right:3%;">
             <table>
                 <tr>
-                    <td style="width: 20%;">
+                    <td style="width: 30%;">
                         <h6 style="font-size: 13px;">Title </h6>
                         <hr>
                     </td>
-                    <td style="width: 20%;">
+                    <td style="width: 30%;">
                         <h6 style="font-size: 13px;">Date</h6>
                         <hr>
                     </td>
-                    <td style="width: 11%;">
+                    <td style="width: 25%;">
                         <h6 style="font-size: 13px;">Time</h6>
                         <hr>
                     </td>
-                    <td style="width: 15%;">
+                    <td style="width: 30%;">
                         <h6 style="font-size: 13px;">Link</h6>
                         <hr>
                     </td>
@@ -93,26 +84,25 @@
                 {{#if consult_detail}}
                 {{#each consult_detail}}
                 <tr>
-                    <td style="width: 25%;">
+                    <td style="width: 30%;">
                         <h6 style="font-size: 13px;">{{prod_name}}</h6>
                         <hr>
                     </td>
-                    <td style="width: 20%;">
+                    <td style="width: 25%;">
                         <h6 style="font-size: 13px;">{{formatDate date 'DD MMM YYYY'}}</h6>
                         <hr>
                     </td>
-                    <td style="width: 20%;">
+                    <td style="width: 30%;">
                         <h6 style="font-size: 13px">{{formatDate start_time 'HH:mm'}} to {{formatDate
                             end_time 'HH:mm'}}</h6>
                         <hr>
                     </td>
 
-                    <td style="width: 20%;">
-                        <a href="/dashboard/vieworder/{{orderId}}">
-                            <a href="/vidroom/{{id}}" style="width:170px; font-size: 15px; margin-top: 50px">Enter
-                                Call
-                                Room</a>
-                            <hr style="margin-top:7%;">
+                    <td style="width: 30%;">
+                        <a href="/vidroom/{{id}}" style="width:170px; font-size: 15px; margin-top: 50px">Enter
+                            Call
+                            Room</a>
+                        <hr style="margin-top:7%;">
                     </td>
                 </tr>
                 {{/each}}
