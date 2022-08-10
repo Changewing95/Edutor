@@ -65,25 +65,26 @@
             </div>
 
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <label for="room-name">Room Name</label>
-                <input type="text" id='room-name' class="form-control rounded-0" value="{{consultation.title}}">
+                <label for="room-name" class="toremove">Room Name</label>
+                <input type="text" id='room-name' class="form-control rounded-0 toremove1" value="{{consultation.title}}">
             </div>
 
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <label for="your-name">Your Name</label>
-                <input type="text" id='your-name' class="form-control rounded-0" placeholder="Your Name">
+                <label for="your-name" class="toremove2">Your Name</label>
+                <input type="text" id='your-name' class="form-control rounded-0 toremove3" placeholder="Your Name">
             </div>
 
+            <div class="col-12 col-md-4 offset-md-4 mb-3 toremove4">
+                <button id='create-room' class="btn btn-block rounded-0 btn-info ">Create Room</button>
+            </div>
+
+            {{!-- <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div> --}}
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <button id='create-room' class="btn btn-block rounded-0 btn-info">Create Room</button>
+                <form method="POST" action="">
+                    <input type="hidden" name="roomURL" id="roomURL">
+                    <button type="submit" class="btn btn-block rounded-0 btn-info">Enter Room</button>
+                </form>
             </div>
-
-            <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'>
-            </div>
-            <form method="POST" action="">
-                <input type="" name="roomURL" id="roomURL">
-                <input type="submit">
-            </form>
 
         </div>
     </div>

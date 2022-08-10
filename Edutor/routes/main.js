@@ -97,7 +97,19 @@ router.get('/logout', (req, res) => {
 // const stream = require('../public/js/stream');
 
 router.get('/vidroom/', ensureAuthenticated, (req, res) => {
-	res.render('consultation/roomNotFound');
+	Consultation.findByPk(req.params.id)
+		.then((consultation) => {
+			if (!consultation) {
+				flashMessage(res, 'error', 'Tutor has yet to create conference link!')
+				res.render('consultation/roomNotFound');
+				return;
+			}
+			
+
+			// res.render('consultation/roomNotFound', { consultation });
+		})
+		.catch(err => console.log(err));
+	// res.render('consultation/roomNotFound');
 });
 
 router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
@@ -112,14 +124,28 @@ router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 			res.render('consultation/callroom', { consultation });
 		})
 		.catch(err => console.log(err));
-	res.render("consultation/callroom");
+	// Consultation.findByPk(req.params.id)
+	// 	.then((consultation) => {
+	// 		if (!consultation) {
+	// 			flashMessage(res, 'error', 'Consultation not found');
+	// 			res.redirect('/tutor/consultation/main');
+	// 			return;
+	// 		}
+	// 		if (req.user.id != consultation.userId) {
+	// 			flashMessage(res, 'error', 'Unauthorised access');
+	// 			res.redirect('/tutor/consultation/main');
+	// 			return;
+	// 		}
+
+	// 		res.render('consultation/editConsultation', { consultation });
+	// 	})
+	// 	.catch(err => console.log(err));
+
+	// res.render("consultation/callroom");
 })
 
 router.post('/vidroom/:id/', function (req, res) {
-	var something = req.params;
 	let link = req.body.roomURL;
-
-	flashMessage(res, 'info', something);
 	Consultation.update(
 		{ roomURL: link },
 		{ where: { id: `${req.params.id}` } }
