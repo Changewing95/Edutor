@@ -96,6 +96,10 @@ router.get('/logout', (req, res) => {
 // const io = require("socket.io")(server);		// for socket.io
 // const stream = require('../public/js/stream');
 
+router.get('/vidroom/', ensureAuthenticated, (req, res) => {
+	res.render('consultation/roomNotFound');
+});
+
 router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 	Consultation.findByPk(req.params.id)
 		.then((consultation) => {
@@ -108,7 +112,7 @@ router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 			res.render('consultation/callroom', { consultation });
 		})
 		.catch(err => console.log(err));
-	// res.render("consultation/callroom");
+	res.render("consultation/callroom");
 })
 
 router.post('/vidroom/:id/', function (req, res) {
