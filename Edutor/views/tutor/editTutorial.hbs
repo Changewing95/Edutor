@@ -59,25 +59,32 @@
                     <span class="details">Update Thumbnail</span>
                     <div class="custom-file mb-2">
                         <input type="file" class="form-control custom-file-input" id="tutorialImageUpload"
-                            name="tutorialImageUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+                            name="tutorialImageUpload" onchange="return fileValidation()" accept="image/png,image/jpeg,image/jpg,image/gif">
                         <label class="custom-file-label" for="customFile">{{tutorials.tutorialImageURL}}</label>
                     </div>
+                    <input id="tutorialImageURL" type="hidden" name="tutorialImageURL" value="{{ tutorials.tutorialImageURL}}">
+                    
+                        <div id="imagePreview">
+                            <img src="{{tutorials.tutorialImageURL}}">
+                        </div>
 
-                    <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
-                        value="{{ tutorials.tutorialImageURL}}">
 
                     <div class="input-box mb-3">
                         <span class="details">Update tutorial video</span>
                         <div class="custom-file mb-2">
-                            <input type="file" class="form-control custom-file-input" id="tutorialVideoURL"
+                            <input type="file" class="form-control custom-file-input" onchange="return videoValidation()" id="tutorialVideoURL"
                                 name="tutorialVideoUpload" accept="video/*">
                             <label class="custom-file-label" for="customFile">{{tutorials.video}}</label>
 
                         </div>
+                        {{!-- <div id="videoPreview">
+                            <video src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" >
+                        </div> --}}
+
 
 
                         <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}">
-                        <video width="320" height="240" controls>
+                        <video width="320" height="240" controls/>
                             <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
                         </video>
 
@@ -91,6 +98,52 @@
     </div>
 </body>
 <script>
+    function fileValidation() {
+        var fileInput = document.getElementById('tutorialImageUpload');
+        var filePath = fileInput.value;
+        // Allowing file type
+        var allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        else {
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '"/>';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    }
+
+
+
+ function videoValidation() {
+        var fileInput = document.getElementById('tutorialVideoURL');
+        var filePath = fileInput.value;
+        // Allowing file type
+        var allowedExtensions =/(\.mp4)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+      
+    }
+
+
+
+
 const uploadButton = document.querySelector('#upload-btn');
  uploadButton.addEventListener('click', (e) => {
   const form = document.querySelector('#my-form');
