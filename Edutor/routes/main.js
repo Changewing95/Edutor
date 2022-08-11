@@ -104,9 +104,6 @@ router.get('/vidroom/', ensureAuthenticated, (req, res) => {
 				res.render('consultation/roomNotFound');
 				return;
 			}
-			
-
-			// res.render('consultation/roomNotFound', { consultation });
 		})
 		.catch(err => console.log(err));
 	// res.render('consultation/roomNotFound');
@@ -124,23 +121,6 @@ router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 			res.render('consultation/callroom', { consultation });
 		})
 		.catch(err => console.log(err));
-	// Consultation.findByPk(req.params.id)
-	// 	.then((consultation) => {
-	// 		if (!consultation) {
-	// 			flashMessage(res, 'error', 'Consultation not found');
-	// 			res.redirect('/tutor/consultation/main');
-	// 			return;
-	// 		}
-	// 		if (req.user.id != consultation.userId) {
-	// 			flashMessage(res, 'error', 'Unauthorised access');
-	// 			res.redirect('/tutor/consultation/main');
-	// 			return;
-	// 		}
-
-	// 		res.render('consultation/editConsultation', { consultation });
-	// 	})
-	// 	.catch(err => console.log(err));
-
 	// res.render("consultation/callroom");
 })
 

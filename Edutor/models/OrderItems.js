@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
@@ -18,7 +19,8 @@ const OrderItems = db.define('orderItems',
         qty: {type: Sequelize.INTEGER},
         status: {type: Sequelize.STRING},
         price: {type: Sequelize.DECIMAL(8,2)},
-        item_detail: {type: Sequelize.STRING}
+        item_detail: { type: Sequelize.STRING },
+        leftReview: {type: sequelize.BOOLEAN}
         //foreign key is order id from Orders table (model)
     });
 

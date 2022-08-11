@@ -7,8 +7,10 @@ const fs = require('fs');
 const upload = require('../helpers/reviewImageUpload');
 // models
 const Review = require('../models/Review');
-const Order = require('../models/Order');
-const OrderItems = require('../models/OrderItems');
+const moment = require('moment');
+
+// const Order = require('../models/Order');
+// const OrderItems = require('../models/OrderItems');
 
 // for raw sql
 const db = require('../config/DBConfig');
@@ -18,6 +20,27 @@ const { QueryTypes } = require('sequelize');
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 const { Console } = require('console');
+
+// function to checkdate endtime > current:
+function checkEndTimeCurrentTime(array) {
+    // verify if endtime is later than current (so that user can leave feedback)
+    var consult_endtime = ((array[0].end_time).toString()).slice(16, 24);
+    var consult_date = ((array[0].date).toString()).slice(4, 16);
+    
+    // concat both date and time together
+    var consult_date_endtime = consult_date.concat(' ', consult_endtime);
+    // create new date object
+    var check = new Date(consult_date_endtime);
+
+    // current datetime
+    var today = moment();
+    console.log(today.toString());
+
+    return (check > today);
+
+    // console.log(check > today);
+}
+
 
 
 // REVIEW
@@ -36,38 +59,55 @@ router.get('/main', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/choose', ensureAuthenticated, async (req, res) => {
-    OrderItems.findAll({
-        where: {
-            cust_id: req.user.id,
-        },
-        order: [['id']]
-    })
-        .then((orders) => {
-            res.render('review/choose', { orders });
-        })
-        .catch(err => console.log(err));
+    // sql query
+    let product = await db.query(`SELECT prod_name, name, prodType
+                                    FROM orderitems oi
+                                    INNER JOIN users u
+                                    ON u.id = oi.tutor_id
+                                    `, { type: QueryTypes.SELECT });
+    // console.log(product)
+    res.render('review/choose', { orders: product });
 });
 
-router.get('/create/:prod_name', ensureAuthenticated, async (req, res) => {
-    const productname = (req.params).prod_name
+router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) => {
+    const productname = (req.params).prodname
+    const prodType = req.params.prodType
 
-    // OrderItems.findAll({
-    //     where: {
-    //         prod_name: productname,
-    //     },
-    //     order: [['id']]
-    // })
-    //     .then((orders) => {
-    //         res.render('review/addReview', { orders });
-    //     })
-    //     .catch(err => console.log(err));
+    console.log(productname);
+    console.log(prodType);
+    if (prodType === 'consultation session') {
+        let product = await db.query(`SELECT id, title, date, end_time
+                                        FROM consultations
+                                        WHERE title = '${productname}'
+                                        `, { type: QueryTypes.SELECT });
 
-    // sql query
-    let prod_name = await db.query(`SELECT title
-                                    FROM tutorials
-                                    WHERE title = '${productname}'`, { type: QueryTypes.SELECT });
-    console.log(prod_name)
-    res.render('review/addReview', { prod_name: prod_name[0].title });
+        var checking = checkEndTimeCurrentTime(product);
+
+        if (checking) {
+            console.log('cannot leave review');
+            flashMessage(res, 'error', "You can't leave review for " + productname + " yet! Wait until the designated end time of the " + prodType + " to end before doing so.");
+            res.redirect('../../../review/choose');
+        }
+        else {
+            console.log('can leave review');
+            res.render('review/addReview', { product });
+        }
+
+    }
+    else if (prodType === 'event') {
+        let product = await db.query(`SELECT id, title, date, endtime 
+                                        FROM event
+                                        WHERE title = '${prodname}'`, { tupe: QueryTypes.SELECT });
+        // todo: verify endtime for dylan
+        res.render('review/addReview', { product })
+    }
+    else {
+        let product = await db.query(`SELECT id, title
+                                        FROM consultations
+                                        WHERE title = '${productname}'
+                                        `, { type: QueryTypes.SELECT });
+        res.render('review/addReview', { product });
+    }
 });
 
 router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
@@ -93,7 +133,7 @@ router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
 
 // ROUTES (POST)
 // CREATE
-router.post('/create/:prod_num', ensureAuthenticated, async (req, res) => {
+router.post('/create/:prodType/:prod_num', ensureAuthenticated, async (req, res) => {
     // title, image, rating, description, category
     let title = req.body.title;
     let image = req.body.reviewURL;
@@ -118,7 +158,7 @@ router.post('/create/:prod_num', ensureAuthenticated, async (req, res) => {
     }
     // if successful
     if (body.success) {
-        const message = 'Review slot successfully submitted';
+        const message = 'Review successfully submitted';
         flashMessage(res, 'success', message);
         Review.create({ title, category, image, rating, description, userId })
             .then((review) => {

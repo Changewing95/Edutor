@@ -22,10 +22,11 @@ const setUpDB = (drop) => {
             Consultation.belongsTo(User);
 
             User.hasMany(Review);
+
             Review.belongsTo(User);
             User.hasMany(Order);
-            Order.belongsTo(User);
 
+            Order.belongsTo(User);
             Order.hasMany(OrderItems);
             OrderItems.belongsTo(Order);
 
