@@ -1,3 +1,4 @@
+const { blockParams } = require('handlebars');
 const moment = require('moment');
 
 const formatDate = function (date, targetFormat) {
@@ -52,6 +53,14 @@ const if_eq = function () {
     return allEqual ? options.fn(this) : options.inverse(this);
 };
 
+const times = function (iter, block) {
+    var accum = '';
+    for (var i = 0; i < iter; ++i){
+        accum += block.fn(i);
+    }
+    return accum;
+}
 
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq, increaseOID, Multiply, radioCheck, formatRating };
+
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq, increaseOID, Multiply, radioCheck, formatRating, times };

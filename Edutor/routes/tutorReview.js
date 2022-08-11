@@ -53,7 +53,7 @@ router.get('/listReview', async (req, res) => {
     Review.findAll({
         // where: { userId: req.user.id },
         attributes: [
-            'title', 'category', 'image', 'rating', 'description', 'createdAt'],
+            'title', 'category', 'image', 'rating', 'description', 'username', 'createdAt'],
         order: [['title']],
         raw: true
     })

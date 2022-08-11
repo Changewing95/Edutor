@@ -73,10 +73,8 @@ router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) 
     const productname = (req.params).prodname
     const prodType = req.params.prodType
 
-    console.log(productname);
-    console.log(prodType);
     if (prodType === 'consultation session') {
-        let product = await db.query(`SELECT id, title, date, end_time
+        let product = await db.query(`SELECT id, title, date, end_time, userId
                                         FROM consultations
                                         WHERE title = '${productname}'
                                         `, { type: QueryTypes.SELECT });
@@ -95,15 +93,15 @@ router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) 
 
     }
     else if (prodType === 'event') {
-        let product = await db.query(`SELECT id, title, date, endtime 
+        let product = await db.query(`SELECT id, title, date, endtime, userId 
                                         FROM event
                                         WHERE title = '${prodname}'`, { tupe: QueryTypes.SELECT });
         // todo: verify endtime for dylan
         res.render('review/addReview', { product })
     }
     else {
-        let product = await db.query(`SELECT id, title
-                                        FROM consultations
+        let product = await db.query(`SELECT id, title, userId
+                                        FROM course
                                         WHERE title = '${productname}'
                                         `, { type: QueryTypes.SELECT });
         res.render('review/addReview', { product });
@@ -138,9 +136,13 @@ router.post('/create/:prodType/:prod_num', ensureAuthenticated, async (req, res)
     let title = req.body.title;
     let image = req.body.reviewURL;
     let rating = req.body.rate;
-    let category = req.body.category;
+    let category = req.params.prodType;
     let description = req.body.description;
     let userId = req.user.id;
+    let tutor_id = req.body.tutorid;
+    let product_id = req.body.prod_id;
+    let username = req.user.name;
+
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -160,7 +162,7 @@ router.post('/create/:prodType/:prod_num', ensureAuthenticated, async (req, res)
     if (body.success) {
         const message = 'Review successfully submitted';
         flashMessage(res, 'success', message);
-        Review.create({ title, category, image, rating, description, userId })
+        Review.create({ title, category, image, rating, description, tutor_id, product_id, username, userId })
             .then((review) => {
                 console.log(review.toJSON());
                 res.redirect('/student/review/main');
@@ -175,9 +177,11 @@ router.post('/editReview/:id', ensureAuthenticated, async (req, res) => {
     let title = req.body.title;
     let image = req.body.reviewURL;
     let rating = req.body.rate;
-    let category = req.body.category;
+    let category = req.params.prodType;
     let description = req.body.description;
     let userId = req.user.id;
+    let tutor_id = req.body.tutorid;
+    let product_id = req.body.prod_id;
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -199,7 +203,7 @@ router.post('/editReview/:id', ensureAuthenticated, async (req, res) => {
         flashMessage(res, 'success', message);
 
         Review.update(
-            { title, category, image, rating, description, userId },
+            { title, category, image, rating, description,tutor_id, product_id, userId },
             { where: { id: req.params.id } }
         )
             .then((result) => {

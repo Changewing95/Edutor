@@ -59,7 +59,8 @@
                     <div class="input-box mb-6">
                         {{#if product}}
                         {{#each product}}
-                        <input type="hidden" name="id" value={{id}}>
+                        <input type="hidden" id="prod_id" name="prod_id" value={{id}}>
+                        <input type="hidden" id="tutorId" name="tutorid" value={{userId}}>
                         {{!-- left, product name --}}
                         <div>
                             <div class="input-box mb-3">
