@@ -55,6 +55,10 @@
         .vote {
             cursor: pointer
         }
+        .padding{
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
     </style>
 </head>
 
@@ -82,20 +86,31 @@
                             <div class="row">
                                 <div class="col-sm-8 align-items-start">
                                     <div class="d-flex flex-column text-left">
-                                        <div style="margin-top: 20px">
+                                        {{!-- title --}}
+                                        <div style="margin-top: 0px" class="padding">
                                             <h2 class="content">Review Title</h3>
                                                 <p class="mt-2 mb-0 text-left" style="padding: 0px; margin: 0px">
                                                     {{title}}
                                                 </p>
                                         </div>
-                                        <div style="margin-top: 15px">
+
+                                        {{!-- category --}}
+                                        <div style="" class="padding">
                                             <h4 class="content">Category</h4>
                                             <p class="content">{{category}}</p>
                                         </div>
-                                        <div>
-                                            <h4 class="blue-text">"{{rating}}"</h4>
+
+                                        {{!-- rating --}}
+                                        <h4 class="content" class="padding">Rating: </h4>
+                                        <div class="row" style="margin-left: 0px">
+                                            {{#times rating}}
+                                            <img src="/background/star.png" style="height: 20px; width: 20px;">
+                                            {{/times}}
+
+                                            <p class="" style="margin-left: 20px">{{rating}} / 5</p>
                                         </div>
-                                        <div>
+                                        {{!-- description --}}
+                                        <div class="padding">
                                             <h4 class="content">Description</h4>
                                             <p class="content">{{description}}</p>
                                         </div>
@@ -132,7 +147,7 @@
                         <div class="row justify-content-center text-center">
                             <div class="image">
                                 <div class="trick"></div>
-                                <img src="/background/bg1.png"/>
+                                <img src="/background/bg1.png" />
                             </div>
                         </div>
                         <div class="row justify-content-center text-center">

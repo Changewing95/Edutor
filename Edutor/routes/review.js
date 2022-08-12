@@ -94,14 +94,14 @@ router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) 
     }
     else if (prodType === 'event') {
         let product = await db.query(`SELECT id, title, date, endtime, userId 
-                                        FROM event
+                                        FROM events
                                         WHERE title = '${prodname}'`, { tupe: QueryTypes.SELECT });
         // todo: verify endtime for dylan
         res.render('review/addReview', { product })
     }
     else {
         let product = await db.query(`SELECT id, title, userId
-                                        FROM course
+                                        FROM tutorials
                                         WHERE title = '${productname}'
                                         `, { type: QueryTypes.SELECT });
         res.render('review/addReview', { product });
