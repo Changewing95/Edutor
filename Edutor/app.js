@@ -188,6 +188,7 @@ const studentTutorialRoute = require('./routes/studentTutorial');
 const studentReviewRoute = require('./routes/review');
 const tutorReviewRoute = require('./routes/tutorReview');
 const adminRoute = require('./routes/admin');
+const nlpRouter = require('./routes/sentimentanalysis');
 
 
 
@@ -211,6 +212,9 @@ app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
 app.use('/tutor/review', tutorReviewRoute);
 app.use('/student/review', studentReviewRoute);
+
+// nlp -- sentiment analysis (yl)
+app.use('/api/nlp', nlpRouter);
 
 app.use(fileUpload());
 
