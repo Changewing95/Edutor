@@ -11,11 +11,9 @@ const Event = db.define('Event',
         description: { type: Sequelize.STRING },
         startdate: { type: Sequelize.DATE },
         enddate: { type: Sequelize.DATE },
-        starttime: { type: Sequelize.STRING },
-        endtime: { type: Sequelize.STRING },
-        people: { type: Sequelize.STRING },
-        status: { type: Sequelize.STRING },
-        price: { type: Sequelize.STRING },
+        starttime: { type: Sequelize.DATE },
+        endtime: { type: Sequelize.DATE },
+        price: { type: Sequelize.FLOAT },
         userId: {type: Sequelize.STRING }
 
     });

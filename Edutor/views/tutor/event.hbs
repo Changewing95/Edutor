@@ -6,8 +6,14 @@
 
 <body>
 
+
     <section class="section-products">
         <div class="container">
+            <div>
+                <a href="/tutor/event/create">
+                    <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Create Event</p>
+                </a>
+            </div>
             {{#if event}}
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
@@ -15,11 +21,6 @@
                         <h2>Your Events</h2>
                     </div>
                 </div>
-            </div>
-            <div>
-                <a href="/tutor/event/create">
-                    <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Create Event</p>
-                </a>
             </div>
             <div class="row">
                 {{#each event}}
@@ -38,13 +39,18 @@
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{title}}</h3>
-                            <h4 class="product-description">Description: {{description}}</h4>
-                            <h5 class="product-date">Date:{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
-                                'DD MMM YYYY'enddate}} </h5>
-                            <h6 class="product-time">Time:{{starttime}} ~ {{endtime}} </h6>
-                            <h7 class="product-status">Status: {{status}} </h7>
                             <br>
-                            <h8 class="product-price">Price: {{price}} </h8>
+                            <h4>Description:</h4>
+                            <p class="product-description">{{ description}}</p>
+
+                            <h4 class="product-date">Date:</h4>
+                                <p class="product-date">{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
+                                    'DD MMM YYYY'enddate}}</p>
+                                <h4>Time:</h4>
+                                <p class="product-time">{{formatDate starttime 'HH:mm'}} ~ {{formatDate endtime
+                                    'HH:mm'}}</p>
+                                <h4 class="product-price">Price: ${{price}} </h4>
+
 
                         </div>
 

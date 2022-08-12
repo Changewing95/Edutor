@@ -186,7 +186,7 @@ const studbookingRoute = require('./routes/studentConsultation');
 const studentTutorialRoute = require('./routes/studentTutorial');
 const studentReviewRoute = require('./routes/review');
 const tutorReviewRoute = require('./routes/tutorReview');
-const adminRoute = require('./routes/admin');
+const adminRoute = require('./routes/admin'); 
 
 
 

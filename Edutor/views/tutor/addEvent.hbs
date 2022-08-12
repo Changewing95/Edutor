@@ -8,9 +8,9 @@
     <!---<title> Responsive Registration Form | CodingLab </title>--->
     <link rel="stylesheet" href="/css/formfield.css">
 
-<style>
-    
-</style>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -35,14 +35,18 @@
 
                         <div class="custom-file mb-2">
                             <input type="file" class="custom-file-input" id="posterUpload" name="posterUpload"
-                                accept="image/png,image/jpeg,image/jpg,image/gif">
+                                accept="image/png,image/jpeg,image/jpg,image/gif" onchange="return fileValidation()">
                             <label class="custom-file-label" for="customFile">Choose File</label>
                         </div>
                         <div class="text-danger small mb-2" id="posterErr" style="display:none"></div>
+                        <div id="imagePreview" style="width:250px;height:150px;"></div>
                         {{!—- Hidden field to submit URL of poster to the server --}}
                         {{!-- <input id="posterURL" type="hidden" name="posterURL"> --}}
 
                     </div>
+
+
+
                     {{!-- <div class="input-box mb-3">
                         <span class="details">Image Upload</span>
 
@@ -55,49 +59,41 @@
 
                     </div>
                     <div class="text-danger small mb-2" id="eventimageErr" style="display:none"></div> --}}
-                    <div class="input-box mb-3">
-                        <label for="description" class="details">Description</label>
+                    
+                    <div class="input-box mb-3" >
+                        <span class="details">Description</span>
                         <textarea class="form-control" placeholder="Enter description of course" id="description"
                             name="description" rows="5" maxlength="2000"></textarea>
                         {{!-- <span class="details">Description</span>
                         <input type="text" class="form-control" placeholder="Enter description of course"
                             name="description" required> --}}
                     </div>
+
                     <div class="input-box mb-3">
                         <span class="details">Start Date</span>
                         <input id="datepicker" class="form-control" name="startdate" required>
                     </div>
+
                     <div class="input-box mb-3">
                         <span class="details">End Date</span>
                         <input class="form-control" id="datepick" name="enddate" required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Start time</span>
-                        <input type="text" class="form-control" name="starttime" placeholder="Enter start time"
+                        <input type="time" class="form-control" name="starttime" min="09:00" max="21:00" value="09:00"
                             required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">End time</span>
-                        <input type="text" class="form-control" name="endtime" placeholder="Enter end time" required>
+                        <input type="time" class="form-control" name="endtime" min="09:00" max="21:00" value="09:00" required>
                     </div>
-                    <div class="input-box mb-3">
-                        <span class="details">Max No. of People</span>
-                        <input type="text" class="form-control" name="people"
-                            placeholder="Enter number of people between 100-200" required>
-                    </div>
+
 
                     <div class="input-box mb-3">
                         <span class="details">Price</span>
-                        <input type="text" class="form-control" name="price"
-                            placeholder="Enter price" required>
+                        <input type="number" class="form-control" name="price" step="0.05" value='10.00' required>
                     </div>
-                    <div class="input-box mb-3">
-                        <label for="status">Online/In Person:</label>
-                        <select name="status">
-                            <option value="In Person">In Person</option>
-                            <option value="Online">Online</option>
-                        </select>
-                    </div>
+
                 </div>
                 <div class="button">
                     <input type="submit">
@@ -109,14 +105,60 @@
 </body>
 
 <script>
+    
+
     $('#datepicker').datepicker({
         format: "dd/mm/yyyy",
-        value: moment().format('DD/MM/YYYY')
+        value: moment().format('DD/MM/YYYY'),
+        minDate: new Date(moment().add(-1, 'days')),
+        maxDate: '+1Y',
+
+
     });
     $('#datepick').datepicker({
         format: "dd/mm/yyyy",
-        value: moment().format('DD/MM/YYYY')
+        value: moment().format('DD/MM/YYYY'),
+        minDate: new Date(moment().add(-1, 'days')),
+        maxDate: '+1Y',
     });
+    
+    function fileValidation() {
+            var fileInput =
+                document.getElementById('posterUpload');
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Invalid file type!'); 
+
+                fileInput.value = '';
+
+            }
+            else
+            {
+             
+                // Image preview
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById(
+                            'imagePreview').innerHTML =
+                            '<img src="' + e.target.result
+                            + '"/>';
+                    };
+                     
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+    }
+    }
+
+
+
+
 </script>
 
 </html>

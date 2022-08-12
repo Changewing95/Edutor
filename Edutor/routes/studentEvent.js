@@ -5,7 +5,7 @@ const Event = require('../models/Event');
 
 
 router.get('/main', (req, res) => {
-    Event.findAll({
+    Event.findAll({ 
         //where: { userId: req.user.id },
         //order: [['startdate']],
         raw: true
@@ -16,5 +16,7 @@ router.get('/main', (req, res) => {
         })
         .catch(err => console.log(err));
 });
+
+
 
 module.exports = router;
