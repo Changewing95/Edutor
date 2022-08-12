@@ -45,6 +45,8 @@
     "passport-local": "^1.0.0",
     "procyon": "^0.0.4",
     "qrcode": "^1.5.0",
+    "redis": "^4.2.0",
+    "redis-server": "^1.2.2",
     "request": "^2.88.2",
     "request-country": "^0.1.6",
     "sequelize": "^6.19.0",

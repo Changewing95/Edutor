@@ -129,6 +129,11 @@
           type: 'linear',
           display: true,
           position: 'left',
+          suggestedMin: 1,
+          suggestedMax: 20,
+          ticks: {
+            precision: 0
+          }
         },
         x: {
           type: "time",
@@ -137,14 +142,15 @@
           time: {
             unit: "day"
           }
-        }
+        },
+
       },
       plugins: {
         tooltip: {
           callbacks: {
             title: (context) => {
-              return `${context[0].raw['y']} Order`;
-
+              month = context[0].label.split(',')[0];
+              return `${context[0].raw['y']} Order on ${month}`;
             }
           }
         }

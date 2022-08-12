@@ -59,7 +59,7 @@ router.post('/place_order', (req, res) => {
         var cust_name = req.body.cust_name;
         var cust_id = req.user.id;
         var status = "ok";
-
+        console.log(prodType)
         OrderItems.create(
             {orderId:oid,cust_name:cust_name,cust_id: cust_id,tutor_id:tutorid,prod_name:prod_name,prodType:prodType, qty:qty, status:status,price:price, item_detail: prod_item}
         )

@@ -4,6 +4,12 @@ const User = require('../models/User');
 const flashMessage = require('../helpers/messenger');
 const bcrypt = require('bcryptjs');
 const Email = require('../config/mail');
+const procyon = require('procyon')
+const OrderItems = require('../models/OrderItems');
+const sequelize = require('sequelize');
+const { response } = require('express');
+const Tutorial = require('../models/Tutorial');
+const UserController = require('../Controller/User');
 
 
 
@@ -99,8 +105,8 @@ exports.UpdateUser = async (req, res) => {
     } else {
         flashMessage(res, 'success', "No changes!", 'fas fa-sign-in-alt', true);
         res.redirect('settings');
-        return; 
-        
+        return;
+
     }
 
 
@@ -204,4 +210,40 @@ function CheckifPasswordIsTheSame(res, req, password, confirm_password) {
         flashMessage(res, 'error', "Password is not the same!", 'fas fa-sign-in-alt', true);
         res.redirect('settings')
     }
+}
+
+
+exports.Recommendation = async (req, res) => {
+    var Student1 = new procyon({
+        className: 'Users'
+    });
+    AllItems = await OrderItems.findAll({
+        where: { cust_id: req.user.id },
+        attributes: [[sequelize.fn('DISTINCT', sequelize.col('prod_name')), 'prod_name']]
+    });
+
+    if (AllItems) {
+        for await (const variable of AllItems) {
+            Student1.liked(req.user.id, variable['prod_name'])
+
+        }
+        let recommendations_actors = await Student1.recommendFor(req.user.id, 10)
+        console.log(recommendations_actors, "asd")
+        if (recommendations_actors.length > 0) {
+            let results = await Tutorial.findAll({
+                raw: true,
+                where: {
+                    title: {
+                        [sequelize.Op.or]: recommendations_actors
+                    }
+                }
+            });
+            return results;
+        } else {
+            return "nothing"
+        }
+    } else {
+        console.log("no recomemndation")
+    }
+
 }

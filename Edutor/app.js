@@ -187,6 +187,7 @@ const studentTutorialRoute = require('./routes/studentTutorial');
 const studentReviewRoute = require('./routes/review');
 const tutorReviewRoute = require('./routes/tutorReview');
 const adminRoute = require('./routes/admin');
+const recommender = require('./routes/recommender');
 
 
 
@@ -210,6 +211,7 @@ app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
 app.use('/tutor/review', tutorReviewRoute);
 app.use('/student/review', studentReviewRoute);
+app.use('/recommender', recommender);
 
 app.use(fileUpload());
 

@@ -38,6 +38,7 @@ router.get('/', (req,res,next) =>{
     })
         .then((cartitems) => {
             var cart = req.session.cart;
+            console.log(cartitems)
             var total = req.session.total;
             var cartCount = req.session.cartCount;
             res.render('cart/cart', { cartitems, cartCount: cartCount,total: total });
@@ -58,6 +59,7 @@ router.post('/addtoCart', (req,res) => {
     var current_student = req.user.id;
     var prodType = req.body.productType;
     var product_item = req.body.product_item
+    console.log(JSON.stringify(title), "asd")
 
     
     Cart.findOrCreate({

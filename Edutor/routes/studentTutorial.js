@@ -5,15 +5,16 @@ const router = express.Router();
 const Tutorial = require('../models/Tutorial');
 // const fs = require('fs');
 // const upload = require('../helpers/uploadImage');
+const UserController = require('../Controller/User');
 
-router.get('/main', ensureAuthenticated, (req, res) => {
+
+router.get('/main', ensureAuthenticated, async (req, res) => {
+    let x = await UserController.Recommendation(req,res)
     Tutorial.findAll({
-        
         raw: true
-    })
-        .then((tutorials) => {
+    }).then((tutorials) => {
             // pass object to listVideos.handlebar
-            res.render('tutor/studentTutorial', { tutorials });
+            res.render('tutor/studentTutorial', { tutorials, results: x});
         })
         .catch(err => console.log(err));
 });
