@@ -217,7 +217,7 @@ const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5000;
+const port = 5001;
 
 // Starts the server and listen to port
 // app.listen(port, () => {
