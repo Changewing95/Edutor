@@ -32,27 +32,40 @@ function cartCount(cart, req) {
 
 router.get('/', async (req, res, next) => {
     // req.session.destroy()
-    await Cart.findAll({
+    let cartitems = await Cart.findAll({
         where: { student_ID: req.user.id },
         raw: true
     })
-        .then((cartitems) => {
-            Cart.count({ //updated cart count 
-                where: { student_ID: req.user.id },
-                raw: true
-            })
-                .then((cartCount) => {
-                    Cart.sum('price', { //updated cart count 
-                        where: { student_ID: req.user.id },
-                        raw: true
-                    })
-                        .then((cartTotal) => {
-                            res.render('cart/cart', { cartitems, cartCount, cartTotal });
-                        })
-                        .catch(err => console.log(err));
-                    // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
-                });
-        });
+    let cartCount = await Cart.count({ //updated cart count 
+        where: { student_ID: req.user.id },
+        raw: true
+    })
+
+    let cartTotal = await Cart.sum('price', { //updated cart count 
+        where: { student_ID: req.user.id },
+        raw: true
+    })
+
+    res.render('cart/cart', { cartitems, cartCount, cartTotal });
+
+
+        // .then((cartitems) => {
+        //     Cart.count({ //updated cart count 
+        //         where: { student_ID: req.user.id },
+        //         raw: true
+        //     })
+        //         .then((cartCount) => {
+        //             Cart.sum('price', { //updated cart count 
+        //                 where: { student_ID: req.user.id },
+        //                 raw: true
+        //             })
+        //                 .then((cartTotal) => {
+        //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
+        //                 })
+        //                 .catch(err => console.log(err));
+        //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
+        //         });
+        // });
 
 });
 
