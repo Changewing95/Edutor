@@ -5,16 +5,15 @@ const fetch = require('isomorphic-fetch')
 const { stringify } = require('querystring');
 const fs = require('fs');
 const upload = require('../helpers/reviewImageUpload');
+const moment = require('moment');
 // models
 const Review = require('../models/Review');
 const Consultation = require('../models/Booking')
 const Event = require('../models/Event');
 const Tutorial = require('../models/Tutorial');
 const Complain = require('../models/Complain');
-const moment = require('moment');
+const OrderItems = require('../models/OrderItems');
 
-// const Order = require('../models/Order');
-// const OrderItems = require('../models/OrderItems');
 
 // for raw sql
 const db = require('../config/DBConfig');
@@ -24,12 +23,12 @@ const { QueryTypes } = require('sequelize');
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 const { Console } = require('console');
-const OrderItems = require('../models/OrderItems');
 
 // sentiment analysis
 const natural = require('natural');
-
 const stopword = require('stopword');
+const spamCheck = require('spam-check');
+
 
 // function to checkdate endtime > current:
 function checkEndTimeCurrentTime(array, type) {
@@ -61,7 +60,6 @@ function checkEndTimeCurrentTime(array, type) {
 
     return (check > today);
 }
-
 
 // For conversion of contractions to standard lexicon 
 const wordDict = {
@@ -154,24 +152,24 @@ function sentimental_analysis(description) {
     // NLP Logic 
     // Convert all data to its standard form 
     const lexData = convertToStandard(description);
-    console.log("Lexed Data: ", lexData);
+    // console.log("Lexed Data: ", lexData);
 
     // Convert all data to lowercase 
     const lowerCaseData = convertTolowerCase(lexData);
-    console.log("LowerCase Format: ", lowerCaseData);
+    // console.log("LowerCase Format: ", lowerCaseData);
 
     // Remove non alphabets and special characters 
     const onlyAlpha = removeNonAlpha(lowerCaseData);
-    console.log("OnlyAlpha: ", onlyAlpha);
+    // console.log("OnlyAlpha: ", onlyAlpha);
 
     // Tokenization 
     const tokenConstructor = new natural.WordTokenizer();
     const tokenizedData = tokenConstructor.tokenize(onlyAlpha);
-    console.log("Tokenized Data: ", tokenizedData);
+    // console.log("Tokenized Data: ", tokenizedData);
 
     // Remove Stopwords 
     const filteredData = stopword.removeStopwords(tokenizedData);
-    console.log("After removing stopwords: ", filteredData);
+    // console.log("After removing stopwords: ", filteredData);
 
     // Stemming 
     const Sentianalyzer = new natural.SentimentAnalyzer('English', natural.PorterStemmer, 'afinn');
@@ -359,6 +357,15 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
     let product_name = req.body.prod_name;
     let username = req.user.name;
 
+    var options = { 'string': description };
+    spamCheck(options, function (err, results) {
+        // console.log('err:', err);
+        console.log('results: ', results);
+        console.log(results.spam == true);
+        return results;
+    });
+
+
     // calculation of sentiment score:
     const sentiment_score = sentimental_analysis(description);
 
@@ -393,7 +400,7 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
                     })
                     .then((result) => {
                         console.log(result[0] + ' leftReview set to true');
-                        console.log(review.toJSON());
+                        // console.log(review.toJSON());
                         if (sentiment_score > 0) {
                             res.redirect('/student/review/main');
                         }
