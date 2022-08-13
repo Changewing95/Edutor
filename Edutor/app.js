@@ -78,26 +78,26 @@ app.set('view engine', 'hbs');
 
 // REDIS DATABASE FOR RECOMMENDATION
 
-// const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
+const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
 
-// ls.stdout.on("data", data => {
-// 	console.log(`stdout: ${data}`);
-// });
+ls.stdout.on("data", data => {
+	console.log(`stdout: ${data}`);
+});
 
-// ls.stderr.on("data", data => {
-// 	console.log(`stderr: ${data}`);
-// });
+ls.stderr.on("data", data => {
+	console.log(`stderr: ${data}`);
+});
 
-// ls.on('error', (error) => {
-// 	console.log(`error: ${error.message}`);
-// });
+ls.on('error', (error) => {
+	console.log(`error: ${error.message}`);
+});
 
-// ls.on("close", code => {
-// 	console.log(`child process exited with code ${code}`);
-// });
+ls.on("close", code => {
+	console.log(`child process exited with code ${code}`);
+});
 
 
-// 
+
 
 
 
@@ -219,7 +219,7 @@ const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5001;
+const port = 5000;
 
 // Starts the server and listen to port
 // app.listen(port, () => {
