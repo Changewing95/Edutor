@@ -5,21 +5,37 @@ const router = express.Router();
 const Tutorial = require('../models/Tutorial');
 // const fs = require('fs');
 // const upload = require('../helpers/uploadImage');
+const UserController = require('../Controller/User');
+const procyon = require('procyon')
+const OrderItems = require('../models/OrderItems');
+const sequelize = require('sequelize');
+const { response } = require('express');
+const User = require('../models/User');
 
-router.get('/main', ensureAuthenticated, (req, res) => {
+router.get('/main', ensureAuthenticated, async (req, res) => {
+    // let x = await UserController.Recommendation(req,res)
     Tutorial.findAll({
-        
         raw: true
-    })
-        .then((tutorials) => {
+    }).then((tutorials) => {
             // pass object to listVideos.handlebar
-            res.render('tutor/studentTutorial', { tutorials });
+            res.render('tutor/studentTutorial', { tutorials});
         })
         .catch(err => console.log(err));
 });
 
-router.get('/display/:id', (req, res) => {
 
+router.get('/getRecommendation', ensureAuthenticated, async (req,res) => {
+    let x =  await UserController.Recommendation(req,res)
+    return res.json(x) 
+
+});
+
+
+
+
+
+
+router.get('/display/:id', (req, res) => {
     Tutorial.findByPk(req.params.id)
         .then((tutorials) => {
             res.render('tutor/studentDetailedTutorial', { tutorials });
