@@ -45,7 +45,7 @@ router.get('/main', ensureAuthenticated, async (req, res) => {
     // console.log(consultations_reviewed);
     console.log(consultations_notreview);
 
-    res.render('consultation/studentConsultation', { consultations_reviewed, consultations_notreview });
+    res.render('consultation/consultation', { consultations_reviewed, consultations_notreview });
     // Consultation.findAll({
     //     where: { userId: req.user.id },
     //     order: [['date']],

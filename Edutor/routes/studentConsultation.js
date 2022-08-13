@@ -46,7 +46,7 @@ router.get('/listConsultations', ensureAuthenticated, async (req, res) => {
     let consultations_notreview = await db.query(`SELECT *
                                     FROM consultations
                                     `, { type: QueryTypes.SELECT });
-    // console.log(consultations_reviewed);
+    console.log(consultations_reviewed);
     console.log(consultations_notreview);
 
     res.render('consultation/studentConsultation', { consultations_reviewed, consultations_notreview });
