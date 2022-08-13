@@ -111,19 +111,19 @@ router.post('/create', ensureAuthenticated, (req, res) => {
                 res.redirect('/tutor/event/create');
 
             }
-            else if (price < 0 && startdate > enddate) {
+            else if (price < 0 && startdate > enddate){
                 errorstatus = true;
                 flashMessage(res, 'error', 'Invalid Price & Date!');
                 res.redirect('/tutor/event/create');
 
             }
-            else if (price < 0 && starttime > endtime) {
+            else if (price < 0 && starttime > endtime){
                 errorstatus = true;
                 flashMessage(res, 'error', 'Invalid Price & Time!');
                 res.redirect('/tutor/event/create');
 
             }
-            else if (starttime > endtime && startdate > enddate) {
+            else if ( starttime > endtime && startdate > enddate){
                 errorstatus = true;
                 flashMessage(res, 'error', 'Invalid Date and Time!');
                 res.redirect('/tutor/event/create');
@@ -139,7 +139,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
                 flashMessage(res, 'error', 'Invalid Dates!');
                 res.redirect('/tutor/event/create');
             }
-            else if (starttime > endtime) {
+            else if (starttime > endtime){
                 errorstatus = true;
                 flashMessage(res, 'error', 'Invalid Time!');
                 res.redirect('/tutor/event/create');
@@ -201,19 +201,19 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
         res.redirect('/tutor/event/create');
 
     }
-    else if (price < 0 && startdate > enddate) {
+    else if (price < 0 && startdate > enddate){
         errorstatus = true;
         flashMessage(res, 'error', 'Invalid Price & Date!');
         res.redirect('/tutor/event/create');
 
     }
-    else if (price < 0 && starttime > endtime) {
+    else if (price < 0 && starttime > endtime){
         errorstatus = true;
         flashMessage(res, 'error', 'Invalid Price & Time!');
         res.redirect('/tutor/event/create');
 
     }
-    else if (starttime > endtime && startdate > enddate) {
+    else if ( starttime > endtime && startdate > enddate){
         errorstatus = true;
         flashMessage(res, 'error', 'Invalid Date and Time!');
         res.redirect('/tutor/event/create');
@@ -229,18 +229,18 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
         flashMessage(res, 'error', 'Invalid Dates!');
         res.redirect('/tutor/event/create');
     }
-
+    
     if (errorstatus == false) {
-        Event.update(
-            { title, description, startdate, enddate, starttime, endtime, people, status, price, userId },
-            { where: { id: req.params.id } }
+    Event.update(
+        { title, description, startdate, enddate, starttime, endtime, people, status, price, userId },
+        { where: { id: req.params.id } }
 
-        )
-            .then((result) => {
-                console.log(result[0] + ' event updated');
-                res.redirect('/tutor/event/main');
-            })
-            .catch(err => console.log(err));
+    )
+        .then((result) => {
+            console.log(result[0] + ' event updated');
+            res.redirect('/tutor/event/main');
+        })
+        .catch(err => console.log(err));
     }
 });
 

@@ -6,13 +6,19 @@
 
 <body>
 
+
     <section class="section-products">
         <div class="container">
+            <div>
+                <a href="/tutor/event/create">
+                    <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Create Event</p>
+                </a>
+            </div>
             {{#if event}}
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
-                        <h2>Events</h2>
+                        <h2>Your Events</h2>
                     </div>
                 </div>
             </div>
@@ -26,21 +32,8 @@
                             <img src="{{eventURL}}" class="single-product">
 
                             <ul>
-                                <li>
-                                    <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}>
-                                        <input type="hidden" name="title" value={{title}}>
-                                        <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value="test">
-                                        <input type="hidden" name="tutorid" value={{userId}}>
-                                        <input type="hidden" name="image" value={{eventURL}}>
-                                        <input type="hidden" name="product_item" value="nil">
-                                        <input type="hidden" name="productType" value="event">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fa fa-shopping-cart"></i></button>
-                                    </form>
-                                </li>
-
+                                <li><a href="/tutor/event/editEvent/{{id}}"><i class="fas fa-pencil-alt"></i></a></li>
+                                <li><a href="/tutor/event/deleteEvent/{{id}}"><i class="fas fa-trash-alt"></i></a></li>
 
                             </ul>
                         </div>
@@ -58,6 +51,7 @@
                                 'HH:mm'}}</p>
                             <h4 class="product-price">Price: ${{price}} </h4>
 
+
                         </div>
 
                     </div>
@@ -72,15 +66,4 @@
 
         </div>
     </section>
-    <script type="text/javascript">
-        (function (d, m) {
-            var kommunicateSettings =
-                { "appId": "3e0537640d1d5c042f7a822f6497a4676", "popupWidget": true, "automaticChatOpenOnNavigation": true };
-            var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
-            s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
-            var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
-            window.kommunicate = m; m._globals = kommunicateSettings;
-        })(document, window.kommunicate || {});
-/* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
-    </script>
 </body>

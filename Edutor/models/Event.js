@@ -14,7 +14,7 @@ const Event = db.define('Event',
         starttime: { type: Sequelize.DATE },
         endtime: { type: Sequelize.DATE },
         price: { type: Sequelize.FLOAT },
-        userId: { type: Sequelize.STRING }
+        userId: {type: Sequelize.STRING }
 
     });
 

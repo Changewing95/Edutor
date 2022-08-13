@@ -1,0 +1,77 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/eventdetail.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="title">Event Information </div>
+        <div class="content card card-cover h-70 overflow-hidden" style="border-radius: 25px">
+            <div class="row">
+
+                <div class="col-sm-6 align-items-start" style="padding: 50px; align-items: left;">
+                    <div class="d-flex flex-column">
+                        <img class="card-img" src="{{event.eventURL}}" style="border-radius: 25px">
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6 align-items-start" style="text-align:left padding: 50px">
+                    <div class="d-flex flex-column">
+                        <h4 class="card-title">{{event.title}}</h4>
+
+
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <h4>Description</h4>
+                        <p>{{event.description}}</p>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <h4>Details</h4>
+                        <div class="d-flex flex-row">
+                            <div>
+                                <p><strong>Dates</strong></p>
+                                <p class="card-text">{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate 'DD
+                                    MMM YYYY'}} </p>
+
+                                <div>
+                                    <p><strong>Time</strong></p>
+                                    <p class="card-text">{{formatDate starttime 'HH:mm'}} to {{formatDate endtime
+                                        'HH:mm'}}
+                                    </p>
+                                </div>
+                                <br>
+                                <div class="d-flex flex-column">
+                                    <p><strong>Price</strong></p>
+                                    <p class="card-text">${{event.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="hstack gap-1 d-flex justify-content-end" style="padding: 50px">
+                    <div class="col-sm-3">
+                        <a href="/student/event/main" class="btn btn-primary " style="width:130px">Back</a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="#" class="btn btn-primary buyButton" style="width:130px">Buy Now</a>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <a href="#" class="btn btn-primary cartButton" style="width:130px">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
