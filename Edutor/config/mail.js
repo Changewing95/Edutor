@@ -11,23 +11,23 @@ const nodemailer = require('nodemailer');
 
 
 exports.sendMail = async (email, code) => {
-    try {
-        let transport = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                user: 'edutorsg@gmail.com',
-                pass: 'nghzvubknbkxzxwa',
-            }
-        });
+  try {
+    let transport = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'edutorsg@gmail.com',
+        pass: 'nghzvubknbkxzxwa',
+      }
+    });
 
-        const mailOptions = {
-            from: 'edutorsg@gmail.com',
-            to: email,
-            subject: 'Edutor Account Confirmation!',
-            text: "Dear User, Thanks for registering with Edutor!",
-            html: `<div class="app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4>
+    const mailOptions = {
+      from: 'edutorsg@gmail.com',
+      to: email,
+      subject: 'Edutor Account Confirmation!',
+      text: "Dear User, Thanks for registering with Edutor!",
+      html: `<div class="app font-sans min-w-screen min-h-screen bg-grey-lighter py-8 px-4>
 
             <div class="mail__wrapper max-w-md mx-auto">
           
@@ -46,7 +46,7 @@ exports.sendMail = async (email, code) => {
                     Keep Rockin'!<br> Your Edutor team
                   </p>
                 </div>
-                <a href= 'http://localhost:5000/auth/validate/${code}' style="background-color: #4CAF50; /* Green */
+                <a href= 'http://localhost:5001/auth/validate/${code}' style="background-color: #4CAF50; /* Green */
                 border: none;
                 color: white;
                 padding: 15px 32px;
@@ -66,12 +66,12 @@ exports.sendMail = async (email, code) => {
           
                 <div class="meta__social flex justify-center my-4">
                   ${code}`
-        };
+    };
 
-        const result = await transport.sendMail(mailOptions);
-        return result;
+    const result = await transport.sendMail(mailOptions);
+    return result;
 
-    } catch (error) {
-        return error;
-    }
+  } catch (error) {
+    return error;
+  }
 }

@@ -97,17 +97,18 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
+
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
                                     <li>
-                                        <form action="cart/addtoCart" method="POST">
+                                        <form action="/cart/addtoCart" method="POST">
                                             <input type="hidden" name="id" value={{id}}>
                                             <input type="hidden" name="title" value="{{title}}">
-                          
+
                                             <input type="hidden" name="price" value={{price}}>
                                             <input type="hidden" name="author" value={{author}}>
                                             <input type="hidden" name="tutorid" value={{userId}}>
@@ -151,8 +152,9 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
+
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
@@ -207,8 +209,9 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
+
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
@@ -336,7 +339,7 @@
 
 
 
-    UpdateRecommendation()
+    { { !--UpdateRecommendation() --} }
 
 
 </script>
