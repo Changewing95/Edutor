@@ -18,10 +18,10 @@
                     </div>
                 </div>
             </div>
-            <h2 class="types">Beginners Level</h2> 
+            <h2 class="types">Beginners Level</h2>
             {{#each tutorials}}
             {{#if_equal category "Beginner Level"}}
-            {{!-- <h2 class="types">Beginnersss Level</h2>  --}}
+            {{!-- <h2 class="types">Beginnersss Level</h2> --}}
             {{else}}
 
             {{/if_equal}}
@@ -36,8 +36,8 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
@@ -45,16 +45,17 @@
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}> 
-                                        <input type="hidden" name="title" value={{title}}> 
-                                        <input type="hidden" name="price" value={{price}}> 
-                                        <input type="hidden" name="author" value={{author}}> 
-                                        <input type="hidden" name="tutorid" value={{userId}}> 
-                                        <input type="hidden" name="image" value={{tutorialImageURL}}> 
-                                        <input type="hidden" name="product_item" value={{video}}> 
-                                        <input type="hidden" name="productType" value="course">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                                    </form>
+                                            <input type="hidden" name="id" value={{id}}>
+                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="price" value={{price}}>
+                                            <input type="hidden" name="author" value={{author}}>
+                                            <input type="hidden" name="tutorid" value={{userId}}>
+                                            <input type="hidden" name="image" value={{tutorialImageURL}}>
+                                            <input type="hidden" name="product_item" value={{video}}>
+                                            <input type="hidden" name="productType" value="course">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fa fa-shopping-cart"></i></button>
+                                        </form>
                                     </li>
 
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
@@ -85,7 +86,7 @@
             {{/if_equal}}
             {{/each}}
 
-<h2 class="types">Intermediate Level</h2>
+            <h2 class="types">Intermediate Level</h2>
             <div class="row2">
 
                 <div class="row">
@@ -95,24 +96,25 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}> 
-                                        <input type="hidden" name="title" value={{title}}> 
-                                        <input type="hidden" name="price" value={{price}}> 
-                                        <input type="hidden" name="author" value={{author}}> 
-                                        <input type="hidden" name="tutorid" value={{userId}}> 
-                                        <input type="hidden" name="image" value={{tutorialImageURL}}> 
-                                        <input type="hidden" name="product_item" value={{video}}> 
-                                        <input type="hidden" name="productType" value="course">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                                    </form>
+                                            <input type="hidden" name="id" value={{id}}>
+                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="price" value={{price}}>
+                                            <input type="hidden" name="author" value={{author}}>
+                                            <input type="hidden" name="tutorid" value={{userId}}>
+                                            <input type="hidden" name="image" value={{tutorialImageURL}}>
+                                            <input type="hidden" name="product_item" value={{video}}>
+                                            <input type="hidden" name="productType" value="course">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fa fa-shopping-cart"></i></button>
+                                        </form>
                                     </li>
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
@@ -129,7 +131,7 @@
                     {{/each}}
                 </div>
             </div>
-                        <h2 class="types">Advance Level</h2>
+            <h2 class="types">Advance Level</h2>
 
             {{#each tutorials}}
             {{#if_equal category "Advance Level"}}
@@ -149,26 +151,27 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
 
-                                    
+
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}> 
-                                        <input type="hidden" name="title" value={{title}}> 
-                                        <input type="hidden" name="price" value={{price}}> 
-                                        <input type="hidden" name="author" value={{author}}> 
-                                        <input type="hidden" name="tutorid" value={{userId}}> 
-                                        <input type="hidden" name="image" value={{tutorialImageURL}}> 
-                                        <input type="hidden" name="product_item" value={{video}}> 
-                                        <input type="hidden" name="productType" value="course">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                                    </form>
+                                            <input type="hidden" name="id" value={{id}}>
+                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="price" value={{price}}>
+                                            <input type="hidden" name="author" value={{author}}>
+                                            <input type="hidden" name="tutorid" value={{userId}}>
+                                            <input type="hidden" name="image" value={{tutorialImageURL}}>
+                                            <input type="hidden" name="product_item" value={{video}}>
+                                            <input type="hidden" name="productType" value="course">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fa fa-shopping-cart"></i></button>
+                                        </form>
                                     </li>
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
@@ -204,24 +207,25 @@
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
-                                <img src="{{tutorialImageURL}}"
-                                    class="product-{{id}} part-1 consultationImage123" style="">
+                                <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
+                                    style="">
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
                                 <ul>
-                                   <li>
+                                    <li>
                                         <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}> 
-                                        <input type="hidden" name="title" value={{title}}> 
-                                        <input type="hidden" name="price" value={{price}}> 
-                                        <input type="hidden" name="author" value={{author}}> 
-                                        <input type="hidden" name="tutorid" value={{userId}}> 
-                                        <input type="hidden" name="image" value={{tutorialImageURL}}> 
-                                        <input type="hidden" name="product_item" value={{video}}> 
-                                        <input type="hidden" name="productType" value="course">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
-                                    </form>
+                                            <input type="hidden" name="id" value={{id}}>
+                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="price" value={{price}}>
+                                            <input type="hidden" name="author" value={{author}}>
+                                            <input type="hidden" name="tutorid" value={{userId}}>
+                                            <input type="hidden" name="image" value={{tutorialImageURL}}>
+                                            <input type="hidden" name="product_item" value={{video}}>
+                                            <input type="hidden" name="productType" value="course">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fa fa-shopping-cart"></i></button>
+                                        </form>
                                     </li>
                                     <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
                                     </li>
@@ -251,14 +255,14 @@
 
     </section>
     <script type="text/javascript">
-    (function(d, m){
-        var kommunicateSettings = 
-            {"appId":"3e0537640d1d5c042f7a822f6497a4676","popupWidget":true,"automaticChatOpenOnNavigation":true};
-        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
-        s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
-        var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
-        window.kommunicate = m; m._globals = kommunicateSettings;
-    })(document, window.kommunicate || {});
+        (function (d, m) {
+            var kommunicateSettings =
+                { "appId": "3e0537640d1d5c042f7a822f6497a4676", "popupWidget": true, "automaticChatOpenOnNavigation": true };
+            var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+            s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+            var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+            window.kommunicate = m; m._globals = kommunicateSettings;
+        })(document, window.kommunicate || {});
 /* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
-</script>
+    </script>
 </body>
