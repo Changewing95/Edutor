@@ -11,7 +11,8 @@ const Review = db.define('review',
         description: { type: Sequelize.STRING },
         tutor_id: { type: Sequelize.STRING },
         product_id: { type: Sequelize.STRING },
-        product_name: {type: Sequelize.STRING },
+        product_name: { type: Sequelize.STRING },
+        sentiment_score: {type: Sequelize.FLOAT},
         username: { type: Sequelize.STRING }
     });
 module.exports = Review, db;

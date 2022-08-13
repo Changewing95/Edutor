@@ -74,6 +74,7 @@ app.engine('hbs', engine({
 		formatRating: helpers.formatRating,
 		radioCheck: helpers.radioCheck,
 		times: helpers.times,
+		ifCond: helpers.ifCond,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',

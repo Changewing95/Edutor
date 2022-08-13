@@ -89,8 +89,10 @@
                                     <div class="d-flex flex-column text-left">
                                         {{!-- product name --}}
                                         <div style="margin-top: 0px" class="padding">
-                                            <h2 class="content" style="font-size: 20px !important">Review For:&nbsp;&nbsp;&nbsp; <span class="mt-2 mb-0 text-left" style="font-weight:normal">{{product_name}}</span></h3>
-                                                
+                                            <h2 class="content" style="font-size: 20px !important">Review
+                                                For:&nbsp;&nbsp;&nbsp; <span class="mt-2 mb-0 text-left"
+                                                    style="font-weight:normal">{{product_name}}</span></h3>
+
                                         </div>
 
                                         {{!-- title --}}
@@ -125,6 +127,23 @@
                                             <p class="text-muted pt-5 pt-sm-3">Date of Review: {{formatDate updatedAt
                                                 'DD MMM YYYY'}}
                                             </p>
+                                            {{#ifCond sentiment_score '>' 0}}
+                                            <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                                <span>😄</span>
+                                            </p>
+                                            {{/ifCond}}
+                                            {{#ifCond sentiment_score '==' 0}}
+                                            <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                                <span>😐</span>
+                                            </p>
+                                            {{/ifCond}}
+                                            {{#ifCond sentiment_score '<' 0}}
+                                            <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                                <span>😡</span>
+                                            </p>
+                                            {{/ifCond}}
+
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -141,8 +160,9 @@
                                                 Edit Review</a>
                                         </div>
                                         <div style="margin-right: 20px">
-                                            <a href="/student/review/deleteReview/{{id}}/{{product_name}}" class="btn btn-danger"><i
-                                                    class="fa fa-trash fa-md"></i> Delete Review</a>
+                                            <a href="/student/review/deleteReview/{{id}}/{{product_name}}"
+                                                class="btn btn-danger"><i class="fa fa-trash fa-md"></i> Delete
+                                                Review</a>
                                         </div>
                                     </div>
                                 </div>
