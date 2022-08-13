@@ -18,8 +18,8 @@
         <div class="container">
             <div class="row">
                 {{!-- listing of consultation slots --}}
-                {{#if consultations_reviewed}}
-                {{#each consultations_reviewed}}
+                {{#if consultations}}
+                {{#each consultations}}
                 <div class="col-md-6 col-lg-4 col-xl-3">
                     {{!-- change the image via the css thr --}}
                     <div id="product-{{id}}" class="single-product">
@@ -48,60 +48,10 @@
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{replaceCommas title}}</h3>
-                            <div class="row" style="margin-left: 0px; margin-bottom: 10px;">
-                                {{#times avgRating}}
-                                <img src="/background/star.png" style="height: 20px; width: 20px;">
-                                {{/times}}
-                                <p style="margin-left: 5px">{{avgRating}} / 5</p>
-                            </div>
-                            <h3 class="product-price">${{replaceCommas price}}</h3>
-                            <br>
-                            <h4>Description: </h4>
-                            <p class="product-description">{{replaceCommas description}}</p>
-                            <h4>Date: </h4>
-                            <p class="product-date">{{ formatDate date 'DD MMM YYYY'}}</p>
-                            <h4>Time</h4>
-                            <p class="product-starttime">{{formatDate start_time 'HH:mm'}} to {{formatDate end_time
-                                'HH:mm'}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                {{/each}}
-                {{/if}}
-                {{#if consultations_notreview}}
-                {{#each consultations_notreview}}
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    {{!-- change the image via the css thr --}}
-                    <div id="product-{{id}}" class="single-product">
-                        <div class="part-1">
-                            <img src="{{consultationURL}}" class="product-{{id}} part-1 consultationImage123" style="">
-                            <ul>
-                                <li>
-                                    <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}>
-                                        <input type="hidden" name="title" value={{title}}>
-                                        <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value="ruri test">
-                                        <input type="hidden" name="tutorid" value={{userId}}>
-                                        <input type="hidden" name="image" value={{consultationURL}}>
-                                        <input type="hidden" name="product_item" value={{roomURL }}>
-                                        <input type="hidden" name="productType" value="consultation session">
-
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fa fa-shopping-cart"></i></button>
-                                    </form>
-                                </li>
-
-                                <li><a href="/student/consultation/display/{{id}}"><i class="fas fa-expand"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">{{replaceCommas title}}</h3>
-                            <div class="row" style="margin-left: 0px; margin-bottom: 10px;">
+                            {{!-- <div class="row" style="margin-left: 0px; margin-bottom: 10px;">
                                 <p style="margin-left: 5px" style="color: grey;"><i>no rating yet</i></p>
-                            </div>
+                            </div> --}}
+                            <a href='../review/{{userId}}' style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View Tutor Review here</i></b></a>
                             <h3 class="product-price">${{replaceCommas price}}</h3>
                             <br>
                             <h4>Description: </h4>

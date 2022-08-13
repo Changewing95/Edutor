@@ -83,6 +83,20 @@ router.get('/choose', ensureAuthenticated, async (req, res) => {
     res.render('review/choose', { orders: product });
 });
 
+router.get('/:tutorid', ensureAuthenticated, (req, res) => {
+    Review.findAll({
+        where: {tutor_id: `${req.params.tutorid}`},
+        order: [['createdAt']],
+        raw: true
+    })
+        .then((reviews) => {
+            // pass object to consultation.hbs
+            res.render('review/tutorReviews', { reviews });
+        })
+        .catch(err => console.log(err));
+
+})
+
 router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) => {
     const productname = (req.params).prodname
     const prodType = req.params.prodType
@@ -199,13 +213,13 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
                             cust_id: `${req.user.id}`,
                             prod_name: `${req.params.prodname}`
                         }
-                })
+                    })
                     .then((result) => {
                         console.log(result[0] + ' leftReview set to true');
                         console.log(review.toJSON());
                         res.redirect('/student/review/main');
                     })
-                    .catch(err => console.log(err));              
+                    .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
     }
@@ -281,7 +295,7 @@ router.get('/deleteReview/:id/:prodname', ensureAuthenticated, async function (r
             .then((result) => {
                 console.log(result[0] + ' leftReview set to false');
             })
-            .catch(err => console.log(err));              
+            .catch(err => console.log(err));
 
         console.log(result + ' review deleted');
         flashMessage(res, 'info', 'Review deleted');

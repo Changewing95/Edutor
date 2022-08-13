@@ -38,27 +38,27 @@ router.get('/settings', ensureAuthenticated, async (req, res) => {
 
 // route to catalogue for consultation
 router.get('/listConsultations', ensureAuthenticated, async (req, res) => {
-    let consultations_reviewed = await db.query(`SELECT consultations.*, ROUND(AVG(rating),2) as 'avgRating'
-                                    FROM consultations
-                                    INNER JOIN reviews
-                                    ON consultations.id = reviews.product_id
-                                    `, { type: QueryTypes.SELECT });
-    let consultations_notreview = await db.query(`SELECT *
-                                    FROM consultations
-                                    `, { type: QueryTypes.SELECT });
-    console.log(consultations_reviewed);
-    console.log(consultations_notreview);
+    // let consultations_reviewed = await db.query(`SELECT consultations.*, ROUND(AVG(rating),2) as 'avgRating'
+    //                                 FROM consultations
+    //                                 INNER JOIN reviews
+    //                                 ON consultations.id = reviews.product_id
+    //                                 `, { type: QueryTypes.SELECT });
+    // let consultations_notreview = await db.query(`SELECT *
+    //                                 FROM consultations
+    //                                 `, { type: QueryTypes.SELECT });
+    // console.log(consultations_reviewed);
+    // console.log(consultations_notreview);
 
-    res.render('consultation/studentConsultation', { consultations_reviewed, consultations_notreview });
-    // Consultation.findAll({
-    //     order: [['date']],
-    //     raw: true
-    // })
-    //     .then((consultations) => {
-    //         // pass object to consultation.hbs
-    //         res.render('consultation/studentConsultation', { consultations });
-    //     })
-    //     .catch(err => console.log(err));
+    // res.render('consultation/studentConsultation', { consultations_reviewed, consultations_notreview });
+    Consultation.findAll({
+        order: [['date']],
+        raw: true
+    })
+        .then((consultations) => {
+            // pass object to consultation.hbs
+            res.render('consultation/studentConsultation', { consultations });
+        })
+        .catch(err => console.log(err));
 });
 
 // display detailed information of slot detail
