@@ -126,6 +126,14 @@ router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 
 router.post('/vidroom/:id/', function (req, res) {
 	let link = req.body.roomURL;
+
+	// tried to save link with ip address -- cmi on the remote laptop
+	// let l = link.slice(16, 100);
+	// let ip_address = 'http://192.168.1.8';
+	// let url = ip_address.concat('', l);
+	// console.log(url);
+	// console.log('req.body.roomURL: ',req.body.roomURL);
+	
 	Consultation.update(
 		{ roomURL: link },
 		{ where: { id: `${req.params.id}` } }

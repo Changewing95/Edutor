@@ -15,11 +15,17 @@ const { spawn } = require("child_process");
 const app = express();
 app.use(express.static(__dirname + '/public'));
 var http = require('http').Server(app);
-var io = require('socket.io')(http)
 
 
+const fs = require('fs');
+const httpsoptions = {
+	key: fs.readFileSync('public/https/localhost-key.key'),
+	cert: fs.readFileSync('public/https/localhost.crt'),
+}
+let https = require('https').createServer(httpsoptions, app);
 
 
+var io = require('socket.io')(http);
 
 
 // io.on("connection",function(socket){
@@ -229,6 +235,7 @@ const port = 5000;
 // 	console.log(`Server started on port ${port}`);
 // });
 
-http.listen(port, () => console.log(`Listening on port ${port}`));
+http.listen(port, () => console.log(`HTTP Listening on port ${port}`));
+https.listen(5001, () => console.log('HTTPS listening on port 5000'));
 
 // http.listen(port, () => console.log(`Listening on port ${port}`));
