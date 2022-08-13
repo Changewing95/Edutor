@@ -26,8 +26,8 @@ const setUpDB = (drop) => {
             User.hasMany(Order);
             Order.belongsTo(User);
 
-            Order.hasMany(OrderItems);
-            OrderItems.belongsTo(Order);
+            // Order.hasMany(OrderItems);
+            // OrderItems.belongsTo(Order);
 
 
             // The sync functioin creates the tables if none exists. The true or false "force" parameter will determine if all tables are preserved or dropped.

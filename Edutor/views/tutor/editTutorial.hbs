@@ -4,10 +4,10 @@
 </head>
 
 <body>
-    <div class="container" style ="height:900px;">
+    <div class="container" style="height:900px;">
         <div class="title">EDITTTTTT</div>
         <div class="content">
-            <form method="POST"  id="my-form" enctype="multipart/form-data" action="#">
+            <form method="POST" id="my-form" enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         {{!-- <span class="details">Title</span> --}}
@@ -57,14 +57,15 @@
 
                     <div class="input-box mb-3">
                         <label class="details">Enter Price Of Course</label>
-                         <input type="number" class="form-control" id="price" name="price" rows="1"  value="{{tutorials.price}}">
+                        <input type="number" class="form-control" id="price" name="price" rows="1"
+                            value="{{tutorials.price}}">
                         {{!-- <textarea class="form-control" id="price" name="price" rows="1"
                             maxlength="1000">{{tutorials.price}}</textarea> --}}
                     </div>
 
 
                 </div>
-                
+
                 {{!-- <div class="input-box mb-3">
                     <span class="details">Upload Thumbnail</span>
                     <input type="file" name="image" accept="image/*" class="form-control" required>
@@ -80,10 +81,10 @@
                     <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
                     <img id="tutorial" src="{{ consultation.consultationURL }}" height="100" width="100"
                         alt="Consulation" class="border img-thumbnail img-fluid">
-                    Hidden field to submit URL of poster to the server 
+                    Hidden field to submit URL of poster to the server
                     <input id="consultationURL" type="hidden" name="consultationURL"
                         value="{{ consultation.consultationURL}}">
-                </div>  --}}
+                </div> --}}
 
                 <div class="input-box mb-3">
                     <span class="details">Update Thumbnail</span>
@@ -108,15 +109,16 @@
 
                         <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}">
                         <video width="320" height="240" controls>
-                            <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
+                            <source src="http://localhost:5001/tutor/tutorial/get-video/{{tutorials.video}}"
+                                type="video/mp4">
                         </video>
-{{!-- 
+                        {{!--
                         <div class="text-danger small mb-3" id="consultationErr" style="display:none"></div>
                         <img id="consultation" src="{{ tutorials.tutorialImageURL }}" height="100" width="100"
                             alt="Tutorial" class="border img-thumbnail img-fluid">
-                         Hidden field to submit URL of poster to the server 
+                        Hidden field to submit URL of poster to the server
                         <input id="tutorialImageURL" type="hidden" name="tutorialImageURL"
-                            value="{{ tutorials.tutorialImageURL}}">  --}}
+                            value="{{ tutorials.tutorialImageURL}}"> --}}
                     </div>
                     {{!-- <div class="input-box mb-3">
                         <span class="details">Upload Tutorial Video</span>
@@ -130,14 +132,15 @@
     </div>
 </body>
 <script>
-const uploadButton = document.querySelector('#upload-btn');
- uploadButton.addEventListener('click', (e) => {
-  const form = document.querySelector('#my-form');
-  const formData = new FormData(form);
-  fetch('http://localhost:5000/tutor/tutorial/upload-video', {
-     method: 'POST',
-     body: formData,
-  });
- });
+    const uploadButton = document.querySelector('#upload-btn');
+    uploadButton.addEventListener('click', (e) => {
+        const form = document.querySelector('#my-form');
+        const formData = new FormData(form);
+        fetch('http://localhost:5001/tutor/tutorial/upload-video', {
+            method: 'POST',
+            body: formData,
+        });
+    });
 </script>
+
 </html>
