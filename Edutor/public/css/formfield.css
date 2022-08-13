@@ -6,6 +6,14 @@
      font-weight: 500;
      position: relative;
  }
+ #imagePreview{
+    width: 200px;
+    height:250px;
+    padding:20px;
+ }
+video{
+    height:240px;
+}
 
  .container .title::before {
      content: "";
