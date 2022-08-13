@@ -9,12 +9,16 @@
 
     <section class="section-products">
         <div class="container">
-
+            <div>
+                <a href="/tutor/event/create">
+                    <p><span><i class="fa fa-plus" aria-hidden="true"></i></span> Create Event</p>
+                </a>
+            </div>
             {{#if event}}
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
-                        <h2>Events</h2>
+                        <h2>Your Events</h2>
                     </div>
                 </div>
             </div>
@@ -28,36 +32,24 @@
                             <img src="{{eventURL}}" class="single-product">
 
                             <ul>
-                                <li>
-                                    <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}>
-                                        <input type="hidden" name="title" value={{title}}>
-                                        <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value="test">
-                                        <input type="hidden" name="tutorid" value={{userId}}>
-                                        <input type="hidden" name="image" value={{eventURL}}>
-                                        <input type="hidden" name="product_item" value="nil">
-                                        <input type="hidden" name="productType" value="event">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fa fa-shopping-cart"></i></button>
-                                    </form>
-                                </li>
-                                <li><a href="/student/event/display/{{id}}"><i class="fas fa-expand"></i></a>
-
+                                <li><a href="/tutor/event/editEvent/{{id}}"><i class="fas fa-pencil-alt"></i></a></li>
+                                <li><a href="/tutor/event/deleteEvent/{{id}}"><i class="fas fa-trash-alt"></i></a></li>
 
                             </ul>
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{title}}</h3>
-
+                            <br>
                             <h4>Description:</h4>
                             <p class="product-description">{{ description}}</p>
+
+                            <h4 class="product-date">Date:</h4>
+                            <p class="product-date">{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
+                                'DD MMM YYYY'enddate}}</p>
+                            <h4>Time:</h4>
+                            <p class="product-time">{{formatDate starttime 'HH:mm'}} ~ {{formatDate endtime
+                                'HH:mm'}}</p>
                             <h4 class="product-price">Price: ${{price}} </h4>
-                            <br>
-                            <br>
-                            <a href="/student/event/display/{{id}}" class="btn btn-primary" style="width:125px">More Details</a>
-
-
 
 
                         </div>

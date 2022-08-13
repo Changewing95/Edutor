@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/formfield.css">
 
     <style>
-
     </style>
 </head>
 
@@ -49,14 +48,11 @@
 
                     {{!-- <div class="input-box mb-3">
                         <span class="details">Image Upload</span>
-
                         <div class="custom-file mb-2">
-
                             <input type="file" class="custom-file-input" id="eventimage" name="eventimage"
                                 accept="image/png,image/jpeg,image/jpg,image/gif">
                             <label class="custom-file-label" for="customFile">Choose File</label>
                         </div>
-
                     </div>
                     <div class="text-danger small mb-2" id="eventimageErr" style="display:none"></div> --}}
                     
@@ -106,14 +102,11 @@
 
 <script>
     
-
     $('#datepicker').datepicker({
         format: "dd/mm/yyyy",
         value: moment().format('DD/MM/YYYY'),
         minDate: new Date(moment().add(-1, 'days')),
         maxDate: '+1Y',
-
-
     });
     $('#datepick').datepicker({
         format: "dd/mm/yyyy",
@@ -134,9 +127,7 @@
              
             if (!allowedExtensions.exec(filePath)) {
                 alert('Invalid file type!'); 
-
                 fileInput.value = '';
-
             }
             else
             {
@@ -155,10 +146,6 @@
                 }
     }
     }
-
-
-
-
 </script>
 
 </html>

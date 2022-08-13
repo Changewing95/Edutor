@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Tutorial = require('../models/Tutorial');
 const Consultation = require('../models/Booking');
 const Review = require('../models/Review');
+const Complain = require('../models/Complain');
 const Order = require('../models/Order');
 const OrderItems = require('../models/OrderItems');
 // const Video = require('../models/Video');
@@ -23,9 +24,14 @@ const setUpDB = (drop) => {
 
             User.hasMany(Review);
             Review.belongsTo(User);
+
+            User.hasMany(Complain);
+            Complain.belongsTo(Review);
+ 
             User.hasMany(Order);
             Order.belongsTo(User);
-
+            // Order.hasMany(OrderItems);
+            // OrderItems.belongsTo(Order);
             Order.hasMany(OrderItems);
             OrderItems.belongsTo(Order);
 

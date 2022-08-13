@@ -169,7 +169,7 @@ router.get('/statisticForOrders', async (req, res) => {
     // console.log(Records[0]['dataValues']['date_col_formed'])
     let b = {}
     Records.forEach(object => {
-        console.log(object['dataValues']['date_col_formed']);
+        // console.log(object['dataValues']['date_col_formed']);
         b[object['dataValues']['date_col_formed']] = (b[object['dataValues']['date_col_formed']] || 0) + 1;
 
     })    // return res.json(result)

@@ -87,14 +87,11 @@
 
 <script>
     
-
     $('#datepicker').datepicker({
         format: "dd/mm/yyyy",
         value: moment().format('DD/MM/YYYY'),
         minDate: new Date(moment().add(-1, 'days')),
         maxDate: '+1Y',
-
-
     });
     $('#datepick').datepicker({
         format: "dd/mm/yyyy",
@@ -115,9 +112,7 @@
              
             if (!allowedExtensions.exec(filePath)) {
                 alert('Invalid file type!'); 
-
                 fileInput.value = '';
-
             }
             else
             {
@@ -136,10 +131,6 @@
                 }
     }
     }
-
-
-
-
 </script>
 
 </html>

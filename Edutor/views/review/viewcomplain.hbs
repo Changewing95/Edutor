@@ -1,0 +1,130 @@
+{{!-- done by yong lin, for tutor main display of reviews --}}
+
+<head>
+
+    <!-- Custom styles for this template -->
+    <style>
+        .btn-grey {
+            background-color: #D8D8D8;
+            color: #FFF;
+        }
+
+        .rating-block {
+            background-color: #FAFAFA;
+            border: 1px solid #EFEFEF;
+            padding: 15px 15px 20px 15px;
+            border-radius: 3px;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .padding-bottom-7 {
+            padding-bottom: 7px;
+        }
+
+        .review-block {
+            background-color: #ffcdcd;
+            border: 1px solid #EFEFEF;
+            padding: 35px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        .review-block-name {
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+        .review-block-date {
+            font-size: 13px;
+        }
+
+        .review-block-rate {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-block-title {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .review-block-description {
+            font-size: 15px;
+        }
+
+        .checked {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {{!-- display header --}}
+        <div class="row justify-content-center text-center">
+            <div>
+                <div class="header">
+                    <h2>Complain</h2>
+                </div>
+            </div>
+        </div>
+
+        {{!-- display overall review block --}}
+        {{#if complains}}
+        {{!-- for each review --}}
+        {{#each complains}}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="review-block">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-date" style="margin-top: 15px">Posted on: {{formatDate updatedAt 'DD MMM YYYY'}}</div>
+                            <img src="/background/angry.png" style="height: 100px; width: 100px; margin: 30px;">
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="review-block-title row">
+                                <p><span
+                                        style="">Title:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{title}} </p>
+                            </div>
+                            <div class="review-block-category row">
+                                <p><span style="">Category:</span>&nbsp;&nbsp;&nbsp;&nbsp; <span
+                                        style="text-transform: capitalize">{{prodType}}</span>
+                                </p>
+                            </div>
+                            <div class="review=block-description row" style="opacity: 0;">&nbsp;</div>
+
+                            <div class="review-block-description row">
+                                <p style="">Description:</p>
+                            </div>
+                            <div class="review-block-description row">
+                                {{complain}}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/each}}
+
+                    {{!-- if no review --}}
+                    {{else}}
+                    <div class="row justify-content-center text-center">
+                        <div>
+                            <div class="header">
+                                <h2>Tutor have yet to receive any review.</h2>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- /container -->
+    </div>
+</body>

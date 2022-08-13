@@ -78,21 +78,17 @@
                             <div class="row">
                                 <div class="col-sm-8 align-items-start">
                                     <div class="d-flex flex-column text-left">
-                                        {{!-- <div style="margin-top: 20px">
-                                            <p class="mt-2 mb-0 text-left" style="padding: 0px; margin: 0px">
-                                                {{prod_name}}
-                                            </p>
-                                        </div> --}}
                                         <div>
                                             <h4 class="blue-text">{{prod_name}}</h4>
                                         </div>
                                         <div style="margin-top: 15px">
-                                            <p class="content">Tutor: {{tutor_id}}</p>
+                                            <p class="content" style="text-transform: capitalize">Category: {{prodType}}</p>
+                                            <p class="content">Tutor: {{name}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <a href="/student/review/create/{{prod_name}}" class="btn btn-primary"
+                                    <a href="/student/review/create/{{prodType}}/{{prod_name}}" class="btn btn-primary"
                                         style="width:170px; font-size: 15px;">Leave
                                         Review</a>
                                 </div>
