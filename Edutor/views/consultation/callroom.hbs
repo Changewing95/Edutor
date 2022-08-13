@@ -9,7 +9,10 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel='stylesheet' src='public/css/room.css' type=" text/css">
 
-<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>    <script type="module" src='/js/rtc.js'></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+        integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+        crossorigin="anonymous"></script>
+    <script type="module" src='/js/rtc.js'></script>
     <script type="module" src='/js/events.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js"
         integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
@@ -62,20 +65,27 @@
             </div>
 
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <label for="room-name">Room Name</label>
-                <input type="text" id='room-name' class="form-control rounded-0" value="{{consultation.title}}">
+                <label for="room-name" class="toremove">Room Name</label>
+                <input type="text" id='room-name' class="form-control rounded-0 toremove1" value="{{consultation.title}}">
             </div>
 
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <label for="your-name">Your Name</label>
-                <input type="text" id='your-name' class="form-control rounded-0" placeholder="Your Name">
+                <label for="your-name" class="toremove2">Your Name</label>
+                <input type="text" id='your-name' class="form-control rounded-0 toremove3" placeholder="Your Name">
             </div>
 
+            <div class="col-12 col-md-4 offset-md-4 mb-3 toremove4">
+                <button id='create-room' class="btn btn-block rounded-0 btn-info ">Create Room</button>
+            </div>
+
+            {{!-- <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div> --}}
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <button id='create-room' class="btn btn-block rounded-0 btn-info">Create Room</button>
+                <form method="POST" action="">
+                    <input type="hidden" name="roomURL" id="roomURL">
+                    <button type="submit" class="btn btn-block rounded-0 btn-info">Enter Room</button>
+                </form>
             </div>
 
-            <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div>
         </div>
     </div>
 
@@ -95,7 +105,7 @@
             </div>
 
             <div class="col-12 col-md-4 offset-md-4 mb-3">
-                <button id='enter-room' class="btn btn-block rounded-0 btn-info">Enter Room</button>
+                <button type="submit" id='enter-room' class="btn btn-block rounded-0 btn-info">Enter room</button>
             </div>
         </div>
     </div>

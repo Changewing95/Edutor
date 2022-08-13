@@ -48,3 +48,16 @@ $('#reviewUpload').on('change', function () {
             }
         })
 });
+
+// $('#enter-room').on('change', function () {
+//     let link = $("#roomURL");
+//     alert(link);
+//     fetch(`${link}`, {
+//         method: 'POST',
+//         body: link
+//     })
+//         .then(res => res.json())
+//         .then((data) => {
+//             console.log(data);
+//         })
+// });

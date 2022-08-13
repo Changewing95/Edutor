@@ -87,7 +87,6 @@
                         <video width="320" height="240" controls/>
                             <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
                         </video>
-
                     </div>
            
                     <div class="button">
@@ -103,7 +102,6 @@
         var filePath = fileInput.value;
         // Allowing file type
         var allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
         if (!allowedExtensions.exec(filePath)) {
             alert('Invalid file type');
             fileInput.value = '';
@@ -119,20 +117,15 @@
                         '<img src="' + e.target.result
                         + '"/>';
                 };
-
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
     }
-
-
-
  function videoValidation() {
         var fileInput = document.getElementById('tutorialVideoURL');
         var filePath = fileInput.value;
         // Allowing file type
         var allowedExtensions =/(\.mp4)$/i;
-
         if (!allowedExtensions.exec(filePath)) {
             alert('Invalid file type');
             fileInput.value = '';
@@ -140,10 +133,6 @@
         }
       
     }
-
-
-
-
 const uploadButton = document.querySelector('#upload-btn');
  uploadButton.addEventListener('click', (e) => {
   const form = document.querySelector('#my-form');

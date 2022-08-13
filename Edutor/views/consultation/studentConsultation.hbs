@@ -35,6 +35,7 @@
                                         <input type="hidden" name="tutorid" value={{userId}}>
                                         <input type="hidden" name="image" value={{consultationURL}}>
                                         <input type="hidden" name="product_item" value={{consultationURL}}>
+                                        <input type="hidden" name="product_item" value={{roomURL }}>
                                         <input type="hidden" name="productType" value="consultation session">
 
                                         <button type="submit" class="btn btn-primary"><i
@@ -48,6 +49,10 @@
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{replaceCommas title}}</h3>
+                            {{!-- <div class="row" style="margin-left: 0px; margin-bottom: 10px;">
+                                <p style="margin-left: 5px" style="color: grey;"><i>no rating yet</i></p>
+                            </div> --}}
+                            <a href='../review/{{userId}}' style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View Tutor Review here</i></b></a>
                             <h3 class="product-price">${{replaceCommas price}}</h3>
                             <br>
                             <h4>Description: </h4>
@@ -63,15 +68,8 @@
                 </div>
                 {{/each}}
                 {{else}}
-                <div class="row justify-content-center text-center">
-                    <div>
-                        <div class="header">
-                            <h2>No Consultation slots created. Below is the template</h2>
-                            <hr>
-                        </div>
-                    </div>
-                </div>
                 {{/if}}
+
             </div>
         </div>
 
