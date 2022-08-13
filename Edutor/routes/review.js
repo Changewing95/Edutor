@@ -9,7 +9,8 @@ const upload = require('../helpers/reviewImageUpload');
 const Review = require('../models/Review');
 const Consultation = require('../models/Booking')
 const Event = require('../models/Event');
-const Tutorial = require('../models/Tutorial')
+const Tutorial = require('../models/Tutorial');
+const Complain = require('../models/Complain');
 const moment = require('moment');
 
 // const Order = require('../models/Order');
@@ -196,8 +197,9 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
+router.get('/:reviewid/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
     const prodType = req.params.prodtype;
+    const reviewid = req.params.reviewid;
 
     switch (prodType) {
         case 'consultation session':
@@ -205,7 +207,7 @@ router.get('/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
                 .then((query) => {
                     console.log(query);
                     // pass object to review.hbs
-                    res.render('review/query', { query });
+                    res.render('review/query', { query, reviewid });
                 })
                 .catch(err => console.log(err));
             break;
@@ -213,7 +215,7 @@ router.get('/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
             Event.findByPk(req.params.prodid)
                 .then((query) => {
                     // pass object to review.hbs
-                    res.render('review/query', { query });
+                    res.render('review/query', { query, reviewid });
                 })
                 .catch(err => console.log(err));
             break;
@@ -221,39 +223,7 @@ router.get('/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
             Tutorial.findByPk(req.params.prodid)
                 .then((query) => {
                     // pass object to review.hbs
-                    res.render('review/query', { query });
-                })
-                .catch(err => console.log(err));
-            break;
-    }
-});
-
-router.post('/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
-    const prodType = req.params.prodtype;
-
-    switch (prodType) {
-        case 'consultation session':
-            Consultation.findByPk(req.params.prodid)
-                .then((query) => {
-                    console.log(query);
-                    // pass object to review.hbs
-                    res.render('review/query', { query });
-                })
-                .catch(err => console.log(err));
-            break;
-        case 'event':
-            Event.findByPk(req.params.prodid)
-                .then((query) => {
-                    // pass object to review.hbs
-                    res.render('review/query', { query });
-                })
-                .catch(err => console.log(err));
-            break;
-        case 'course':
-            Tutorial.findByPk(req.params.prodid)
-                .then((query) => {
-                    // pass object to review.hbs
-                    res.render('review/query', { query });
+                    res.render('review/query', { query, reviewid });
                 })
                 .catch(err => console.log(err));
             break;
@@ -358,6 +328,19 @@ router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
+router.get('/displaycomplain/:id', ensureAuthenticated, (req, res) => {
+    Complain.findAll({
+        where: { reviewId: `${req.params.id}` },
+        raw: true
+    })
+        .then((complains) => {
+            // pass object to consultation.hbs
+            res.render('review/viewcomplain', { complains });
+        })
+        .catch(err => console.log(err));
+
+})
+
 
 
 
@@ -415,10 +398,10 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
                             res.redirect('/student/review/main');
                         }
                         else if (sentiment_score == 0) {
-                            res.redirect(`/student/review/${category}/${product_id}/followup`);
+                            res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
                         }
                         else {
-                            res.redirect(`/student/review/${category}/${product_id}/followup`);
+                            res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
                         }
                     })
                     .catch(err => console.log(err));
@@ -513,6 +496,23 @@ router.get('/deleteReview/:id/:prodname', ensureAuthenticated, async function (r
     }
 });
 
+// create for complain message (if sentiment_score <= 0)
+router.post('/:reviewid/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
+    const prodType = req.params.prodtype;
+    const prodId = req.params.prodid;
+    const complain = req.body.complain;
+    const reviewId = req.params.reviewid;
+    const userId = req.user.id;
+
+    Complain.create({ prodType, prodId, complain, reviewId, userId })
+        .then((complain) => {
+            console.log(complain.toJSON());
+            flashMessage(res, 'info', "Your valuable feedback has been received. Our tutors will look at it and prevent this from happening again");
+            res.redirect('/student/review/main');
+        })
+        .catch(err => console.log(err));
+
+});
 
 // image upload
 router.post('/upload', (req, res) => {

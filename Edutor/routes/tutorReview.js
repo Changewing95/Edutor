@@ -55,13 +55,14 @@ router.get('/listReview', async (req, res) => {
     Review.findAll({
         // where: { userId: req.user.id },
         attributes: [
-            'title', 'category', 'image', 'rating', 'description', 'username', 'createdAt'],
+            'id','title', 'category', 'image', 'rating', 'description', 'username','sentiment_score', 'createdAt'],
         order: [['title']],
         where: { tutor_id: req.user.id },
         raw: true
     })
         .then((reviews) => {
             // pass object to review.hbs
+            console.log(reviews);
             res.render('review/overview.hbs', {
                 reviews, avgRating: avgRating[0], rating5: rating5Count[0], rating4: rating4Count[0],
                 rating3: rating3Count[0], rating2: rating2Count[0], rating1: rating1Count[0],
