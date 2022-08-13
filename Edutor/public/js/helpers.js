@@ -49,21 +49,28 @@ export default {
 
 
     userMediaAvailable() {
+        console.log(navigator.getUserMedia);
         return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
     },
 
 
     getUserFullMedia() {
         if (this.userMediaAvailable()) {
+            // console.log('fullmedia: ', navigator.mediaDevices.getUserMedia());
             return navigator.mediaDevices.getUserMedia({
+                // video: {
+                //     width: { min: 500, max: 1000 },
+                //     height: { min: 500, max: 720 }
+                // },
                 video: true,
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true
-                }
+                // audio: {
+                //     echoCancellation: true,
+                //     noiseSuppression: true
+                // }
+                audio: true
             });
+            
         }
-
         else {
             throw new Error('User media not available');
         }
@@ -111,16 +118,21 @@ export default {
         return {
             iceServers: [
                 {
-                    urls: ["stun:eu-turn4.xirsys.com"]
+                    urls: ["stun:ss-turn1.xirsys.com:5000"]
                 },
                 {
-                    username: "ml0jh0qMKZKd9P_9C0UIBY2G0nSQMCFBUXGlk6IXDJf8G2uiCymg9WwbEJTMwVeiAAAAAF2__hNSaW5vbGVl",
-                    credential: "4dd454a6-feee-11e9-b185-6adcafebbb45",
+                    username: "vzzxCRZSpbAYCwzzH0UceI3f_YZmwP1H3wN_zEnbif-HrUcjRH5VkfTZn5JPUD6oAAAAAGL1-uh5b25nbGlubm5ubm4=",
+                    credential: "a963f056-1a0c-11ed-99a6-0242ac140004",
                     urls: [
-                        "turn:eu-turn4.xirsys.com:80?transport=udp",
-                        "turn:eu-turn4.xirsys.com:3478?transport=tcp"
+                        // "turn:eu-turn4.xirsys.com:80?transport=udp",
+                        // "turn:eu-turn4.xirsys.com:3478?transport=tcp"
+                        "turn:ss-turn1.xirsys.com:5000?transport=udp",
+                        "turn:ss-turn1.xirsys.com:5000?transport=tcp",
+                        // "turns:ss-turn1.xirsys.com:5000?transport=tcp",
+                        // "turns:ss-turn1.xirsys.com:5000?transport=tcp"
                     ]
-                }
+                },
+
             ]
         };
     },

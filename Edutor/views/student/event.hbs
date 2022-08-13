@@ -20,38 +20,43 @@
                 {{#each event}}
                 <!-- Single Product -->
                 <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div  class="single-product">
+                    <div class="single-product">
 
                         <div class="part-1">
                             <img src="{{eventURL}}" class="single-product">
 
                             <ul>
                                 <li>
-                                        <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}> 
-                                        <input type="hidden" name="title" value={{title}}> 
-                                        <input type="hidden" name="price" value={{price}}> 
-                                        <input type="hidden" name="author" value="test"> 
-                                        <input type="hidden" name="tutorid" value={{userId}}> 
-                                        <input type="hidden" name="image" value={{eventURL}}> 
-                                        <input type="hidden" name="product_item" value="nil"> 
+                                    <form action="/cart/addtoCart" method="POST">
+                                        <input type="hidden" name="id" value={{id}}>
+                                        <input type="hidden" name="title" value={{title}}>
+                                        <input type="hidden" name="price" value={{price}}>
+                                        <input type="hidden" name="author" value="test">
+                                        <input type="hidden" name="tutorid" value={{userId}}>
+                                        <input type="hidden" name="image" value={{eventURL}}>
+                                        <input type="hidden" name="product_item" value="nil">
                                         <input type="hidden" name="productType" value="event">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="fa fa-shopping-cart"></i></button>
                                     </form>
-                                    </li>
+                                </li>
 
 
                             </ul>
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{title}}</h3>
-                            <h4 class="product-description">Description: {{description}}</h4>
-                            <h5 class="product-date">Date:{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
-                                'DD MMM YYYY'enddate}} </h5>
-                            <h6 class="product-time">Time:{{starttime}} ~ {{endtime}} </h6>
-                            <h7 class="product-status">Status: {{status}} </h7>
                             <br>
-                            <h8 class="product-price">Price: {{price}} </h8>
+                            <h4>Description:</h4>
+                            <p class="product-description">{{ description}}</p>
+
+                            <h4 class="product-date">Date:</h4>
+                            <p class="product-date">{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
+                                'DD MMM YYYY'enddate}}</p>
+                            <h4>Time:</h4>
+                            <p class="product-time">{{formatDate starttime 'HH:mm'}} ~ {{formatDate endtime
+                                'HH:mm'}}</p>
+                            <h4 class="product-price">Price: ${{price}} </h4>
 
                         </div>
 
