@@ -1,5 +1,7 @@
 <head>
     <link rel="stylesheet" href="/css/catalogue.css">
+    <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+
 </head>
 
 <body>
@@ -45,7 +47,7 @@
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
                                             <input type="hidden" name="id" value={{id}}>
-                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value={{price}}>
                                             <input type="hidden" name="author" value={{author}}>
                                             <input type="hidden" name="tutorid" value={{userId}}>
@@ -104,7 +106,7 @@
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
                                             <input type="hidden" name="id" value={{id}}>
-                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value={{price}}>
                                             <input type="hidden" name="author" value={{author}}>
                                             <input type="hidden" name="tutorid" value={{userId}}>
@@ -159,7 +161,7 @@
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
                                             <input type="hidden" name="id" value={{id}}>
-                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value={{price}}>
                                             <input type="hidden" name="author" value={{author}}>
                                             <input type="hidden" name="tutorid" value={{userId}}>
@@ -213,7 +215,7 @@
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
                                             <input type="hidden" name="id" value={{id}}>
-                                            <input type="hidden" name="title" value={{title}}>
+                                            <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value={{price}}>
                                             <input type="hidden" name="author" value={{author}}>
                                             <input type="hidden" name="tutorid" value={{userId}}>
@@ -245,57 +247,95 @@
                 </div>
             </div>
 
+            {{!-- {{#if_equal results "false"}}
+
+
+            {{else}} --}}
 
 
 
-        </div>
-        <h1>Recommendation</h1>
-        <div class="row1">
-            <div class="row">
-                <!-- Single Product -->
-                {{#each results}}
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div id="product-{{id}}" class="single-product">
-                        <div class="part-1">
-                            <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123" style="">
-                            {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
-                            {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
-                            {{!-- class="border img-thumbnail img-fluid" --}}
+            <h2 class="test">Recommendation</h2>
+            <div class="row1">
+                <div class="row" id="template-body">
 
-                            <ul>
-                                <li>
-                                    <form action="/cart/addtoCart" method="POST">
-                                        <input type="hidden" name="id" value={{id}}>
-                                        <input type="hidden" name="title" value={{title}}>
-                                        <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value={{author}}>
-                                        <input type="hidden" name="tutorid" value={{userId}}>
-                                        <input type="hidden" name="image" value={{tutorialImageURL}}>
-                                        <input type="hidden" name="product_item" value={{video}}>
-                                        <input type="hidden" name="productType" value="course">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fa fa-shopping-cart"></i></button>
-                                    </form>
-                                </li>
 
-                                <li><a href="/student/tutorial/display/{{id}}"><i class="fa fa-info-circle"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="part-2">
-                            <h3 class="product-title">{{replaceCommas title}}</h3>
-                            {{!-- <h4>{{replaceCommas description}}</h4> --}}
-                            <h4 class="product-price">${{replaceCommas price}}</h4>
-                        </div>
-                    </div>
                 </div>
-
-                {{/each}}
-
-
             </div>
+
+            {{!-- {{/if_equal}} --}}
         </div>
+
+
     </section>
 
 
 </body>
+
+
+
+
+<script>
+
+    function UpdateRecommendation() {
+        $("#template-body").empty();
+        $.ajax({
+            url: '/student/tutorial/getRecommendation',
+        }).then(function (data) {
+            console.log(data)
+            if (data != "false") {
+                for (let item of data) {
+                    var template1 = $(`
+                    <!-- Single Product -->
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div id="product-${item.id}" class="single-product">
+                            <div class="part-1">
+                                <img src="${item.tutorialImageURL}" class="product-${item.id} part-1 consultationImage123"
+                                    style="">
+                                {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
+                                {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
+                                {{!-- class="border img-thumbnail img-fluid" --}}
+
+                                <ul>
+                                    <li>
+                                        <form action="/cart/addtoCart" method="POST">
+                                            <input type="hidden" name="id" value=${item.id}>
+                                            <input type="hidden" name="title" value="${item.title}">
+                                            <input type="hidden" name="price" value=${item.price}>
+                                            <input type="hidden" name="author" value=${item.author}>
+                                            <input type="hidden" name="tutorid" value=${item.userId}>
+                                            <input type="hidden" name="image" value=${item.tutorialImageURL}>
+                                            <input type="hidden" name="product_item" value=${item.video}>
+                                            <input type="hidden" name="productType" value="course">
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fa fa-shopping-cart"></i></button>
+                                        </form>
+                                    </li>
+
+                                    <li><a href="/student/tutorial/display/${item.id}"><i class="fa fa-info-circle"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="part-2">
+                                <h3 class="product-title">${item.title}</h3>
+                                <h4 class="product-price">${item.price}</h4>
+                            </div>
+                        </div>
+                    </div>`)
+                    $("#template-body").append(template1);
+                }
+            } else {
+                $(".test").empty()
+                $("#template-body").empty()
+
+            }
+            // render(data);
+        });
+    }
+
+
+
+
+    UpdateRecommendation()
+
+
+</script>

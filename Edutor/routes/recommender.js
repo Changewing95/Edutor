@@ -5,7 +5,9 @@ const UserController = require('../Controller/User');
 
 
 
-router.get('/lol', UserController.Recommendation);
+router.get('/lol', (req,res) => {
+    main().then(console.log());
+});
 
 
 

@@ -165,6 +165,7 @@
 
   function getStatisticForOrder() {
     $.get('/dashboard/statisticForOrders', (res) => {
+      console.log("asd")
       counter = 0
       var keys = Object.keys(res['b']);
       for (var i = 0; i < keys.length; i++) {

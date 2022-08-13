@@ -213,6 +213,7 @@ function CheckifPasswordIsTheSame(res, req, password, confirm_password) {
 }
 
 
+
 exports.Recommendation = async (req, res) => {
     var Student1 = new procyon({
         className: 'Users'
@@ -222,13 +223,13 @@ exports.Recommendation = async (req, res) => {
         attributes: [[sequelize.fn('DISTINCT', sequelize.col('prod_name')), 'prod_name']]
     });
 
-    if (AllItems) {
+    if (AllItems.length > 0) {
         for await (const variable of AllItems) {
+            console.log(variable['prod_name'])
             Student1.liked(req.user.id, variable['prod_name'])
-
         }
         let recommendations_actors = await Student1.recommendFor(req.user.id, 10)
-        console.log(recommendations_actors, "asd")
+        console.log(recommendations_actors)
         if (recommendations_actors.length > 0) {
             let results = await Tutorial.findAll({
                 raw: true,
@@ -240,10 +241,12 @@ exports.Recommendation = async (req, res) => {
             });
             return results;
         } else {
-            return "nothing"
+            console.log("no recommendation")
+            return "false"
         }
     } else {
         console.log("no recomemndation")
+        return "false"
     }
 
 }
