@@ -6,8 +6,10 @@
 
 <body>
 
+
     <section class="section-products">
         <div class="container">
+
             {{#if event}}
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
@@ -40,23 +42,23 @@
                                                 class="fa fa-shopping-cart"></i></button>
                                     </form>
                                 </li>
+                                <li><a href="/student/event/display/{{id}}"><i class="fas fa-expand"></i></a>
 
 
                             </ul>
                         </div>
                         <div class="part-2">
                             <h3 class="product-title">{{title}}</h3>
-                            <br>
+
                             <h4>Description:</h4>
                             <p class="product-description">{{ description}}</p>
+                            <h4 class="product-price">Price: ${{price}} </h4>
+                            <br>
+                            <br>
+                            <a href="/student/event/display/{{id}}" class="btn btn-primary" style="width:125px">More Details</a>
 
-                            <h4 class="product-date">Date:</h4>
-                                <p class="product-date">{{formatDate startdate 'DD MMM YYYY'}} ~ {{formatDate enddate
-                                    'DD MMM YYYY'enddate}}</p>
-                                <h4>Time:</h4>
-                                <p class="product-time">{{formatDate starttime 'HH:mm'}} ~ {{formatDate endtime
-                                    'HH:mm'}}</p>
-                                <h4 class="product-price">Price: ${{price}} </h4>
+
+
 
                         </div>
 
