@@ -97,10 +97,10 @@
                 <h3 style="font-size:15px; margin-left:-2%;margin-top: 15px;margin-bottom:15px;"><b>2. Payment</b></h3>
                 {{#if orders}}
                 {{#each orders}}
-                <input type="hidden" name="oid" id="oid" value="{{increaseOID order_id 1}}">
+                <input type="hidden" name="oid" id="oid" value={{increaseOID order_id 1}}>
                 {{/each}}
                 {{else}}
-                <input type="hidden" name="oid" id="oid" value="1">
+                <input type="hidden" name="oid" id="oid" value=1>
                 {{/if}}
 
 

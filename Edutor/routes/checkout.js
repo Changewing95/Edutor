@@ -5,7 +5,11 @@ const OrderItems = require('../models/OrderItems');
 const User = require('../models/User');
 const Tutorial = require('../models/Tutorial');
 const Cart = require('../models/Cart');
-const stripe = require('stripe')("Add your secret key");
+// for raw sql
+const db = require('../config/DBConfig');
+const { QueryTypes } = require('sequelize');
+
+
 
 router.get('/', (req, res) => {
     Order.findAll({
@@ -16,15 +20,11 @@ router.get('/', (req, res) => {
             Cart.findAll({
                 where: { student_ID: req.user.id },
                 raw: true
-            }).then((cartitems) => {
-                Cart.sum('price', { //updated cart count 
-                    where: { student_ID: req.user.id },
-                    raw: true
-                })
-                    .then((total) => {
-                        res.render('checkout/checkout', { cartitems, total, orders });
-                    })
             })
+                .then((cartitems) => {
+                    var total = req.session.total;
+                    res.render('checkout/checkout', { cartitems, total: total, orders });
+                })
         })
         .catch(err => console.log(err));
 });
@@ -40,6 +40,7 @@ router.post('/place_order', (req, res) => {
     var cust_name = req.body.cust_name;
 
     console.log("new order id " + oid);
+
     //Order items creation
     var cart = req.session.cart;
     for (let i = 0; i < cart.length; i++) {
@@ -65,7 +66,7 @@ router.post('/place_order', (req, res) => {
         var status = "ok";
 
         OrderItems.create(
-            { orderId: oid, cust_name: cust_name, cust_id: cust_id, tutor_id: tutorid, prod_name: prod_name, prodType: prodType, qty: qty, status: status, price: price, item_detail: prod_item }
+            { cust_name: cust_name, cust_id: cust_id, tutor_id: tutorid, prod_name: prod_name, prodType: prodType, qty: qty, status: status, price: price, item_detail: prod_item, order_id: oid }
         )
             .then((orderitem) => {
                 console.log(orderitem.toJSON());
@@ -84,24 +85,25 @@ router.post('/place_order', (req, res) => {
 
 });
 
-
-
-router.get('/orderSuccessful', (req, res) => {
-    Order.findOne({
-        limit: 1,
+router.get('/orderSuccessful', async (req, res) => {
+    await Order.findOne({
         where: {
             userId: req.user.id
         },
         order: [['createdAt', 'DESC']]
     })
-        .then((order) => {
+        .then((theordermade) => {
             OrderItems.findAll({
-                where: { cust_id: req.user.id, orderId: order.order_id },
+                where: {
+                    cust_id: req.user.id,
+                    order_id: theordermade.order_id
+                },
                 raw: true
             })
-                .then((cartitems) => {
-                    console.log(order)
-                    res.render('checkout/orderSuccessful', { cartitems, order });
+
+                .then((orderItems) => {
+                    console.log("latests order:" + theordermade.order_id)
+                    res.render('checkout/orderSuccessful', { orderItems, theordermade });
                 })
         })
         .catch(err => console.log(err));
