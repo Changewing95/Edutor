@@ -94,7 +94,6 @@
         var filePath = fileInput.value;
         // Allowing file type
         var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
         if (!allowedExtensions.exec(filePath)) {
             alert('Invalid file type');
             fileInput.value = '';
@@ -129,7 +128,6 @@ $(function() {
       }
     });
 });
-
 // If user tries to upload videos other than these extension , it will throw error.
 function isVideo(filename) {
     var ext = getExtension(filename);
@@ -145,16 +143,10 @@ function isVideo(filename) {
     }
     return false;
 }
-
 function getExtension(filename) {
     var parts = filename.split('.');
     return parts[parts.length - 1];
 }
-
-
-
-
-
     const uploadButton = document.querySelector('#upload-btn');
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
@@ -164,16 +156,6 @@ function getExtension(filename) {
             body: formData,
         });
     });
-
-const uploadButton = document.querySelector('#upload-btn');
- uploadButton.addEventListener('click', (e) => {
-  const form = document.querySelector('#my-form');
-  const formData = new FormData(form);
-  fetch('http://localhost:/tutor/tutorial/upload-video', {
-     method: 'POST',
-     body: formData,
-  });
- });
 </script>
 
 </html>
