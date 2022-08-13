@@ -86,26 +86,26 @@ app.set('view engine', 'hbs');
 
 // REDIS DATABASE FOR RECOMMENDATION
 
-// const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
+const ls = spawn("Redis\\redis-server.exe", ["Redis\\redis.windows.conf"]);
 
-// ls.stdout.on("data", data => {
-// 	console.log(`stdout: ${data}`);
-// });
+ls.stdout.on("data", data => {
+	console.log(`stdout: ${data}`);
+});
 
-// ls.stderr.on("data", data => {
-// 	console.log(`stderr: ${data}`);
-// });
+ls.stderr.on("data", data => {
+	console.log(`stderr: ${data}`);
+});
 
-// ls.on('error', (error) => {
-// 	console.log(`error: ${error.message}`);
-// });
+ls.on('error', (error) => {
+	console.log(`error: ${error.message}`);
+});
 
-// ls.on("close", code => {
-// 	console.log(`child process exited with code ${code}`);
-// });
+ls.on("close", code => {
+	console.log(`child process exited with code ${code}`);
+});
 
 
-// 
+
 
 
 
@@ -195,6 +195,7 @@ const studentTutorialRoute = require('./routes/studentTutorial');
 const studentReviewRoute = require('./routes/review');
 const tutorReviewRoute = require('./routes/tutorReview');
 const adminRoute = require('./routes/admin');
+const recommender = require('./routes/recommender');
 const nlpRouter = require('./routes/sentimentanalysis');
 
 
@@ -219,6 +220,7 @@ app.use('/student/tutorial', studentTutorialRoute);
 app.use('/admin', adminRoute);
 app.use('/tutor/review', tutorReviewRoute);
 app.use('/student/review', studentReviewRoute);
+app.use('/recommender', recommender);
 
 // nlp -- sentiment analysis (yl)
 app.use('/api/nlp', nlpRouter);
@@ -229,7 +231,7 @@ const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5000;
+const port = 5001;
 
 // Starts the server and listen to port
 // app.listen(port, () => {

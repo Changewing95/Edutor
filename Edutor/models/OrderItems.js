@@ -11,6 +11,7 @@ const OrderItems = db.define('orderItems',
             autoIncrement: true,
             allowNull: false
         },
+        order_id: { type: Sequelize.INTEGER },
         cust_name: { type: Sequelize.STRING },
         cust_id: { type: Sequelize.STRING },
         tutor_id: { type: Sequelize.STRING },
@@ -25,6 +26,7 @@ const OrderItems = db.define('orderItems',
             type: sequelize.BOOLEAN,
             defaultValue: false,
         }
+        });
         //foreign key is order id from Orders table (model)
     });
 

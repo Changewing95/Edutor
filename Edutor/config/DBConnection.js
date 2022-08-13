@@ -30,6 +30,8 @@ const setUpDB = (drop) => {
  
             User.hasMany(Order);
             Order.belongsTo(User);
+            // Order.hasMany(OrderItems);
+            // OrderItems.belongsTo(Order);
             Order.hasMany(OrderItems);
             OrderItems.belongsTo(Order);
 
