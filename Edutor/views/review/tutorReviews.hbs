@@ -110,12 +110,14 @@
                                 {{#ifCond sentiment_score '==' 0}}
                                 <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
                                     <span>😐</span>
+                                    <a href="../../../student/review/displaycomplain/{{id}}">(view complain here)</a>
+
                                 </p>
                                 {{/ifCond}}
                                 {{#ifCond sentiment_score '<' 0}} <p class="text-muted pt-5 pt-sm-3">Sentiment score:
                                     {{sentiment_score}}
                                     <span>😡</span>
-                                    <a href="../../../student/review/displaycomplain">view complain here</a>
+                                    <a href="../../../student/review/displaycomplain/{{id}}">(view complain here)</a>
                                     </p>
                                     {{/ifCond}}
                             </div>
