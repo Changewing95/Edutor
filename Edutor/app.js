@@ -236,6 +236,6 @@ const port = 5000;
 // });
 
 http.listen(port, () => console.log(`HTTP Listening on port ${port}`));
-https.listen(5001, () => console.log('HTTPS listening on port 5000'));
+https.listen(5002, () => console.log('HTTPS listening on port 5002'));
 
 // http.listen(port, () => console.log(`Listening on port ${port}`));
