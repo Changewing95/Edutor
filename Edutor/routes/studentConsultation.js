@@ -12,19 +12,18 @@ const flashMessage = require('../helpers/messenger');
 
 // ROUTING:
 router.get('/settings', ensureAuthenticated, async (req, res) => {
-    //  todo: query for roomURL after saving the room url to the db
     var userId = req.user.id;
-    let consult_detail = await db.query(`SELECT date, start_time, end_time, roomURL, title
-                                    FROM consultations c
-                                    INNER JOIN orderitems oi
-                                    ON oi.tutor_id = c.userId
-                                    WHERE oi.cust_id = '${userId}' and prodType = 'consultation session' 
-                                    GROUP BY c.title
+    let consult_detail = await db.query(`SELECT title, date, start_time, end_time, userId
+                                    FROM consultations
+                                    JOIN orderitems
+                                    ON consultations.userId = orderitems.tutor_id AND orderitems.prod_name = consultations.title
+                                    WHERE orderitems.prodType = 'consultation session' AND orderitems.cust_id = '${userId}' 
+                                    GROUP BY title, date, start_time, end_time, userId
                                     ORDER BY date`, { type: QueryTypes.SELECT });
-    
-    // console.log(consult_detail.roomURL);
+
 
     consult_detail.forEach(element => {
+        console.log(element)
         var date = element.date;
         var iscurrentDate = moment(date).isSame(new Date(), "day");
         console.log(`${element.roomURL}`);

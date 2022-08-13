@@ -55,7 +55,8 @@
         .vote {
             cursor: pointer
         }
-        .padding{
+
+        .padding {
             padding-top: 15px;
             padding-bottom: 15px;
         }
@@ -86,6 +87,12 @@
                             <div class="row">
                                 <div class="col-sm-8 align-items-start">
                                     <div class="d-flex flex-column text-left">
+                                        {{!-- product name --}}
+                                        <div style="margin-top: 0px" class="padding">
+                                            <h2 class="content" style="font-size: 20px !important">Review For:&nbsp;&nbsp;&nbsp; <span class="mt-2 mb-0 text-left" style="font-weight:normal">{{product_name}}</span></h3>
+                                                
+                                        </div>
+
                                         {{!-- title --}}
                                         <div style="margin-top: 0px" class="padding">
                                             <h2 class="content">Review Title</h3>
@@ -134,7 +141,7 @@
                                                 Edit Review</a>
                                         </div>
                                         <div style="margin-right: 20px">
-                                            <a href="/student/review/deleteReview/{{id}}" class="btn btn-danger"><i
+                                            <a href="/student/review/deleteReview/{{id}}/{{product_name}}" class="btn btn-danger"><i
                                                     class="fa fa-trash fa-md"></i> Delete Review</a>
                                         </div>
                                     </div>
