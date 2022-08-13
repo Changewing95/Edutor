@@ -39,6 +39,7 @@
     "jquery": "^3.6.0",
     "js-sha512": "^0.8.0",
     "jsdom": "^20.0.0",
+    "md5": "^2.3.0",
     "moment": "^2.29.3",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
@@ -61,9 +62,9 @@
     "socket.io": "^4.5.1",
     "spam-check": "^1.0.0",
     "speakeasy": "^2.0.0",
-    "stripe": "^10.1.0",
     "spelling-corrector": "^3.0.0",
     "stopword": "^2.0.2",
+    "stripe": "^10.1.0",
     "uuid": "^8.3.2",
     "zipcodes": "^8.0.0"
   }
