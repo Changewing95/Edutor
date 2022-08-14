@@ -384,9 +384,6 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
             // console.log('err:', err);
             console.log('results: ', results);
             if (results.spam == false) {
-                console.log(
-                    'true'
-                )
                 // calculation of sentiment score:
                 const sentiment_score = sentimental_analysis(description);
                 const message = 'Review successfully submitted';
@@ -444,9 +441,6 @@ router.post('/editReview/:id', ensureAuthenticated, async (req, res) => {
     let tutor_id = req.body.tutorid;
     let product_id = req.body.prod_id;
 
-    // calculation of sentiment score:
-    const sentiment_score = sentimental_analysis(description);
-
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -464,18 +458,34 @@ router.post('/editReview/:id', ensureAuthenticated, async (req, res) => {
     }
     // if successful
     if (body.success) {
-        const message = 'Review slot successfully submitted';
-        flashMessage(res, 'success', message);
+        var options = { 'string': description };
+        spamCheck(options, function (err, results) {
+            // console.log('err:', err);
+            console.log('results: ', results);
+            if (results.spam == false) {
+                // calculation of sentiment score:
+                const sentiment_score = sentimental_analysis(description);
 
-        Review.update(
-            { title, category, image, rating, description, tutor_id, product_id, sentiment_score, userId },
-            { where: { id: req.params.id } }
-        )
-            .then((result) => {
-                console.log(result[0] + ' review updated');
+
+                const message = 'You have successfuly updated your review.';
+                flashMessage(res, 'success', message);
+
+                Review.update(
+                    { title, category, image, rating, description, tutor_id, product_id, sentiment_score, userId },
+                    { where: { id: req.params.id } }
+                )
+                    .then((result) => {
+                        console.log(result[0] + ' review updated');
+                        res.redirect('/student/review/main');
+                    })
+                    .catch(err => console.log(err));
+            }
+            else {
+                const message = 'Review not updated as it is reported as a spam!';
+                flashMessage(res, 'error', message);
                 res.redirect('/student/review/main');
-            })
-            .catch(err => console.log(err));
+            }
+        })
     }
 });
 
