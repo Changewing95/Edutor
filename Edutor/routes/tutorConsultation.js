@@ -105,7 +105,7 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
     let userId = req.user.id;
-    let roomURL = 'http://localhost:5001/vidroom/';
+    let roomURL = 'http://localhost:5000/vidroom/';
 
     // validation -- for price and time
     if (start_time >= end_time && price < 0) {
@@ -183,7 +183,7 @@ router.post('/editConsultation/:id', ensureAuthenticated, async (req, res) => {
         flashMessage(res, 'error', 'Enter valid Start and End time!');
         res.redirect(`/tutor/consultation/editConsultation/${req.params.id}`)
     }
-    else {     
+    else {
         // recaptcha -- advanced feature
         const resKey = req.body['g-recaptcha-response'];
         const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -192,23 +192,23 @@ router.post('/editConsultation/:id', ensureAuthenticated, async (req, res) => {
             response: resKey,
             remoteip: req.connection.remoteAddress
         })
-    
+
         // verify url
         const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
-    
+
         const body = await fetch(verifyURL).then(res => res.json());
-    
+
         // if not successful
         if (body.success !== undefined && !body.success) {
             flashMessage(res, 'error', 'Please click recaptcha!');
             res.redirect('/tutor/consultation/create');
         }
-    
+
         // if successful
         if (body.success) {
             const message = 'Consultation slot successfully submitted';
             flashMessage(res, 'success', message);
-    
+
             Consultation.update(
                 { title, consultationURL, price, description, date, start_time, end_time, userId },
                 { where: { id: req.params.id } }

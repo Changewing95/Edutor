@@ -38,12 +38,19 @@
                     <span class="links_name">Order</span>
                 </a>
                 <span class="tooltip">Order</span>
-            <li class="{{#if currentpage.consultation}}active{{/if}}">
-                <a style="background: {{#if_equal  user.roles "tutor"}} {{else}} {{/if_equal}}"
-                    href="/tutor/consultation/settings">
+            <li>
+                {{#if_equal user.roles "tutor"}}
+                <a style="background: {{#if_equal user.roles " tutor"}} {{else}} {{/if_equal}}" href="/tutor/consultation/settings">
                     <i class='bx bx-folder'></i>
                     <span class="links_name">Consultation Slot</span>
                 </a>
+                {{else}}
+                <a style="background: {{#if_equal user.roles " tutor"}} {{else}} {{/if_equal}}"
+                    href="/student/consultation/settings">
+                    <i class='bx bx-folder'></i>
+                    <span class="links_name">Consultation Slot</span>
+                </a>
+                {{/if_equal}}
                 <span class="tooltip">Consultation Slot</span>
             </li>
 

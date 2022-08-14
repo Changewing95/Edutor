@@ -31,6 +31,7 @@ router.get('/settings', ensureAuthenticated, async (req, res) => {
             flashMessage(res, 'success', `You have a ${element.title} consultation today!`);
         }
     });
+    console.log(consult_detail);
 
     res.render('dashboard/student/consultationview', { consult_detail, layout: 'main2' });
 });

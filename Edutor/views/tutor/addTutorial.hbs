@@ -16,8 +16,8 @@
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">author</span>
-                        <input type="text" name="author" placeholder="Enter Author name of tutorial" class="form-control"
-                            required>
+                        <input type="text" name="author" placeholder="Enter Author name of tutorial"
+                            class="form-control" required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Description</span>
@@ -151,7 +151,7 @@
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
         const formData = new FormData(form);
-        fetch('http://localhost:5001/tutor/tutorial/upload-video', {
+        fetch('http://localhost:5000/tutor/tutorial/upload-video', {
             method: 'POST',
             body: formData,
         });

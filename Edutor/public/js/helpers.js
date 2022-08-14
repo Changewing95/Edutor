@@ -118,7 +118,7 @@ export default {
         return {
             iceServers: [
                 {
-                    urls: ["stun:ss-turn1.xirsys.com:5001"]
+                    urls: ["stun:ss-turn1.xirsys.com:5000"]
                 },
                 {
                     username: "vzzxCRZSpbAYCwzzH0UceI3f_YZmwP1H3wN_zEnbif-HrUcjRH5VkfTZn5JPUD6oAAAAAGL1-uh5b25nbGlubm5ubm4=",
@@ -126,10 +126,10 @@ export default {
                     urls: [
                         // "turn:eu-turn4.xirsys.com:80?transport=udp",
                         // "turn:eu-turn4.xirsys.com:3478?transport=tcp"
-                        "turn:ss-turn1.xirsys.com:5001?transport=udp",
-                        "turn:ss-turn1.xirsys.com:5001?transport=tcp",
-                        // "turns:ss-turn1.xirsys.com:5001?transport=tcp",
-                        // "turns:ss-turn1.xirsys.com:5001?transport=tcp"
+                        "turn:ss-turn1.xirsys.com:5000?transport=udp",
+                        "turn:ss-turn1.xirsys.com:5000?transport=tcp",
+                        // "turns:ss-turn1.xirsys.com:5000?transport=tcp",
+                        // "turns:ss-turn1.xirsys.com:5000?transport=tcp"
                     ]
                 },
 

@@ -113,7 +113,7 @@ router.post('/addtoCart', async (req, res) => {
 
     }
     else {
-        if (prodType == 'Consultation Session') {
+        if (prodType == 'consultation session') {
             Consultation.findByPk(id)
                 .then((consultation) => {
                     User.findByPk(consultation.userId)
