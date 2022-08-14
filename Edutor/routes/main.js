@@ -8,20 +8,15 @@ const Tutorial = require('../models/Tutorial')
 const User = require('../models/User')
 const Procyon = require('procyon')
 const { Op } = require("sequelize");
+//for raw sql
+const db = require('../config/DBConfig');
+const { QueryTypes } = require('sequelize');
 
 
 
 router.get('/', async (req, res) => {
 	const title = "Edutor"
-	// var ListOfTut = await Tutorial.findAll({
-	// 	where: {
-	// 	  title: {
-	// 		[Op.or]: JSON.parse(req.user.interest)
-	// 	  }
-	// 	}
-	//   })
-	//   console.log(ListOfTut)
-	// renders views/index.handlebars, passing title as an object
+	// let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
 	res.render('home', { title: title })
 });
 
@@ -33,6 +28,15 @@ router.get('/recommender', ensureAuthenticated, async (req, res) => {
 	});
 
 });
+
+
+router.get('/watching-video/:id', ensureAuthenticated, async (req, res) => {
+	Tutorial.findByPk(req.params.id)
+		.then((tutorialToWatch) => {
+			res.render('student/watching_video', { tutorialToWatch })
+		})
+});
+
 
 
 router.post('/recommender', async (req, res) => {
@@ -96,20 +100,7 @@ router.get('/logout', (req, res) => {
 // const io = require("socket.io")(server);		// for socket.io
 // const stream = require('../public/js/stream');
 
-router.get('/vidroom/', ensureAuthenticated, (req, res) => {
-	Consultation.findByPk(req.params.id)
-		.then((consultation) => {
-			if (!consultation) {
-				flashMessage(res, 'error', 'Tutor has yet to create conference link!')
-				res.render('consultation/roomNotFound');
-				return;
-			}
-		})
-		.catch(err => console.log(err));
-	// res.render('consultation/roomNotFound');
-});
-
-router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
+router.get('/vidroom/:id', ensureAuthenticated, function (req, res) {
 	Consultation.findByPk(req.params.id)
 		.then((consultation) => {
 			if (!consultation) {
@@ -122,28 +113,6 @@ router.get('/vidroom/:id/', ensureAuthenticated, function (req, res) {
 		})
 		.catch(err => console.log(err));
 	// res.render("consultation/callroom");
-})
-
-router.post('/vidroom/:id/', function (req, res) {
-	let link = req.body.roomURL;
-
-	// tried to save link with ip address -- cmi on the remote laptop
-	// let l = link.slice(16, 100);
-	// let ip_address = 'http://192.168.1.8';
-	// let url = ip_address.concat('', l);
-	// console.log(url);
-	// console.log('req.body.roomURL: ',req.body.roomURL);
-	
-	Consultation.update(
-		{ roomURL: link },
-		{ where: { id: `${req.params.id}` } }
-	)
-		.then((result) => {
-			console.log(result[0] + ' consultation updated');
-			flashMessage(res, 'success', 'roomurl saved!');
-			res.redirect(`${link}`);
-		})
-		.catch(err => console.log(err));
 })
 
 

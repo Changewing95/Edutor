@@ -300,21 +300,21 @@ router.get('/allorders', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/vieworder/:id', (req, res) => {
-    Order.findAll({
-        where: {
-            order_id: req.params.id,
+// router.get('/vieworder/:id', (req, res) => {
+//     Order.findAll({
+//         where: {
+//             order_id: req.params.id,
 
-        },
-        order: [['id', 'DESC']]
-    })
-        .then((order) => {
-            var oid = req.params.id;
-            console.log(order);
-            res.render('dashboard/editorder', { layout: 'main2', order, oid: oid });
-        })
-        .catch(err => console.log(err));
-});
+//         },
+//         order: [['id', 'DESC']]
+//     })
+//         .then((order) => {
+//             var oid = req.params.id;
+//             console.log(order);
+//             res.render('dashboard/editorder', { layout: 'main2', order, oid: oid });
+//         })
+//         .catch(err => console.log(err));
+// });
 
 router.get('/deleteorder/:id', (req, res) => {
     OrderItems.update(
@@ -330,34 +330,45 @@ router.get('/deleteorder/:id', (req, res) => {
         .catch(err => console.log(err));
 });
 
+
 router.get('/student/yourorders', (req, res) => {
-    Order.findAll({
+    OrderItems.findAll({
         where: {
-            userId: req.user.id,
+            cust_id: req.user.id,
         },
         order: [['id', 'DESC']]
     })
-        .then((orders) => {
-            res.render('dashboard/student/yourorders', { orders });
+        .then((orderitems) => {
+            res.render('dashboard/student/yourorders', { orderitems });
         })
         .catch(err => console.log(err));
 });
 
 router.get('/vieworder/:id', (req, res) => {
-    OrderItems.findAll({
+    Order.findAll({
         where: {
-            orderId: req.params.id,
-            status: "ok"
+            order_id: req.params.id,
         },
         order: [['id', 'DESC']]
-    })
-        .then((orderitems) => {
-            var oid = req.params.id; //order_id
-            console.log(orderitems);
-            res.render('dashboard/student/orderdetail', { orderitems, oid: oid });
+
+    }).then((theordermade) => {
+        OrderItems.findAll({
+            where: {
+                cust_id: req.user.id,
+                order_id: req.params.id,
+                status: "ok"
+            },
+            raw: true
         })
+            .then((orderitems) => {
+                // var oid = req.params.id; //order_id
+                console.log(orderitems);
+                res.render('dashboard/student/yourorderd', { orderitems, theordermade });
+            })
+    })
         .catch(err => console.log(err));
 });
+
 
 
 module.exports = router;

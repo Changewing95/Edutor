@@ -13,8 +13,9 @@ const Event = db.define('Event',
         enddate: { type: Sequelize.DATE },
         starttime: { type: Sequelize.DATE },
         endtime: { type: Sequelize.DATE },
-        price: { type: Sequelize.FLOAT },
-        userId: {type: Sequelize.STRING }
+        price: { type: Sequelize.DECIMAL(8, 2) },
+        userId: { type: Sequelize.STRING },
+        zoomlink: { type: Sequelize.STRING }
 
     });
 

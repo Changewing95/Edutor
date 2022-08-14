@@ -5,14 +5,10 @@
 
 <body onload="onLoadSubmit()">
     <a href="/student/tutorial/main"><i class="fa fa-arrow-left fa-2x""></i></a>
-
     <div class=" container">
-
             {{!-- {{#if orders}} --}}
             {{!-- {{#else}} --}}
             {{!-- {{/if}} --}}
-
-
             {{!-- {{#each tutorials}} --}}
             <div class="title">{{tutorials.title}}</div>
             <div class="content">
@@ -21,23 +17,15 @@
                     <img src="/uploads/{{tutorials.userId}}/{{tutorials.tutorialImageURL}}" class="view" style="">
                 </div> --}}
                 {{!-- <form method="POST" id="my-form" enctype="multipart/form-data" action="#"> --}}
-
-
                     <div>
-
                         {{!-- <input id="login" type="hidden" name="login" value={{ tutorials.userId}}"> --}}
-
                         <video width="820" height="640" controls>
                             <source
                                 src="http://localhost:5000/student/tutorial/get-video/{{tutorials.userId}}/{{tutorials.video}}"
                                 type="video/mp4">
                         </video>
-
-
                     </div>
                 </form>
-
-
                 <div>
                     <form action="/cart/addtoCart" method="POST">
                         <input type="hidden" name="id" value={{id}}>
@@ -62,8 +50,5 @@
             </div>
             {{!-- {{/each}} --}}
             </div>
-
 </body>
-
-
 </html>
