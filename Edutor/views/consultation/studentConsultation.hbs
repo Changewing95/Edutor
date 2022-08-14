@@ -31,12 +31,12 @@
                                         <input type="hidden" name="id" value={{id}}>
                                         <input type="hidden" name="title" value="{{title}}">
                                         <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value="ruri test">
+                                        <input type="hidden" name="author" value="">
                                         <input type="hidden" name="tutorid" value={{userId}}>
                                         <input type="hidden" name="image" value={{consultationURL}}>
-                                        <input type="hidden" name="product_item"
-                                            value="Please go to your Dashboard->Consultation menu for more into">
-                                        <input type="hidden" name="productType" value="Consultation Session">
+                                        {{!-- <input type="hidden" name="product_item" value={{consultationURL}}> --}}
+                                        <input type="hidden" name="product_item" value={{roomURL }}>
+                                        <input type="hidden" name="productType" value="consultation session">
 
                                         <button type="submit" class="btn btn-primary"><i
                                                 class="fa fa-shopping-cart"></i></button>
@@ -55,7 +55,7 @@
                             <a href='../review/{{userId}}'
                                 style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View
                                         Tutor Review here</i></b></a>
-                            <h3 class="product-price">${{replaceCommas price}}</h3>
+                            <h3 class="product-price">${{formatRating price}}</h3>
                             <br>
                             <h4>Description: </h4>
                             <p class="product-description">{{replaceCommas description}}</p>
