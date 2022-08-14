@@ -5,30 +5,30 @@
 
 <body>
     <div class="container" style="height:700px;">
-        <div class="title">Avaliable Courses</div>
+        <div class="title">Add Tutorial</div>
         <div class="content">
             <form method="POST" id="my-form" enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
-                        <input type="text" name="title" placeholder="Enter Title of course" class="form-control"
+                        <input type="text" name="title" placeholder="Enter Title of tutorial" class="form-control"
                             required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">author</span>
-                        <input type="text" name="author" placeholder="Enter Author name of course" class="form-control"
+                        <input type="text" name="author" placeholder="Enter Author name of tutorial" class="form-control"
                             required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Description</span>
                         <input type="text" name="description" class="form-control"
-                            placeholder="Enter description of course" required>
+                            placeholder="Enter description of tutorial" required>
                     </div>
 
                     <div class="input-box mb-3">
                         <span class="details">Category</span>
                         <select name="category" list="categories" class="form-control"
-                            placeholder="Enter category of course" required>
+                            placeholder="Enter category of tutorial" required>
                             <datalist id="categories">
                                 <option value="Beginner Level">Beginner Level</option>
                                 <option value="Intermediate Level">Intermediate Level</option>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="input-box mb-3">
-                        <span class="details">Enter Price of course</span>
+                        <span class="details">Enter Price of tutorial</span>
                         <input type='number' name="price" step='0.01' min="0.1" value='10.00' class="form-control"
                             required>
                     </div>
@@ -72,8 +72,9 @@
 
                 <div class="input-box mb-3">
                     <span class="details">Upload Tutorial Video</span>
-                    <input class="upload-video-file" type="file" onchange="return videoValidation()" id="tutorialVideoUpload"
-                        name="tutorialVideoUpload" accept="video/*" class="form-control" required>
+                    <input class="upload-video-file" type="file" onchange="return videoValidation()"
+                        id="tutorialVideoUpload" name="tutorialVideoUpload" accept="video/*" class="form-control"
+                        required>
                     <div id="videoPreview"></div>
                 </div>
                 <div style="display: none;" class='video-prev' class="pull-right">
@@ -113,45 +114,44 @@
             }
         }
     }
-    
-$(function() {
-    $('.upload-video-file').on('change', function(){
-      if (isVideo($(this).val())){
-        $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
-        $('.video-prev').show();
-      }
-      else
-      {
-        $('.upload-video-file').val('');
-        $('.video-prev').hide();
-        alert("Only video files are allowed to upload.")
-      }
+
+    $(function () {
+        $('.upload-video-file').on('change', function () {
+            if (isVideo($(this).val())) {
+                $('.video-preview').attr('src', URL.createObjectURL(this.files[0]));
+                $('.video-prev').show();
+            }
+            else {
+                $('.upload-video-file').val('');
+                $('.video-prev').hide();
+                alert("Only video files are allowed to upload.")
+            }
+        });
     });
-});
-// If user tries to upload videos other than these extension , it will throw error.
-function isVideo(filename) {
-    var ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-    case 'm4v':
-    case 'avi':
-    case 'mp4':
-    case 'mov':
-    case 'mpg':
-    case 'mpeg':
-        // etc
-        return true;
+    // If user tries to upload videos other than these extension , it will throw error.
+    function isVideo(filename) {
+        var ext = getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'm4v':
+            case 'avi':
+            case 'mp4':
+            case 'mov':
+            case 'mpg':
+            case 'mpeg':
+                // etc
+                return true;
+        }
+        return false;
     }
-    return false;
-}
-function getExtension(filename) {
-    var parts = filename.split('.');
-    return parts[parts.length - 1];
-}
+    function getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    }
     const uploadButton = document.querySelector('#upload-btn');
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
         const formData = new FormData(form);
-        fetch('http://localhost:5000/tutor/tutorial/upload-video', {
+        fetch('http://localhost:5001/tutor/tutorial/upload-video', {
             method: 'POST',
             body: formData,
         });

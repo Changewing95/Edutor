@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "address": "^1.2.0",
     "apos-to-lex-form": "^1.0.5",
     "average-rating": "^2.0.2",
@@ -49,6 +50,7 @@
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "paypal-rest-sdk": "^1.8.1",
     "procyon": "^0.0.4",
     "pusher": "^5.1.1-beta",
     "qrcode": "^1.5.0",

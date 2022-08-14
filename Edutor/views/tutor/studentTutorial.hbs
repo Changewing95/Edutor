@@ -47,8 +47,6 @@
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-
-
                                             <input type="hidden" name="id" value="{{id}}">
                                             <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value="{{price}}">
@@ -57,8 +55,8 @@
                                             <input type="hidden" name="image" value="{{tutorialImageURL}}">
                                             <input type="hidden" name="product_item" value="{{video}}">
                                             <input type="hidden" name="productType" value="course">
-                                            <button type="submit" class="btn btn-primary"><i
-                                                    class="fa fa-shopping-cart"></i></button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-shopping-cart"></i></button>
                                         </form>
                                     </li>
 
@@ -213,10 +211,10 @@
                 </div>
             </div>
 
-
+            <h2 class="types">Others</h2>
             {{#each tutorials}}
             {{#if_equal category "Others"}}
-            <h2 class="types">Others</h2>
+            {{!-- <h2 class="types">Others</h2> --}}
             {{/if_equal}}
             {{/each}}
             <div class="row2">
@@ -276,6 +274,7 @@
 
 
 
+  
             <h2 class="test">Recommended for you
             </h2>
             <div class="row1">
@@ -287,9 +286,6 @@
 
             {{!-- {{/if_equal}} --}}
         </div>
-
-
-    </section>
     <script type="text/javascript">
         (function (d, m) {
             var kommunicateSettings =
@@ -321,8 +317,9 @@
             var hash = res.hash;
             console.log(currenthash, hash)
             if (currenthash != hash) {
-                $("#template-body").empty();
                 if (data != "false") {
+                    $("#test").empty().append("Recommended for you")
+                    $("#template-body").empty();
                     for (let item of data) {
                         var template1 = $(`
                     <!-- Single Product -->
@@ -364,7 +361,7 @@
                         $("#template-body").append(template1);
                     }
                 } else {
-                    $(".test").empty()
+                    $("#test").empty()
                     $("#template-body").empty()
                 }
                 currenthash = hash;
@@ -378,8 +375,6 @@
     }
 
 
-    UpdateRecommendation()
-    setInterval(UpdateRecommendation, 1000)
 
 
 </script>

@@ -1,20 +1,21 @@
+<head>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Aeni2wMkmtCA03IGpmAJqbSUr_mVeNnOWJvuxN1e6fZUkRNJPot4S2y-5Vu9Jt_paxkCu2TToGIkRHIq&currency=SGD"></script>
+</head>
 <style>
   #example1 {
     padding: 15px;
     box-shadow: 0px 0.5px 2px grey;
     margin: 15px;
   }
-
   #example3 {
     padding: 15px 70% 15px 15px;
     box-shadow: 0px 0.5px 2px grey;
   }
-
   #example2 {
     padding: 15px;
     box-shadow: 0px 0.5px 3px grey;
   }
-
   .button {
     background-color: #5CBF8F;
     /* Green */
@@ -28,18 +29,15 @@
     margin: 4px 2px;
     cursor: pointer;
   }
-
   .table-condensed td {
     border: none !important;
   }
-
   .select-wrap {
     border: 1px solid #777;
     width: 150px;
     background-color: #fff;
     position: relative;
   }
-
   .select-wrap label {
     font-size: 8px;
     text-transform: uppercase;
@@ -49,7 +47,6 @@
     position: absolute;
     top: 6px;
   }
-
   select {
     background-color: #fff;
     border: 0px;
@@ -60,11 +57,9 @@
     font-size: 13px;
     margin-right: 4%;
   }
-
   label {
     display: block;
   }
-
   input[type="radio"] {
     width: auto;
     display: inline;
@@ -154,7 +149,8 @@
                     applicable transaction taxes for purchases made in certain tax jurisdictions.<br>
                     By completing your purchase you agree to these Terms of Service.</h6>
                   <input type="hidden" name="cartTotal" value="{{total}}">
-                  <button type="submit" style="font-weight:bold;" class="button">Payment</button>
+                  <input type="submit" class="button" value="Payment">
+                  {{!-- <button type="submit" style="font-weight:bold;" class="button">Payment</button> --}}
                   </form>
                 </div>
               </tbody>
