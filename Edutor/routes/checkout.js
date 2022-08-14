@@ -46,8 +46,8 @@ router.post('/place_order', async (req, res) => {
 
 
     //Order creation
-    var country = req.body.country;
-    var paym = req.body.paym;
+    var country = "Singapore";
+    var paym = "Credit Cards";
     var totalPrice = req.body.cartTotal;
     var userId = req.user.id;
     var products_ids = "";
@@ -64,7 +64,7 @@ router.post('/place_order', async (req, res) => {
         },
         "redirect_urls": {
             "return_url": "http://localhost:5001/checkout/orderSuccessful",
-            "cancel_url": "http://localhost:3000/checkout/cancel"
+            "cancel_url": "http://localhost:3000/checkout/cart"
         },
         "transactions": [{
             "item_list": {

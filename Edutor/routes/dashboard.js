@@ -155,16 +155,16 @@ router.get('/statisticForOrders', async (req, res) => {
     startdate = startdate.subtract(7, "days");
     startdate = startdate.format('YYYY-MM-DD');
     let end = moment().format('YYYY-MM-DD');
-    const Records = await Order.findAll({
+    let Records = await Order.findAll({
         attributes: [
             [sequelize.fn('date_format', sequelize.col('createdAt'), '%Y-%m-%d'), 'date_col_formed']
         ]
-    })
+    });
     // console.log(Records[0]['dataValues']['date_col_formed'])
     let b = {}
     Records.forEach(object => {
         // console.log(object['dataValues']['date_col_formed']);
-        b[object['dataValues']['date_col_formed']] = (b[object['dataValues']['date_col_formed']] || 0) + 3;
+        b[object['dataValues']['date_col_formed']] = (b[object['dataValues']['date_col_formed']] || 0) + 1;
 
     })    // return res.json(result)
     return res.json({ b })
