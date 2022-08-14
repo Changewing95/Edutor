@@ -110,7 +110,7 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
     let userId = req.user.id;
-    let roomURL = 'http://localhost:5000/vidroom/';
+    let roomURL = 'http://localhost:5001/vidroom/';
 
     // validation -- for price and time
     if (start_time > end_time) {
