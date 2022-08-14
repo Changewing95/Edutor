@@ -1,3 +1,7 @@
+<head>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Aeni2wMkmtCA03IGpmAJqbSUr_mVeNnOWJvuxN1e6fZUkRNJPot4S2y-5Vu9Jt_paxkCu2TToGIkRHIq&currency=SGD"></script>
+</head>
 <style>
   #example1 {
     padding: 15px;
@@ -154,7 +158,8 @@
                     applicable transaction taxes for purchases made in certain tax jurisdictions.<br>
                     By completing your purchase you agree to these Terms of Service.</h6>
                   <input type="hidden" name="cartTotal" value="{{total}}">
-                  <button type="submit" style="font-weight:bold;" class="button">Payment</button>
+                  <input type="submit" class="button" value="Payment">
+                  {{!-- <button type="submit" style="font-weight:bold;" class="button">Payment</button> --}}
                   </form>
                 </div>
               </tbody>

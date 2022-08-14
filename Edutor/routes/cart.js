@@ -49,23 +49,23 @@ router.get('/', async (req, res, next) => {
     res.render('cart/cart', { cartitems, cartCount, cartTotal });
 
 
-        // .then((cartitems) => {
-        //     Cart.count({ //updated cart count 
-        //         where: { student_ID: req.user.id },
-        //         raw: true
-        //     })
-        //         .then((cartCount) => {
-        //             Cart.sum('price', { //updated cart count 
-        //                 where: { student_ID: req.user.id },
-        //                 raw: true
-        //             })
-        //                 .then((cartTotal) => {
-        //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
-        //                 })
-        //                 .catch(err => console.log(err));
-        //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
-        //         });
-        // });
+    // .then((cartitems) => {
+    //     Cart.count({ //updated cart count 
+    //         where: { student_ID: req.user.id },
+    //         raw: true
+    //     })
+    //         .then((cartCount) => {
+    //             Cart.sum('price', { //updated cart count 
+    //                 where: { student_ID: req.user.id },
+    //                 raw: true
+    //             })
+    //                 .then((cartTotal) => {
+    //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
+    //                 })
+    //                 .catch(err => console.log(err));
+    //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
+    //         });
+    // });
 
 });
 

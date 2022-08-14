@@ -76,7 +76,7 @@
   <table style="width: 100%;">
     <tr>
       <h2 style="font-size: 22px; margin-top:7%;"><b>Order Summary #{{theordermade.order_id}}</b></h2><br>
-      <h2 style="font-size: 13px; margin-top:9.5%;margin-left:-16%;">View your order details and
+      <h2 style="font-size: 13px; margin-top:9.5%;margin-left:-17.5%;">View your order details and
         order items again
         <u>here</u>
       </h2>
@@ -84,14 +84,14 @@
     <tr>
       <td style="width:87%;">
         <b>
-          <h4 style="font-size: 15px;font-weight:700;margin-top:2%;margin-bottom:1.5%;">Your ordered items</h4>
+          <h4 style="font-size: 15px;font-weight:700;margin-top:2%;margin-bottom:1.5%;">Your Ordered Items</h4>
         </b>
         {{#each orderItems}}
         <div id="example2" style="width:120%;">
           <h5 style="text-align:left;font-size:20px;">{{prod_name}}<br><span style="font-size:9px;margin-top:-7%;">A
-              {{prodType}} by {{author}}</span></h5>
+              {{prodType}} by {{tutor_name}}</span></h5>
           <h6 style="text-align:right;margin-top:-3%;"><b>{{price}}</b></h6>
-          <h6 style="text-align:left;"><b>Link for your {{prodType}}: {{item_detail}}</b></h6>
+          <h6 style="text-align:left;"><b>Link for your {{prodType}}: {{item_detail}}</a></b></h6>
         </div>
         <br>
         {{/each}}
