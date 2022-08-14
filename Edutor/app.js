@@ -239,7 +239,7 @@ const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5001;
+const port = 5000;
 
 // Starts the server and listen to port
 // app.listen(port, () => {
@@ -247,6 +247,6 @@ const port = 5001;
 // });
 
 http.listen(port, () => console.log(`HTTP Listening on port ${port}`));
-// https.listen(5001, () => console.log('HTTPS listening on port 5001'));
+// https.listen(5000, () => console.log('HTTPS listening on port 5000'));
 
 // http.listen(port, () => console.log(`Listening on port ${port}`));

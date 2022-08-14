@@ -46,7 +46,7 @@ exports.sendMail = async (email, code) => {
                     Keep Rockin'!<br> Your Edutor team
                   </p>
                 </div>
-                <a href= 'http://localhost:5001/auth/validate/${code}' style="background-color: #4CAF50; /* Green */
+                <a href= 'http://localhost:5000/auth/validate/${code}' style="background-color: #4CAF50; /* Green */
                 border: none;
                 color: white;
                 padding: 15px 32px;

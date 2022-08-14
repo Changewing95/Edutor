@@ -151,7 +151,7 @@
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
         const formData = new FormData(form);
-        fetch('http://localhost:5001/tutor/tutorial/upload-video', {
+        fetch('http://localhost:5000/tutor/tutorial/upload-video', {
             method: 'POST',
             body: formData,
         });

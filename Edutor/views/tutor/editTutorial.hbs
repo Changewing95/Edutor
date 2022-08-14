@@ -75,23 +75,22 @@
                     <div class="input-box mb-3">
                         <span class="details">Update tutorial video</span>
                         <div class="custom-file mb-2">
-                            <input type="file"  class="form-control custom-file-input anything"
+                            <input type="file" class="form-control custom-file-input anything"
                                 onchange="return videoValidation()" id="tutorialVideoURL" name="tutorialVideoUpload"
                                 accept="video/*">
                             <label class="custom-file-label" for="customFile">{{tutorials.video}}</label>
 
                         </div>
                         {{!-- <div id="videoPreview">
-                            <video src="http://jeremy.chip.sg/tutor/tutorial/get-video/{{tutorials.video}}">
+                            <video src="http://5000/tutor/tutorial/get-video/{{tutorials.video}}">
                         </div> --}}
 
 
 
-                        <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL"
-                            value="{{ tutorials.video}}">
+                        <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value="{{ tutorials.video}}">
                         <video width="320" height="240" controls />
-                        <source id="preview-video1"
-                            src="http://jeremy.chip.sg/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
+                        <source id="preview-video1" src="http://5000/tutor/tutorial/get-video/{{tutorials.video}}"
+                            type="video/mp4">
                         </video>
                     </div>
 
@@ -143,8 +142,8 @@
         console.log("asd")
         $('.anything').on('change', function () {
             console.log("asda")
-                $('#preview-video1').attr('src', URL.createObjectURL(this.files[0]));
-                $('#preview-video1').parent()[0].load();
+            $('#preview-video1').attr('src', URL.createObjectURL(this.files[0]));
+            $('#preview-video1').parent()[0].load();
         });
     })
 
@@ -174,7 +173,7 @@
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
         const formData = new FormData(form);
-        fetch('http://jeremy.chip.sg/tutor/tutorial/upload-video', {
+        fetch('http://5000/tutor/tutorial/upload-video', {
             method: 'POST',
             body: formData,
         });
