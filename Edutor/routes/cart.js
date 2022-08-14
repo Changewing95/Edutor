@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Cart = require('../models/Cart');
 const User = require('../models/User');
-const Consultation = require('../models/Booking');
-const Event = require('../models/Event');
-
 
 function isProductinCart(cart, id) {
     for (let i = 0; i < cart.length; i++) {
@@ -52,23 +49,23 @@ router.get('/', async (req, res, next) => {
     res.render('cart/cart', { cartitems, cartCount, cartTotal });
 
 
-        // .then((cartitems) => {
-        //     Cart.count({ //updated cart count 
-        //         where: { student_ID: req.user.id },
-        //         raw: true
-        //     })
-        //         .then((cartCount) => {
-        //             Cart.sum('price', { //updated cart count 
-        //                 where: { student_ID: req.user.id },
-        //                 raw: true
-        //             })
-        //                 .then((cartTotal) => {
-        //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
-        //                 })
-        //                 .catch(err => console.log(err));
-        //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
-        //         });
-        // });
+    // .then((cartitems) => {
+    //     Cart.count({ //updated cart count 
+    //         where: { student_ID: req.user.id },
+    //         raw: true
+    //     })
+    //         .then((cartCount) => {
+    //             Cart.sum('price', { //updated cart count 
+    //                 where: { student_ID: req.user.id },
+    //                 raw: true
+    //             })
+    //                 .then((cartTotal) => {
+    //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
+    //                 })
+    //                 .catch(err => console.log(err));
+    //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
+    //         });
+    // });
 
 });
 
@@ -79,114 +76,37 @@ router.post('/addtoCart', async (req, res) => {
     var title = req.body.title;
     var price = req.body.price;
     var image = req.body.image;
+    var author = req.body.author;
     var tutorid = req.body.tutorid;
     var current_student = req.user.id;
     var prodType = req.body.productType;
     var product_item = req.body.product_item
-    console.log(JSON.stringify(title), "asd");
-    var author;
+    console.log(JSON.stringify(title), "asd")
 
-    if (prodType == 'course') {
-        author = req.body.author;
-        Cart.findOrCreate({
-            where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
-        })
 
-        var addingProd = { id: id, title: title, author: author, price: price, image: image, tutorid: tutorid, product_item: product_item, prodType: prodType };
+    await Cart.findOrCreate({
+        where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
+    })
 
-        if (req.session.cart) {
-            var cart = req.session.cart;
+    var addingProd = { id: id, title: title, author: author, price: price, image: image, tutorid: tutorid, product_item: product_item, prodType: prodType };
 
-            if (!isProductinCart(cart, id)) {
-                cart.push(addingProd)
-            }
-        } else {
-            req.session.cart = [addingProd];
-            var cart = req.session.cart;
+    if (req.session.cart) {
+        var cart = req.session.cart;
+
+        if (!isProductinCart(cart, id)) {
+            cart.push(addingProd)
         }
-
-        //calculate total
-        calculateTotal(cart, req);
-        cartCount(cart, req);
-
-        // return to cart page
-        res.redirect('/cart');
-
+    } else {
+        req.session.cart = [addingProd];
+        var cart = req.session.cart;
     }
-    else {
-        if (prodType == 'consultation session') {
-            Consultation.findByPk(id)
-                .then((consultation) => {
-                    User.findByPk(consultation.userId)
-                        .then((user) => {
-                            author = user.name;
-                            Cart.findOrCreate({
-                                where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
-                            })
 
-                            var addingProd = { id: id, title: title, author: author, price: price, image: image, tutorid: tutorid, product_item: product_item, prodType: prodType };
+    //calculate total
+    calculateTotal(cart, req);
+    cartCount(cart, req);
 
-                            if (req.session.cart) {
-                                var cart = req.session.cart;
-
-                                if (!isProductinCart(cart, id)) {
-                                    cart.push(addingProd)
-                                }
-                            } else {
-                                req.session.cart = [addingProd];
-                                var cart = req.session.cart;
-                            }
-
-                            //calculate total
-                            calculateTotal(cart, req);
-                            cartCount(cart, req);
-
-                            // return to cart page
-                            res.redirect('/cart');
-
-                        })
-                        .catch(err => console.log(err));
-                })
-                .catch(err => console.log(err));
-            console.log(author);
-        }
-        else {
-            Event.findByPk(id)
-                .then((event) => {
-                    User.findByPk(event.userId)
-                        .then((user) => {
-                            author = user.name;
-                            Cart.findOrCreate({
-                                where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
-                            })
-
-                            var addingProd = { id: id, title: title, author: author, price: price, image: image, tutorid: tutorid, product_item: product_item, prodType: prodType };
-
-                            if (req.session.cart) {
-                                var cart = req.session.cart;
-
-                                if (!isProductinCart(cart, id)) {
-                                    cart.push(addingProd)
-                                }
-                            } else {
-                                req.session.cart = [addingProd];
-                                var cart = req.session.cart;
-                            }
-
-                            //calculate total
-                            calculateTotal(cart, req);
-                            cartCount(cart, req);
-
-                            // return to cart page
-                            res.redirect('/cart');
-
-                        })
-                        .catch(err => console.log(err));
-                })
-                .catch(err => console.log(err));
-            // console.log(author);
-        }
-    }
+    // return to cart page
+    res.redirect('/cart');
 
 });
 
