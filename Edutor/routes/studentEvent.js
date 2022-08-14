@@ -12,7 +12,7 @@ router.get('/main', (req, res) => {
     })
         .then((event) => {
             // pass object to listVideos.handlebar
-            res.render('student/event', { event });
+            res.render('student/studentevent', { event });
         })
         .catch(err => console.log(err));
 });
