@@ -49,6 +49,7 @@
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "paypal-rest-sdk": "^1.8.1",
     "procyon": "^0.0.4",
     "pusher": "^5.1.1-beta",
     "qrcode": "^1.5.0",

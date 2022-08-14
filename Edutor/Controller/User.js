@@ -58,7 +58,7 @@ exports.UpdateUser = async (req, res) => {
 
         if (name.length > 0) {
             if (IsUserUsernameValid(name)) {
-                User.update({
+                await User.update({
                     name: name
                 }, { where: { id: req.user.id } })
             } else {
@@ -72,20 +72,27 @@ exports.UpdateUser = async (req, res) => {
             if (IsUserPasswordValid(password, confirm_password)) {
                 var salt = bcrypt.genSaltSync(10);
                 var hash = bcrypt.hashSync(password, salt);
-                User.update({
+                await User.update({
                     password: hash
                 }, { where: { id: req.user.id } })
             } else {
                 isValid = false;
-                flashMessage(res, 'error', 'Error, ensure that there is at least 5 character');
+                flashMessage(res, 'error', 'Error, ensure that password matches and is more than 5 characters');
             }
         }
 
         if ((email.length > 0)) {
             if (IsUserEmailValid(getUser)) {
-                User.update({
-                    email: email.toLowerCase()
-                }, { where: { id: req.user.id } })
+                await User.update({
+                    email: email.toLowerCase(),
+                    verified: "no"
+                }, { where: { id: req.user.id } }).then(() => {
+                    Email.sendMail(email, req.user.verification_code).then((result) => {
+                        console.log(result)
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+                });
             } else {
                 isValid = false;
                 flashMessage(res, 'error', 'User already exists Please choose another email address');
@@ -96,6 +103,10 @@ exports.UpdateUser = async (req, res) => {
         if (!isValid) {
             res.redirect('settings');
             return;
+        } else if (req.user.verified == "no") {
+            flashMessage(res, 'success', "Email changed successfully! Please re-verify in your inbox", 'fas fa-sign-in-alt', true);
+            res.redirect('/logout');
+            return
         } else {
             flashMessage(res, 'success', "Information changed successfully!", 'fas fa-sign-in-alt', true);
             res.redirect('settings');
@@ -241,11 +252,9 @@ exports.Recommendation = async (req, res) => {
             });
             return results;
         } else {
-            console.log("no recommendation")
             return "false"
         }
     } else {
-        console.log("no recomemndation")
         return "false"
     }
 
