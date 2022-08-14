@@ -29,9 +29,9 @@
                                 <li>
                                     <form action="/cart/addtoCart" method="POST">
                                         <input type="hidden" name="id" value={{id}}>
-                                        <input type="hidden" name="title" value={{title}}>
+                                        <input type="hidden" name="title" value="{{title}}">
                                         <input type="hidden" name="price" value={{price}}>
-                                        <input type="hidden" name="author" value="ruri test">
+                                        <input type="hidden" name="author" value="">
                                         <input type="hidden" name="tutorid" value={{userId}}>
                                         <input type="hidden" name="image" value={{consultationURL}}>
                                         {{!-- <input type="hidden" name="product_item" value={{consultationURL}}> --}}
@@ -52,7 +52,9 @@
                             {{!-- <div class="row" style="margin-left: 0px; margin-bottom: 10px;">
                                 <p style="margin-left: 5px" style="color: grey;"><i>no rating yet</i></p>
                             </div> --}}
-                            <a href='../review/{{userId}}' style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View Tutor Review here</i></b></a>
+                            <a href='../review/{{userId}}'
+                                style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View
+                                        Tutor Review here</i></b></a>
                             <h3 class="product-price">${{formatRating price}}</h3>
                             <br>
                             <h4>Description: </h4>
