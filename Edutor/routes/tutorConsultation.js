@@ -25,6 +25,16 @@ router.get('/settings', (req, res) => {
         raw: true
     })
         .then((consultations) => {
+            consultations.forEach(element => {
+                console.log(element)
+                var date = element.date;
+                var iscurrentDate = moment(date).isSame(new Date(), "day");
+                console.log(`${element.roomURL}`);
+                if (iscurrentDate) {
+                    flashMessage(res, 'success', `You have a ${element.title} consultation today!`);
+                }
+            });
+
             // pass object to consultation.hbs
             res.render('dashboard/consultationOverview', { consultations, layout: 'main2' });
         })

@@ -195,6 +195,7 @@ router.get('/main', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
+// follow up if sentiment score <= 0
 router.get('/:reviewid/:prodtype/:prodid/followup', ensureAuthenticated, (req, res) => {
     const prodType = req.params.prodtype;
     const reviewid = req.params.reviewid;
@@ -228,7 +229,7 @@ router.get('/:reviewid/:prodtype/:prodid/followup', ensureAuthenticated, (req, r
     }
 });
 
-
+// choose product to review
 router.get('/choose', ensureAuthenticated, async (req, res) => {
     // sql query
     let product = await db.query(`SELECT prod_name, name, prodType
@@ -241,6 +242,7 @@ router.get('/choose', ensureAuthenticated, async (req, res) => {
     res.render('review/choose', { orders: product });
 });
 
+// view tutor reviews for under product listings
 router.get('/:tutorid', ensureAuthenticated, (req, res) => {
     Review.findAll({
         where: { tutor_id: `${req.params.tutorid}` },
@@ -255,6 +257,7 @@ router.get('/:tutorid', ensureAuthenticated, (req, res) => {
 
 })
 
+// create each review
 router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) => {
     const productname = (req.params).prodname
     const prodType = req.params.prodType
@@ -307,6 +310,7 @@ router.get('/create/:prodType/:prodname', ensureAuthenticated, async (req, res) 
     }
 });
 
+// edit review
 router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
     Review.findByPk(req.params.id)
         .then((review) => {
@@ -326,6 +330,7 @@ router.get('/editReview/:id', ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
+// display complain if sentiment score <= 0
 router.get('/displaycomplain/:id', ensureAuthenticated, (req, res) => {
     Complain.findAll({
         where: { reviewId: `${req.params.id}` },
@@ -357,18 +362,6 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
     let product_name = req.body.prod_name;
     let username = req.user.name;
 
-    var options = { 'string': description };
-    spamCheck(options, function (err, results) {
-        // console.log('err:', err);
-        console.log('results: ', results);
-        console.log(results.spam == true);
-        return results;
-    });
-
-
-    // calculation of sentiment score:
-    const sentiment_score = sentimental_analysis(description);
-
     // recaptcha -- advanced feature
     const resKey = req.body['g-recaptcha-response'];
     const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
@@ -386,34 +379,55 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
     }
     // if successful
     if (body.success) {
-        const message = 'Review successfully submitted';
-        flashMessage(res, 'success', message);
-        Review.create({ title, category, image, rating, description, tutor_id, product_id, product_name, sentiment_score, username, userId })
-            .then((review) => {
-                OrderItems.update(
-                    { leftReview: true },
-                    {
-                        where: {
-                            cust_id: `${req.user.id}`,
-                            prod_name: `${req.params.prodname}`
-                        }
-                    })
-                    .then((result) => {
-                        console.log(result[0] + ' leftReview set to true');
-                        // console.log(review.toJSON());
-                        if (sentiment_score > 0) {
-                            res.redirect('/student/review/main');
-                        }
-                        else if (sentiment_score == 0) {
-                            res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
-                        }
-                        else {
-                            res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
-                        }
+        var options = { 'string': description };
+        spamCheck(options, function (err, results) {
+            // console.log('err:', err);
+            console.log('results: ', results);
+            if (results.spam == false) {
+                console.log(
+                    'true'
+                )
+                // calculation of sentiment score:
+                const sentiment_score = sentimental_analysis(description);
+                const message = 'Review successfully submitted';
+                flashMessage(res, 'success', message);
+                Review.create({ title, category, image, rating, description, tutor_id, product_id, product_name, sentiment_score, username, userId })
+                    .then((review) => {
+                        OrderItems.update(
+                            { leftReview: true },
+                            {
+                                where: {
+                                    cust_id: `${req.user.id}`,
+                                    prod_name: `${req.params.prodname}`
+                                }
+                            })
+                            .then((result) => {
+                                console.log(result[0] + ' leftReview set to true');
+                                // console.log(review.toJSON());
+                                if (sentiment_score > 0) {
+                                    res.redirect('/student/review/main');
+                                }
+                                else if (sentiment_score == 0) {
+                                    res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
+                                }
+                                else {
+                                    res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
+                                }
+                            })
+                            .catch(err => console.log(err));
                     })
                     .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err));
+            }
+            else {
+                const message = 'Review not submitted as it is reported as a spam!';
+                flashMessage(res, 'error', message);
+                res.redirect('/student/review/main');
+            }
+            return results;
+        });
+
+
+
     }
 });
 

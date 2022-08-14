@@ -47,7 +47,7 @@
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-     
+
 
                                             <input type="hidden" name="id" value="{{id}}">
                                             <input type="hidden" name="title" value="{{title}}">
@@ -69,6 +69,11 @@
                             <div class="part-2">
                                 <h3 class="product-title">{{replaceCommas title}}</h3>
                                 {{!-- <h4>{{replaceCommas description}}</h4> --}}
+                                <a href='../review/{{userId}}'
+                                    style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View
+                                            Tutor
+                                            Review here</i></b></a>
+                                <br>
                                 <h4 class="product-price">${{replaceCommas price}}</h4>
                             </div>
                         </div>
@@ -127,6 +132,11 @@
                             </div>
                             <div class="part-2">
                                 <h3 class="product-title">{{replaceCommas title}}</h3>
+                                <a href='../review/{{userId}}'
+                                    style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View
+                                            Tutor
+                                            Review here</i></b></a>
+                                <br>
                                 {{!-- <h4>{{replaceCommas description}}</h4> --}}
                                 <h4 class="product-price">${{replaceCommas price}}</h4>
                             </div>
@@ -185,6 +195,11 @@
                             </div>
                             <div class="part-2">
                                 <h3 class="product-title">{{replaceCommas title}}</h3>
+                                <a href='../review/{{userId}}'
+                                    style="font-size: 13px; color: #1E63CB; text-transform: lowercase; text-decoration: underline;"><b><i>View
+                                            Tutor
+                                            Review here</i></b></a>
+                                <br>
                                 {{!-- <h4>{{replaceCommas description}}</h4> --}}
                                 <h4 class="product-price">${{replaceCommas price}}</h4>
                             </div>
@@ -214,7 +229,7 @@
                         <div id="product-{{id}}" class="single-product">
                             <div class="part-1">
                                 <img src="{{tutorialImageURL}}" class="product-{{id}} part-1 consultationImage123"
-                               style="">
+                                    style="">
                                 {{!-- <img class="thumbnail" src="{{replaceCommas thumbnail}}"> --}}
                                 {{!-- <img src="https://i.ibb.co/L8Nrb7p/1.jpg" height="300" alt=" Trulli"> --}}
                                 {{!-- class="border img-thumbnail img-fluid" --}}
@@ -261,7 +276,7 @@
 
 
 
-             <h2 class="test">Recommended for you
+            <h2 class="test">Recommended for you
             </h2>
             <div class="row1">
                 <div class="row" id="template-body">
@@ -298,7 +313,7 @@
 <script>
     var currenthash = "test";
     function UpdateRecommendation() {
-       // $("#template-body").empty();
+        // $("#template-body").empty();
         $.ajax({
             url: '/student/tutorial/getRecommendation',
         }).then(function (res) {
