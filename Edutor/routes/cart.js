@@ -49,29 +49,29 @@ router.get('/', async (req, res, next) => {
     res.render('cart/cart', { cartitems, cartCount, cartTotal });
 
 
-        // .then((cartitems) => {
-        //     Cart.count({ //updated cart count 
-        //         where: { student_ID: req.user.id },
-        //         raw: true
-        //     })
-        //         .then((cartCount) => {
-        //             Cart.sum('price', { //updated cart count 
-        //                 where: { student_ID: req.user.id },
-        //                 raw: true
-        //             })
-        //                 .then((cartTotal) => {
-        //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
-        //                 })
-        //                 .catch(err => console.log(err));
-        //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
-        //         });
-        // });
+    // .then((cartitems) => {
+    //     Cart.count({ //updated cart count 
+    //         where: { student_ID: req.user.id },
+    //         raw: true
+    //     })
+    //         .then((cartCount) => {
+    //             Cart.sum('price', { //updated cart count 
+    //                 where: { student_ID: req.user.id },
+    //                 raw: true
+    //             })
+    //                 .then((cartTotal) => {
+    //                     res.render('cart/cart', { cartitems, cartCount, cartTotal });
+    //                 })
+    //                 .catch(err => console.log(err));
+    //             // res.render('cart/cart', {cart: cart, total: total, Cartcount:cartCount})
+    //         });
+    // });
 
 });
 
 // router.post('/addtoCart', cartController.addToCart);
 
-router.post('/addtoCart', async (req, res) => {
+router.post('/addtoCart', (req, res) => {
     var id = req.body.id;
     var title = req.body.title;
     var price = req.body.price;
@@ -84,7 +84,7 @@ router.post('/addtoCart', async (req, res) => {
     console.log(JSON.stringify(title), "asd")
 
 
-    await Cart.findOrCreate({
+    Cart.findOrCreate({
         where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
     })
 
