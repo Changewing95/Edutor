@@ -24,11 +24,13 @@
 
                     {{!-- <input id="login" type="hidden" name="login" value={{ tutorials.userId}}"> --}}
 
-                    <video width="820" height="640" controls>
+                    {{!-- <video width="820" height="640" controls>
                         <source
                             src="http://localhost:5001/student/tutorial/get-video/{{tutorials.userId}}/{{tutorials.video}}"
                             type="video/mp4">
-                    </video>
+                    </video> --}}
+
+                    <img src={{tutorials.tutorialImageURL}} style="margin-left:3%;height: 300px;width:200px;">
 
 
                 </div>
@@ -37,15 +39,16 @@
 
             <div>
                 <form action="/cart/addtoCart" method="POST">
-                    <input type="hidden" name="id" value={{id}}>
-                    <input type="hidden" name="title" value={{title}}>
-                    <input type="hidden" name="price" value={{price}}>
-                    <input type="hidden" name="author" value={{author}}>
-                    <input type="hidden" name="tutorid" value={{userId}}>
-                    <input type="hidden" name="image" value={{tutorialImageURL}}>
-                    <input type="hidden" name="product_item" value={{video}}>
+                    <input type="hidden" name="id" value="{{tutorials.id}}">
+                    <input type="hidden" name="title" value="{{tutorials.title}}">
+                    <input type="hidden" name="price" value={{tutorials.price}}>
+                    <input type="hidden" name="author" value="{{tutorials.author}}">
+                    <input type="hidden" name="tutorid" value="{{tutorials.userId}}">
+                    <input type="hidden" name="image" value="{{tutorials.tutorialImageURL}}">
+                    <input type="hidden" name="product_item" value="{{tutorials.video}}">
                     <input type="hidden" name="productType" value="course">
-                    <button type="submit" class="btn btn-primary" id="buybutton">Buy Now</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-shopping-cart"></i></button>
                 </form>
             </div>
             <div>
