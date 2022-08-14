@@ -3,67 +3,37 @@
     <link rel="stylesheet" href="/css/singleTutorial.css">
 </head>
 
-<body onload="onLoadSubmit()">
-    <a href="/student/tutorial/main"><i class="fa fa-arrow-left fa-2x""></i></a>
+<body>
+    <div class="container">
+        {{!-- {{#each tutorials}} --}}
+        <div class="title">{{tutorials.title}}</div>
+        <div class="content">
+            
+            {{!-- <div>
+                {{!-- <img class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg"> 
+                <img src="/uploads/{{tutorials.userId}}/{{tutorials.tutorialImageURL}}" class="view" style="">
+            </div> --}}
+            <div>
 
-    <div class=" container">
-
-            {{!-- {{#if orders}} --}}
-            {{!-- {{#else}} --}}
-            {{!-- {{/if}} --}}
-
-
-            {{!-- {{#each tutorials}} --}}
-            <div class="title">{{tutorials.title}}</div>
-            <div class="content">
-                {{!-- <div>
-                    <img class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg">
-                    <img src="/uploads/{{tutorials.userId}}/{{tutorials.tutorialImageURL}}" class="view" style="">
-                </div> --}}
-                {{!-- <form method="POST" id="my-form" enctype="multipart/form-data" action="#"> --}}
-
-
-                    <div>
-
-                        {{!-- <input id="login" type="hidden" name="login" value={{ tutorials.userId}}"> --}}
-
-                        <video width="820" height="640" controls>
-                            <source
-                                src="http://localhost:5000/student/tutorial/get-video/{{tutorials.userId}}/{{tutorials.video}}"
-                                type="video/mp4">
-                        </video>
-
-
-                    </div>
-                </form>
-
-
-                <div>
-                    <form action="/cart/addtoCart" method="POST">
-                        <input type="hidden" name="id" value={{id}}>
-                        <input type="hidden" name="title" value={{title}}>
-                        <input type="hidden" name="price" value={{price}}>
-                        <input type="hidden" name="author" value={{author}}>
-                        <input type="hidden" name="tutorid" value={{userId}}>
-                        <input type="hidden" name="image" value={{tutorialImageURL}}>
-                        <input type="hidden" name="product_item" value={{video}}>
-                        <input type="hidden" name="productType" value="course">
-                        <button type="submit" class="btn btn-primary" id="buybutton">Buy Now</button>
-                    </form>
-                </div>
-                <div>
-                    <h4>Author</h4>
-                    {{!-- Will display None because dunno display which tutorial info so need to retroeve according to
-                    tutorial ID first--}}
-                    <p>{{tutorials.author}}</p>
-                    <h4>Description</h4>
-                    <p>{{tutorials.description}}</p>
-                </div>
+                {{!-- <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}"> --}}
+                <video width="820" height="640" controls>
+                    <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
+                </video>
             </div>
-            {{!-- {{/each}} --}}
+
+            
+            <div>
+                <h4>Author</h4>
+                {{!-- Will display None because dunno display which tutorial info so need to retroeve according to
+                tutorial ID first--}}
+                <p>{{tutorials.author}}</p>
+                <h4>Description</h4>
+                <p>{{tutorials.description}}</p>
             </div>
+        </div>
+        {{!-- {{/each}} --}}
+    </div>
 
 </body>
-
 
 </html>

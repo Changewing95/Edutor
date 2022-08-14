@@ -4,17 +4,14 @@
     box-shadow: 0px 0.5px 2px grey;
     margin: 15px;
   }
-
   #example3 {
     padding: 15px 70% 15px 15px;
     box-shadow: 0px 0.5px 2px grey;
   }
-
   #example2 {
     padding: 15px;
     box-shadow: 0px 0.5px 3px grey;
   }
-
   .button {
     background-color: #5CBF8F;
     /* Green */
@@ -28,18 +25,15 @@
     margin: 4px 2px;
     cursor: pointer;
   }
-
   .table-condensed td {
     border: none !important;
   }
-
   .select-wrap {
     border: 1px solid #777;
     width: 150px;
     background-color: #fff;
     position: relative;
   }
-
   .select-wrap label {
     font-size: 8px;
     text-transform: uppercase;
@@ -49,7 +43,6 @@
     position: absolute;
     top: 6px;
   }
-
   select {
     background-color: #fff;
     border: 0px;
@@ -60,11 +53,9 @@
     font-size: 13px;
     margin-right: 4%;
   }
-
   label {
     display: block;
   }
-
   input[type="radio"] {
     width: auto;
     display: inline;
@@ -76,7 +67,7 @@
   <table style="width: 100%;">
     <tr>
       <h2 style="font-size: 22px; margin-top:7%;"><b>Order Summary #{{theordermade.order_id}}</b></h2><br>
-      <h2 style="font-size: 13px; margin-top:9.5%;margin-left:-17%;">View your order details and
+      <h2 style="font-size: 13px; margin-top:9.5%;margin-left:-17.5%;">View your order details and
         order items again
         <u>here</u>
       </h2>
@@ -84,14 +75,14 @@
     <tr>
       <td style="width:87%;">
         <b>
-          <h4 style="font-size: 15px;font-weight:700;margin-top:2%;margin-bottom:1.5%;">Your ordered items</h4>
+          <h4 style="font-size: 15px;font-weight:700;margin-top:2%;margin-bottom:1.5%;">Your Ordered Items</h4>
         </b>
         {{#each orderItems}}
         <div id="example2" style="width:120%;">
           <h5 style="text-align:left;font-size:20px;">{{prod_name}}<br><span style="font-size:9px;margin-top:-7%;">A
-              {{prodType}} by {{author}}</span></h5>
+              {{prodType}} by {{tutor_name}}</span></h5>
           <h6 style="text-align:right;margin-top:-3%;"><b>{{price}}</b></h6>
-          <h6 style="text-align:left;"><b>Link for your {{prodType}}: {{item_detail}}</b></h6>
+          <h6 style="text-align:left;"><b>Link for your {{prodType}}: {{item_detail}}</a></b></h6>
         </div>
         <br>
         {{/each}}

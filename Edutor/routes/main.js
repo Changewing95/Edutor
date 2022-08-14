@@ -128,14 +128,15 @@ router.post('/vidroom/:id/', function (req, res) {
 	let link = req.body.roomURL;
 
 	// tried to save link with ip address -- cmi on the remote laptop
-	// let l = link.slice(16, 100);
-	// let ip_address = 'http://192.168.1.8';
-	// let url = ip_address.concat('', l);
-	// console.log(url);
-	// console.log('req.body.roomURL: ',req.body.roomURL);
+	// comment out this part (if cnt present on 2 device) and save the req.body.roomURL instead, then change on
+	let l = link.slice(16, 100);
+	let ip_address = 'http://192.168.1.8';
+	let url = ip_address.concat('', l);
+	console.log(url);
+	console.log('req.body.roomURL: ',req.body.roomURL);
 	
 	Consultation.update(
-		{ roomURL: link },
+		{ roomURL: url },
 		{ where: { id: `${req.params.id}` } }
 	)
 		.then((result) => {

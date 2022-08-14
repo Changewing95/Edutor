@@ -9,6 +9,12 @@ const Cart = require('../models/Cart');
 const db = require('../config/DBConfig');
 const { QueryTypes } = require('sequelize');
 
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'AUvIwVU7LwotRL4fgWsVhYQqSn6BWZeJeoi0KUIMvYsa8BgMD-tcldToEcjf6KIiFFcg4arRx0YKAmvA',
+    'client_secret': 'ELPvlaeJkPAA3SULRitj3K06KJHckaTLNAZHcswzcjadTtzX0HeRG6KJPo3bCZ9U2R_IweJg9MuVX_uq'
+});
 
 
 router.get('/', (req, res) => {
@@ -22,58 +28,104 @@ router.get('/', (req, res) => {
                 raw: true
             })
                 .then((cartitems) => {
-                    var total = req.session.total;
-                    res.render('checkout/checkout', { cartitems, total: total, orders });
+                    Cart.sum('price', { //updated cart count 
+                        where: { student_ID: req.user.id },
+                        raw: true
+                    })
+                        .then((total) => {
+                            res.render('checkout/checkout', { cartitems, total, orders });
+                        })
                 })
         })
         .catch(err => console.log(err));
 });
 
-router.post('/place_order', (req, res) => {
+router.post('/place_order', async (req, res) => {
+
+
     //Order creation
     var country = req.body.country;
     var paym = req.body.paym;
-    var totalPrice = req.session.total;
+    var totalPrice = req.body.total;
     var userId = req.user.id;
     var products_ids = "";
     var oid = req.body.oid;
-    var cust_name = req.body.cust_name;
 
-    console.log("new order id " + oid);
-
-    //Order items creation
-    var cart = req.session.cart;
-    for (let i = 0; i < cart.length; i++) {
-        products_ids = products_ids + "," + cart[i].id;
-    }
+    //order creation
     Order.create(
         { order_id: oid, paym, country, totalPrice, products_ids, userId }
     )
-        .then((order) => {
-            console.log(order.toJSON());
-        })
-        .catch(err => console.log(err))
+    const create_payment_json = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": "http://localhost:5001/checkout/orderSuccessful",
+            "cancel_url": "http://localhost:3000/checkout/cancel"
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "Red Sox Hat",
+                    "sku": "001",
+                    "price": "0.01",
+                    "currency": "SGD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "currency": "SGD",
+                "total": "0.01"
+            },
+            "description": "Hat for the best team ever"
+        }]
+    };
 
-    for (let i = 0; i < cart.length; i++) {
-        var prod_name = cart[i].title;
-        var price = cart[i].price;
-        var tutorid = cart[i].tutorid; //id of tutor who created each product
-        var prod_item = cart[i].product_item;
-        var prodType = cart[i].prodType;
-        var qty = 1;
-        var cust_name = req.body.cust_name;
-        var cust_id = req.user.id;
-        var status = "ok";
-        console.log(prodType)
-        OrderItems.create(
-            { cust_name: cust_name, cust_id: cust_id, tutor_id: tutorid, prod_name: prod_name, prodType: prodType, qty: qty, status: status, price: price, item_detail: prod_item, order_id: oid }
-        )
-            .then((orderitem) => {
-                console.log(orderitem.toJSON());
-                res.redirect('/checkout/orderSuccessful');
-            })
-            .catch(err => console.log(err))
-    }
+
+    //order items' creation
+    await Cart.findAll({
+        where: { student_ID: req.user.id },
+        raw: true
+    })
+        .then((cartitems) => {
+            for (const cartItem of cartitems) {
+                const Purchasingprod = Cart.findAll({ where: { product_ID: cartItem.product_ID } })
+                console.log("pp:" + Purchasingprod)
+
+                var qty = 1;
+                var customer_id = req.user.id;
+                var status = "ok";
+                OrderItems.create(
+                    { cust_id: customer_id, tutor_name: cartItem.author, tutor_id: cartItem.tutor_ID, prod_name: cartItem.product_name, prodType: cartItem.product_type, qty: qty, status: status, price: cartItem.price, item_detail: cartItem.product_item, order_id: oid }
+                )
+            }
+            // res.redirect('/checkout/orderSuccessful');
+
+
+        })
+
+
+
+
+
+    paypal.payment.create(create_payment_json, function (error, payment) {
+        if (error) {
+            throw error;
+        } else {
+            for (let i = 0; i < payment.links.length; i++) {
+                if (payment.links[i].rel === 'approval_url') {
+                    res.redirect(payment.links[i].href);
+                }
+            }
+        }
+    });
+
+
+});
+
+router.get('/orderSuccessful', async (req, res) => {
+
 
     Cart.destroy({
         where: { student_ID: req.user.id },
@@ -82,10 +134,29 @@ router.post('/place_order', (req, res) => {
         console.log(destroyeditem);
     });
 
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
 
-});
+    const execute_payment_json = {
+        "payer_id": payerId,
+        "transactions": [{
+            "amount": {
+                "currency": "SGD",
+                "total": "0.01"
+            }
+        }]
+    };
 
-router.get('/orderSuccessful', async (req, res) => {
+    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+        if (error) {
+            console.log(error.response);
+            throw error;
+        } else {
+            console.log(JSON.stringify(payment));
+            // res.send('Success');
+        }
+    });
+
     await Order.findOne({
         where: {
             userId: req.user.id
@@ -109,5 +180,7 @@ router.get('/orderSuccessful', async (req, res) => {
         .catch(err => console.log(err));
 });
 
+
+router.get('/cancel', (req, res) => res.send('Cancelled'));
 
 module.exports = router;
