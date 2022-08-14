@@ -132,12 +132,15 @@
         box-shadow: 0px 0.5px 3px grey;
     }
 </style>
+
 <div class="container-fluid dashboard">
     <div class="container mt-5" style="margin-left:-10%">
-        <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;margin-bottom:3%;">All your ordered
-            items</h1>
+        <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;margin-bottom:3%;">All your <u>ordered
+                items</u></h1>
 
         {{#each orderitems}}
+        {{#if_equal prodType "course"}}
+
         <div id="example2" style="width:120%;">
             <b>
                 <h5 style="text-align:left;font-size:20px;color:#4CAF50;">{{prod_name}}<br>
@@ -151,6 +154,36 @@
             </h6>
         </div>
         <br>
+        {{/if_equal}}
         {{/each}}
+    </div>
+
+</div>
+
+<div class="container-fluid dashboard" style="margin-top: -40%;">
+    <div class="container mt-5" style="margin-left:-10%">
+        <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;margin-bottom:3%;">Your upcoming
+            <u>events</u>
+        </h1>
+
+        {{#each orderitems}}
+        {{#if_equal prodType "event"}}
+
+        <div id="example2" style="width:120%;">
+            <b>
+                <h5 style="text-align:left;font-size:20px;color:#4CAF50;">{{prod_name}}<br>
+                    <span style="font-size:9px;margin-top:-7%;">A {{prodType}} by {{tutor_name}}
+                </h5>
+            </b>
+            <h4 style="text-align:right;margin-top:-1.5%;"><b>SGD {{price}}</b></h4>
+            <h6 style="font-size: 9px;margin-top:-2%;"> From order #{{order_id}} </h6>
+            <h6 style="text-align:left;">
+                Link for your {{prodType}}: {{item_detail}}</a>
+            </h6>
+        </div>
+        <br>
+        {{/if_equal}}
+        {{/each}}
+
     </div>
 </div>
