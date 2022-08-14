@@ -41,10 +41,12 @@
                     </div>
                     {{!-- date --}}
                     <div class="input-box mb-3">
-                        <label class="details">Date of release</label>
-                        <input id="datepicker" name="consultDate" class="form-control"
-                            value="{{formatDate consultation.date 'DD/MM/YYYY'}}" required />
+                        <label class="details">Date</label>
+                        {{!-- <input id="datepicker" name="consultDate" class="form-control"
+                            value="{{formatDate consultation.date 'DD/MM/YYYY'}}" readonly required /> --}}
+                        <input class="form-control" name="consultDate" id="datepicker" value="{{formatDate consultation.date 'DD/MM/YYYY'}}" readonly required>
                     </div>
+
                     {{!-- start time --}}
                     <div class="input-box mb-3">
                         <label class="details">Start time</label>
@@ -55,7 +57,7 @@
                     <div class="input-box mb-3">
                         <label class="details">End time</label>
                         <input type="time" id="end_time" name="end_time" class="form-control" min="09:00" max="21:00"
-                            value="{{formatDate consultation.start_time 'HH:mm'}}" required>
+                            value="{{formatDate consultation.end_time 'HH:mm'}}" required>
                     </div>
 
                 </div>
@@ -83,6 +85,9 @@
     <script>
         $('#datepicker').datepicker({
             format: "dd/mm/yyyy",
+            value: moment().format('DD/MM/YYYY'),
+            minDate: new Date(moment().add(-1, 'days')),
+            maxDate: '+30Y',
         });
 
     </script>

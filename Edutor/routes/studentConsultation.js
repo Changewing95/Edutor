@@ -13,7 +13,7 @@ const flashMessage = require('../helpers/messenger');
 // ROUTING:
 router.get('/settings', ensureAuthenticated, async (req, res) => {
     var userId = req.user.id;
-    let consult_detail = await db.query(`SELECT title, date, start_time, end_time, userId
+    let consult_detail = await db.query(`SELECT title, date, start_time, end_time, userId, roomURL
                                     FROM consultations
                                     JOIN orderitems
                                     ON consultations.userId = orderitems.tutor_id AND orderitems.prod_name = consultations.title

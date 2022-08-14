@@ -25,6 +25,16 @@ router.get('/settings', (req, res) => {
         raw: true
     })
         .then((consultations) => {
+            consultations.forEach(element => {
+                console.log(element)
+                var date = element.date;
+                var iscurrentDate = moment(date).isSame(new Date(), "day");
+                console.log(`${element.roomURL}`);
+                if (iscurrentDate) {
+                    flashMessage(res, 'success', `You have a ${element.title} consultation today!`);
+                }
+            });
+
             // pass object to consultation.hbs
             res.render('dashboard/consultationOverview', { consultations, layout: 'main2' });
         })
@@ -52,23 +62,8 @@ router.get('/main', ensureAuthenticated, async (req, res) => {
         raw: true
     })
         .then((consultations) => {
-            Review.sum('rating', { //updated cart count 
-                where: { tutor_id: req.user.id },
-                raw: true
-            })
-                .then((reviewrate) => {
-                    Review.count('price', { //updated cart count 
-                        where: { tutor_id: req.user.id },
-                        raw: true
-                    })
-                        .then((reviewcount) => {
-                            var overall = reviewrate / reviewcount;
-                            console.log(overall);
-                            res.render('consultation/consultation', { consultations });
-                        })
-                        .catch(err => console.log(err));
-                })
-                .catch(err => console.log(err));
+            console.log(consultations);
+            res.render('consultation/consultation', { consultations });
         })
         .catch(err => console.log(err));
 });
@@ -113,49 +108,53 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let roomURL = 'http://localhost:5001/vidroom/';
 
     // validation -- for price and time
-    if (start_time > end_time) {
-        if (price < 0) {
-            flashMessage(res, 'error', 'Price cannot be negative!');
-        }
+    if (start_time >= end_time && price < 0) {
+        flashMessage(res, 'error', 'Price cannot be negative!');
         flashMessage(res, 'error', 'Enter valid Start and End time!');
-        res.redirect('/tutor/consultation/create');
+        res.redirect('/tutor/consultation/create')
     }
-    if (price < 0) {
+    else if (price < 0) {
         flashMessage(res, 'error', 'Price cannot be negative!');
         res.redirect('/tutor/consultation/create');
     }
+    else if (start_time >= end_time) {
+        flashMessage(res, 'error', 'Enter valid Start and End time!');
+        res.redirect('/tutor/consultation/create')
+    }
+    else {
+        // recaptcha -- advanced feature
+        const resKey = req.body['g-recaptcha-response'];
+        const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
+        const query = stringify({
+            secret: secretKey,
+            response: resKey,
+            remoteip: req.connection.remoteAddress
+        })
 
-    // recaptcha -- advanced feature
-    const resKey = req.body['g-recaptcha-response'];
-    const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
-    const query = stringify({
-        secret: secretKey,
-        response: resKey,
-        remoteip: req.connection.remoteAddress
-    })
+        const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
 
-    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
+        const body = await fetch(verifyURL).then(res => res.json());
 
-    const body = await fetch(verifyURL).then(res => res.json());
+        // if not successful
+        if (body.success !== undefined && !body.success) {
+            flashMessage(res, 'error', 'Please click recaptcha!');
+            res.redirect('/tutor/consultation/create');
+        }
 
-    // if not successful
-    if (body.success !== undefined && !body.success) {
-        flashMessage(res, 'error', 'Please click recaptcha!');
-        res.redirect('/tutor/consultation/create');
+        // if successful
+        if (body.success) {
+            const message = 'Consultation slot successfully submitted';
+            flashMessage(res, 'success', message);
+
+            Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, roomURL, userId })
+                .then((consultation) => {
+                    console.log(consultation.toJSON());
+                    res.redirect('/tutor/consultation/main');
+                })
+                .catch(err => console.log(err));
+        }
     }
 
-    // if successful
-    if (body.success) {
-        const message = 'Consultation slot successfully submitted';
-        flashMessage(res, 'success', message);
-
-        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, roomURL, userId })
-            .then((consultation) => {
-                console.log(consultation.toJSON());
-                res.redirect('/tutor/consultation/main');
-            })
-            .catch(err => console.log(err));
-    }
 });
 
 
@@ -171,53 +170,57 @@ router.post('/editConsultation/:id', ensureAuthenticated, async (req, res) => {
     let userId = req.user.id;
 
     // validation
-    if (start_time > end_time) {
-        if (price < 0) {
-            flashMessage(res, 'error', 'Price cannot be negative!');
-        }
-        flashMessage(res, 'error', 'Enter valid Start and End time!');
-        res.redirect('/tutor/consultation/create');
-    }
-    if (price < 0) {
+    if (start_time >= end_time && price < 0) {
         flashMessage(res, 'error', 'Price cannot be negative!');
-        res.redirect('/tutor/consultation/create');
+        flashMessage(res, 'error', 'Enter valid Start and End time!');
+        res.redirect(`/tutor/consultation/editConsultation/update/${req.params.id}`)
+    }
+    else if (price < 0) {
+        flashMessage(res, 'error', 'Price cannot be negative!');
+        res.redirect(`/tutor/consultation/editConsultation/${req.params.id}`);
+    }
+    else if (start_time >= end_time) {
+        flashMessage(res, 'error', 'Enter valid Start and End time!');
+        res.redirect(`/tutor/consultation/editConsultation/${req.params.id}`)
+    }
+    else {     
+        // recaptcha -- advanced feature
+        const resKey = req.body['g-recaptcha-response'];
+        const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
+        const query = stringify({
+            secret: secretKey,
+            response: resKey,
+            remoteip: req.connection.remoteAddress
+        })
+    
+        // verify url
+        const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
+    
+        const body = await fetch(verifyURL).then(res => res.json());
+    
+        // if not successful
+        if (body.success !== undefined && !body.success) {
+            flashMessage(res, 'error', 'Please click recaptcha!');
+            res.redirect('/tutor/consultation/create');
+        }
+    
+        // if successful
+        if (body.success) {
+            const message = 'Consultation slot successfully submitted';
+            flashMessage(res, 'success', message);
+    
+            Consultation.update(
+                { title, consultationURL, price, description, date, start_time, end_time, userId },
+                { where: { id: req.params.id } }
+            )
+                .then((result) => {
+                    console.log(result[0] + ' consultation updated');
+                    res.redirect('/tutor/consultation/main');
+                })
+                .catch(err => console.log(err));
+        }
     }
 
-    // recaptcha -- advanced feature
-    const resKey = req.body['g-recaptcha-response'];
-    const secretKey = '6LdLCYogAAAAAH7S5icpeSR4cCVxbhXF3LTHN4ur';
-    const query = stringify({
-        secret: secretKey,
-        response: resKey,
-        remoteip: req.connection.remoteAddress
-    })
-
-    // verify url
-    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?${query}`;
-
-    const body = await fetch(verifyURL).then(res => res.json());
-
-    // if not successful
-    if (body.success !== undefined && !body.success) {
-        flashMessage(res, 'error', 'Please click recaptcha!');
-        res.redirect('/tutor/consultation/create');
-    }
-
-    // if successful
-    if (body.success) {
-        const message = 'Consultation slot successfully submitted';
-        flashMessage(res, 'success', message);
-
-        Consultation.update(
-            { title, consultationURL, price, description, date, start_time, end_time, userId },
-            { where: { id: req.params.id } }
-        )
-            .then((result) => {
-                console.log(result[0] + ' consultation updated');
-                res.redirect('/tutor/consultation/main');
-            })
-            .catch(err => console.log(err));
-    }
 });
 
 

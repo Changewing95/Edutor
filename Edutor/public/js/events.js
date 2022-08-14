@@ -47,6 +47,7 @@ window.addEventListener('load', () => {
             // inserting the url link to the hidden form field
             document.querySelector('#roomURL').setAttribute('value', roomLink);
             console.log(document.querySelector('#roomURL'));
+            document.getElementById("enterroom-btn").removeAttribute("hidden");
 
             //empty the values
             var removed = document.querySelector('.toremove');
