@@ -5,30 +5,30 @@
 
 <body>
     <div class="container" style="height:700px;">
-        <div class="title">Avaliable Courses</div>
+        <div class="title">Add Tutorial</div>
         <div class="content">
             <form method="POST" id="my-form" enctype="multipart/form-data" action="#">
                 <div class="user-details mb-3">
                     <div class="input-box mb-3">
                         <span class="details">Title</span>
-                        <input type="text" name="title" placeholder="Enter Title of course" class="form-control"
+                        <input type="text" name="title" placeholder="Enter Title of tutorial" class="form-control"
                             required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">author</span>
-                        <input type="text" name="author" placeholder="Enter Author name of course" class="form-control"
+                        <input type="text" name="author" placeholder="Enter Author name of tutorial" class="form-control"
                             required>
                     </div>
                     <div class="input-box mb-3">
                         <span class="details">Description</span>
                         <input type="text" name="description" class="form-control"
-                            placeholder="Enter description of course" required>
+                            placeholder="Enter description of tutorial" required>
                     </div>
 
                     <div class="input-box mb-3">
                         <span class="details">Category</span>
                         <select name="category" list="categories" class="form-control"
-                            placeholder="Enter category of course" required>
+                            placeholder="Enter category of tutorial" required>
                             <datalist id="categories">
                                 <option value="Beginner Level">Beginner Level</option>
                                 <option value="Intermediate Level">Intermediate Level</option>
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="input-box mb-3">
-                        <span class="details">Enter Price of course</span>
+                        <span class="details">Enter Price of tutorial</span>
                         <input type='number' name="price" step='0.01' min="0.1" value='10.00' class="form-control"
                             required>
                     </div>
