@@ -11,6 +11,8 @@ const OrderItems = require('../models/OrderItems');
 const sequelize = require('sequelize');
 const { response } = require('express');
 const User = require('../models/User');
+var md5 = require('md5');
+
 
 router.get('/main', ensureAuthenticated, async (req, res) => {
     // let x = await UserController.Recommendation(req,res)
@@ -24,12 +26,15 @@ router.get('/main', ensureAuthenticated, async (req, res) => {
 });
 
 
-router.get('/getRecommendation', ensureAuthenticated, async (req,res) => {
-    let x =  await UserController.Recommendation(req,res)
-    return res.json(x) 
+router.get('/getRecommendation', ensureAuthenticated, async (req, res) => {
+    let x = await UserController.Recommendation(req, res)
+    return res.json({
+        x: x,
+        hash: md5(JSON.stringify(x))
+
+    })
 
 });
-
 
 
 

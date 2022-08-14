@@ -1,0 +1,165 @@
+{{!-- done by yong lin, for tutor main display of reviews --}}
+
+<head>
+
+    <!-- Custom styles for this template -->
+    <style>
+        .btn-grey {
+            background-color: #D8D8D8;
+            color: #FFF;
+        }
+
+        .rating-block {
+            background-color: #FAFAFA;
+            border: 1px solid #EFEFEF;
+            padding: 15px 15px 20px 15px;
+            border-radius: 3px;
+        }
+
+        .bold {
+            font-weight: 700;
+        }
+
+        .padding-bottom-7 {
+            padding-bottom: 7px;
+        }
+
+        .review-block {
+            background-color: #FAFAFA;
+            border: 1px solid #EFEFEF;
+            padding: 15px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        .review-block-name {
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+        .review-block-date {
+            font-size: 13px;
+        }
+
+        .review-block-rate {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-block-title {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .review-block-description {
+            font-size: 15px;
+        }
+
+        .checked {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {{!-- display header --}}
+        <div class="row justify-content-center text-center">
+            <div>
+                <div class="header">
+                    <h2>Tutor's Reviews</h2>
+                </div>
+            </div>
+        </div>
+
+        {{!-- display overall review block --}}
+        {{#if reviews}}
+        {{!-- for each review --}}
+        {{#each reviews}}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="review-block">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-name" style="text-transform: capitalize">User: {{username}}</div>
+                            <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="review-block-title row">
+                                <p><span
+                                        style="">Title:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{title}} </p>
+                            </div>
+                            <div class="review-block-rate row">
+                                <div style="margin-right: 20px; margin-top: -2px;">
+                                    {{#times rating}}
+                                    <img src="/background/star.png" style="height: 20px; width: 20px;">
+                                    {{/times}}
+                                </div>
+                                <div>
+                                    <p class="text-left">{{rating}} / 5</p>
+                                </div>
+                            </div>
+                            <div class="review-block-category-row" style="text-transform: capitalize">
+                                {{#ifCond sentiment_score '>' 0}}
+                                <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                    <span>😄</span>
+                                </p>
+                                {{/ifCond}}
+                                {{#ifCond sentiment_score '==' 0}}
+                                <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                    <span>😐</span>
+                                    <a href="../../../student/review/displaycomplain/{{id}}">(view complain here)</a>
+
+                                </p>
+                                {{/ifCond}}
+                                {{#ifCond sentiment_score '<' 0}} <p class="text-muted pt-5 pt-sm-3">Sentiment score:
+                                    {{sentiment_score}}
+                                    <span>😡</span>
+                                    <a href="../../../student/review/displaycomplain/{{id}}">(view complain here)</a>
+                                    </p>
+                                    {{/ifCond}}
+                            </div>
+
+                            <div class="review-block-category row">
+                                <p><span style="">Category:</span>&nbsp;&nbsp;&nbsp;&nbsp; <span
+                                        style="text-transform: capitalize">{{category}}</span>
+                                </p>
+                            </div>
+                            <div class="review=block-description row" style="opacity: 0;">&nbsp;</div>
+                            <div class="review=block-description row" style="opacity: 0;">&nbsp;</div>
+
+                            <div class="review-block-description row">
+                                <p style="">Description:</p>
+                            </div>
+                            <div class="review-block-description row">
+                                {{description}}
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img src="{{image}}">
+                        </div>
+                    </div>
+
+                    {{/each}}
+
+                    {{!-- if no review --}}
+                    {{else}}
+                    <div class="row justify-content-center text-center">
+                        <div>
+                            <div class="header">
+                                <h2>Tutor have yet to receive any review.</h2>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- /container -->
+    </div>
+</body>

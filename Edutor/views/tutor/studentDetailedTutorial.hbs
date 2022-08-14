@@ -11,7 +11,6 @@
 
 
         {{!-- {{#each tutorials}} --}}
-        <h1>HHIHIHIHIIHI new</h1>
         <div class="title">{{tutorials.title}}</div>
         <div class="content">
             {{!-- <div>
@@ -36,8 +35,7 @@
             </form>
 
 
-            <div class="button">
-                <input type="button" class="buyButton" value="Buy now">
+            <div>
                 <form action="/cart/addtoCart" method="POST">
                     <input type="hidden" name="id" value={{id}}>
                     <input type="hidden" name="title" value={{title}}>
@@ -47,7 +45,7 @@
                     <input type="hidden" name="image" value={{tutorialImageURL}}>
                     <input type="hidden" name="product_item" value={{video}}>
                     <input type="hidden" name="productType" value="course">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+                    <button type="submit" class="btn btn-primary" id="buybutton">Buy Now</button>
                 </form>
             </div>
             <div>

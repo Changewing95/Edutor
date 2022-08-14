@@ -19,25 +19,27 @@ function calculatePercentage(ratingCount, totalCount) {
 // ROUTES (GET)
 // for tutors
 router.get('/listReview', async (req, res) => {
+    var userId = req.user.id;
     // query avg rating
     let avgRating = await db.query(`SELECT AVG(rating) as 'avgRating'
-                                    FROM reviews`, { type: QueryTypes.SELECT });
+                                    FROM reviews
+                                    WHERE tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     // query for review count for each rating (/5)
     let rating5Count = await db.query(`SELECT COUNT(rating) as 'rate5'
                                     FROM reviews
-                                    WHERE rating = 5`, { type: QueryTypes.SELECT });
+                                    WHERE rating = 5 and tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     let rating4Count = await db.query(`SELECT COUNT(rating) as 'rate4'
                                     FROM reviews
-                                    WHERE rating = 4`, { type: QueryTypes.SELECT });
+                                    WHERE rating = 4 and tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     let rating3Count = await db.query(`SELECT COUNT(rating) as 'rate3'
                                     FROM reviews
-                                    WHERE rating = 3`, { type: QueryTypes.SELECT });
+                                    WHERE rating = 3 and tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     let rating2Count = await db.query(`SELECT COUNT(rating) as 'rate2'
                                     FROM reviews
-                                    WHERE rating = 2`, { type: QueryTypes.SELECT });
+                                    WHERE rating = 2 and tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     let rating1Count = await db.query(`SELECT COUNT(rating) as 'rate1'
                                     FROM reviews
-                                    WHERE rating = 1`, { type: QueryTypes.SELECT });
+                                    WHERE rating = 1 and tutor_id = '${userId}'`, { type: QueryTypes.SELECT });
     let totalCount = await db.query(`SELECT COUNT(*) AS 'totalrating' FROM reviews`, { type: QueryTypes.SELECT });
 
     // for percentage count
@@ -53,12 +55,14 @@ router.get('/listReview', async (req, res) => {
     Review.findAll({
         // where: { userId: req.user.id },
         attributes: [
-            'title', 'category', 'image', 'rating', 'description', 'createdAt'],
+            'id','title', 'category', 'image', 'rating', 'description', 'username','sentiment_score', 'createdAt'],
         order: [['title']],
+        where: { tutor_id: req.user.id },
         raw: true
     })
         .then((reviews) => {
             // pass object to review.hbs
+            console.log(reviews);
             res.render('review/overview.hbs', {
                 reviews, avgRating: avgRating[0], rating5: rating5Count[0], rating4: rating4Count[0],
                 rating3: rating3Count[0], rating2: rating2Count[0], rating1: rating1Count[0],

@@ -71,7 +71,7 @@ router.get('/', async (req, res, next) => {
 
 // router.post('/addtoCart', cartController.addToCart);
 
-router.post('/addtoCart', (req, res) => {
+router.post('/addtoCart',async  (req, res) => {
     var id = req.body.id;
     var title = req.body.title;
     var price = req.body.price;
@@ -84,7 +84,7 @@ router.post('/addtoCart', (req, res) => {
     console.log(JSON.stringify(title), "asd")
 
 
-    Cart.findOrCreate({
+   await Cart.findOrCreate({
         where: { student_ID: current_student, tutor_ID: tutorid, product_ID: id, product_name: title, price: price, image: image, author: author, product_type: prodType, product_item: product_item }
     })
 
@@ -111,11 +111,11 @@ router.post('/addtoCart', (req, res) => {
 });
 
 
-router.post('/delete-cart', (req, res) => {
+router.post('/delete-cart',async (req, res) => {
     var id = req.body.productID;
     var cart = req.session.cart;
 
-    Cart.destroy({
+   await Cart.destroy({
         where: { product_ID: id },
         raw: true
     }).then((destroyeditem) => {

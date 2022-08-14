@@ -8,21 +8,16 @@ const Tutorial = require('../models/Tutorial')
 const User = require('../models/User')
 const Procyon = require('procyon')
 const { Op } = require("sequelize");
+//for raw sql
+const db = require('../config/DBConfig');
+const { QueryTypes } = require('sequelize');
 
 
 
 router.get('/', async (req, res) => {
 	const title = "Edutor"
-	// var ListOfTut = await Tutorial.findAll({
-	// 	where: {
-	// 	  title: {
-	// 		[Op.or]: JSON.parse(req.user.interest)
-	// 	  }
-	// 	}
-	//   })
-	//   console.log(ListOfTut)
-	// renders views/index.handlebars, passing title as an object
-	res.render('home', { title: title })
+	let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
+	res.render('home', { title: title, product })
 });
 
 
@@ -33,6 +28,16 @@ router.get('/recommender', ensureAuthenticated, async (req, res) => {
 	});
 
 });
+
+
+router.get('/watching-video/:id', ensureAuthenticated, async (req, res) => {
+	Tutorial.findByPk(req.params.id)
+		.then((tutorialToWatch) => {
+			res.render('student/watching_video', { tutorialToWatch })
+		})
+
+});
+
 
 
 router.post('/recommender', async (req, res) => {

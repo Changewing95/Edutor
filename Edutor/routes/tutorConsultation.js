@@ -2,6 +2,7 @@ const moment = require('moment');
 const express = require('express');
 const router = express.Router();
 const Consultation = require('../models/Booking');
+const Review = require('../models/Review');
 const flashMessage = require('../helpers/messenger');
 const fetch = require('isomorphic-fetch')
 const fs = require('fs');
@@ -10,6 +11,11 @@ const { stringify } = require('querystring');
 // for validation
 const ensureAuthenticated = require('../helpers/auth');
 const { start } = require('repl');
+
+// for raw sql
+const db = require('../config/DBConfig');
+const { QueryTypes } = require('sequelize');
+
 
 
 router.get('/settings', (req, res) => {
@@ -25,15 +31,44 @@ router.get('/settings', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/main', ensureAuthenticated, (req, res) => {
+router.get('/main', ensureAuthenticated, async (req, res) => {
+    // let consultations_reviewed = await db.query(`SELECT consultations.*, ROUND(AVG(rating),2) as 'avgRating'
+    //                                 FROM consultations
+    //                                 INNER JOIN reviews
+    //                                 ON consultations.id = reviews.product_id
+    //                                 WHERE consultations.userId = '${req.user.id}'
+    //                                 `, { type: QueryTypes.SELECT });
+    // let consultations_notreview = await db.query(`SELECT *
+    //                                 FROM consultations
+    //                                 WHERE consultations.userId = '${req.user.id}'
+    //                                 `, { type: QueryTypes.SELECT });
+    // // console.log(consultations_reviewed);
+    // console.log(consultations_notreview);
+
+    // res.render('consultation/consultation', { consultations_reviewed, consultations_notreview });
     Consultation.findAll({
         where: { userId: req.user.id },
         order: [['date']],
         raw: true
     })
         .then((consultations) => {
-            // pass object to consultation.hbs
-            res.render('consultation/consultation', { consultations });
+            Review.sum('rating', { //updated cart count 
+                where: { tutor_id: req.user.id },
+                raw: true
+            })
+                .then((reviewrate) => {
+                    Review.count('price', { //updated cart count 
+                        where: { tutor_id: req.user.id },
+                        raw: true
+                    })
+                        .then((reviewcount) => {
+                            var overall = reviewrate / reviewcount;
+                            console.log(overall);
+                            res.render('consultation/consultation', { consultations });
+                        })
+                        .catch(err => console.log(err));
+                })
+                .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
 });
@@ -74,7 +109,8 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
     let start_time = moment(req.body.start_time, 'HH:mm:ss');
     let end_time = moment(req.body.end_time, 'HH:mm:ss');
     let date = moment(req.body.consultDate, 'DD/MM/YYYY');
-    let userId = req.user.id
+    let userId = req.user.id;
+    let roomURL = 'http://localhost:5000/vidroom/';
 
     // validation -- for price and time
     if (start_time > end_time) {
@@ -113,7 +149,7 @@ router.post('/create', ensureAuthenticated, async (req, res) => {
         const message = 'Consultation slot successfully submitted';
         flashMessage(res, 'success', message);
 
-        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, userId })
+        Consultation.create({ title, consultationURL, price, description, date, start_time, end_time, roomURL, userId })
             .then((consultation) => {
                 console.log(consultation.toJSON());
                 res.redirect('/tutor/consultation/main');

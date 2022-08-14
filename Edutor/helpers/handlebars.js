@@ -1,4 +1,6 @@
+const { blockParams } = require('handlebars');
 const moment = require('moment');
+const { options } = require('../routes/review');
 
 const formatDate = function (date, targetFormat) {
     return moment(date).format(targetFormat);
@@ -52,6 +54,29 @@ const if_eq = function () {
     return allEqual ? options.fn(this) : options.inverse(this);
 };
 
+const times = function (iter, block) {
+    var accum = '';
+    for (var i = 0; i < iter; ++i){
+        accum += block.fn(i);
+    }
+    return accum;
+}
+
+const ifCond = function (v1, operator, v2, options) {
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+}
 
 
-module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq, increaseOID, Multiply, radioCheck, formatRating };
+
+module.exports = { formatDate, replaceCommas, isEqualHelperHandlerbar, if_eq, increaseOID, Multiply, radioCheck, formatRating, times, ifCond };

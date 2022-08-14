@@ -23,11 +23,17 @@ paypal.configure({
 const app = express();
 app.use(express.static(__dirname + '/public'));
 var http = require('http').Server(app);
-var io = require('socket.io')(http)
 
 
+const fs = require('fs');
+const httpsoptions = {
+	key: fs.readFileSync('public/https/localhost-key.key'),
+	cert: fs.readFileSync('public/https/localhost.crt'),
+}
+let https = require('https').createServer(httpsoptions, app);
 
 
+var io = require('socket.io')(http);
 
 
 // io.on("connection",function(socket){
@@ -75,6 +81,8 @@ app.engine('hbs', engine({
 		increaseOID: helpers.increaseOID,
 		formatRating: helpers.formatRating,
 		radioCheck: helpers.radioCheck,
+		times: helpers.times,
+		ifCond: helpers.ifCond,
 	},
 	defaultLayout: 'main',
 	extname: '.hbs',
@@ -196,6 +204,7 @@ const studentReviewRoute = require('./routes/review');
 const tutorReviewRoute = require('./routes/tutorReview');
 const adminRoute = require('./routes/admin');
 const recommender = require('./routes/recommender');
+const nlpRouter = require('./routes/sentimentanalysis');
 
 
 
@@ -221,19 +230,23 @@ app.use('/tutor/review', tutorReviewRoute);
 app.use('/student/review', studentReviewRoute);
 app.use('/recommender', recommender);
 
+// nlp -- sentiment analysis (yl)
+app.use('/api/nlp', nlpRouter);
+
 app.use(fileUpload());
 
 const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5001;
+const port = 5000;
 
 // Starts the server and listen to port
 // app.listen(port, () => {
 // 	console.log(`Server started on port ${port}`);
 // });
 
-http.listen(port, () => console.log(`Listening on port ${port}`));
+http.listen(port, () => console.log(`HTTP Listening on port ${port}`));
+// https.listen(5002, () => console.log('HTTPS listening on port 5002'));
 
 // http.listen(port, () => console.log(`Listening on port ${port}`));

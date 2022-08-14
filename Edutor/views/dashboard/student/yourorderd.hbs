@@ -1,0 +1,14 @@
+<style>
+    #example2 {
+        padding: 15px;
+        box-shadow: 0px 0.5px 3px grey;
+    }
+</style>{{#each orderItems}}
+<div id="example2" style="width:120%;">
+    <h5 style="text-align:left;font-size:20px;">{{prod_name}}<br><span style="font-size:9px;margin-top:-7%;">A
+            {{prodType}} by {{tutor_name}}</span></h5>
+    <h6 style="text-align:right;margin-top:-3%;"><b>{{price}}</b></h6>
+    <h6 style="text-align:left;"><b>Link for your {{prodType}}: {{item_detail}}</a></b></h6>
+</div>
+<br>
+{{/each}}

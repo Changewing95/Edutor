@@ -3,10 +3,12 @@ const router = express.Router();
 const flashMessage = require('../helpers/messenger');
 const moment = require('moment');
 const Event = require('../models/Event');
+
 const path = require('path')
 const fs = require('fs');
 const upload = require('../helpers/eventimageupload');
 const ensureAuthenticated = require('../helpers/auth');
+const { Console } = require('console');
 
 
 
@@ -79,6 +81,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
         }
         else {
 
+
             console.log(req.files['posterUpload'][0].filename)
 
             // note from yl to dylan:
@@ -91,25 +94,71 @@ router.post('/create', ensureAuthenticated, (req, res) => {
             let description = req.body.description;
             let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
             let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
-            let starttime = req.body.starttime;
-            let endtime = req.body.endtime;
+            let starttime = moment(req.body.starttime, 'HH:mm:ss');
+            let endtime = moment(req.body.endtime, 'HH:mm:ss');
             let people = req.body.people;
             let status = req.body.status;
             let price = req.body.price;
-
             let userId = req.user.id;
 
 
-            Event.create(
-                { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price, userId }
-            )
-                .then((event) => {
-                    console.log(event.toJSON());
-                    res.redirect('/tutor/event/main');
-                })
-                .catch(err => console.log(err))
-            // res.json({ file: `/eventuploads/${req.file.filename}` });
 
+
+            let errorstatus = false;
+            if (price < 0 && startdate > enddate && starttime > endtime) {
+                errorstatus = true;
+                flashMessage(res, 'error', 'Multiple Invalid Inputs!');
+                res.redirect('/tutor/event/create');
+
+            }
+            else if (price < 0 && startdate > enddate){
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Price & Date!');
+                res.redirect('/tutor/event/create');
+
+            }
+            else if (price < 0 && starttime > endtime){
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Price & Time!');
+                res.redirect('/tutor/event/create');
+
+            }
+            else if ( starttime > endtime && startdate > enddate){
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Date and Time!');
+                res.redirect('/tutor/event/create');
+
+            }
+            else if (price < 0) {
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Price!');
+                res.redirect('/tutor/event/create');
+            }
+            else if (startdate > enddate) {
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Dates!');
+                res.redirect('/tutor/event/create');
+            }
+            else if (starttime > endtime){
+                errorstatus = true;
+                flashMessage(res, 'error', 'Invalid Time!');
+                res.redirect('/tutor/event/create');
+            }
+
+            if (errorstatus == false) {
+                Event.create(
+                    { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price, userId }
+                )
+                    .then((event) => {
+                        console.log(event.toJSON());
+                        res.redirect('/tutor/event/main');
+                    })
+                    .catch(err => console.log(err))
+
+
+
+                // res.json({ file: `/eventuploads/${req.file.filename}` });
+            }
         }
     });
 
@@ -135,17 +184,53 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
 
     // from yl, to dylan: add in " '/eventuploads/1/' + " after u implement updating of image. 
     // another note: change to " `/eventuploads/${req.user.id}/` +" once u add in userid to file path 
-    
+
     let description = req.body.description;
     let startdate = moment(req.body.startdate, 'DD/MM/YYYY');
     let enddate = moment(req.body.enddate, 'DD/MM/YYYY');
-    let starttime = req.body.starttime;
-    let endtime = req.body.endtime;
+    let starttime = moment(req.body.starttime, 'HH:mm:ss');
+    let endtime = moment(req.body.endtime, 'HH:mm:ss');
     let people = req.body.people;
     let status = req.body.status;
     let price = req.body.price;
     let userId = req.user.id;
+    let errorstatus = false;
+    if (price < 0 && startdate > enddate && starttime > endtime) {
+        errorstatus = true;
+        flashMessage(res, 'error', 'Multiple Invalid Inputs!');
+        res.redirect('/tutor/event/create');
 
+    }
+    else if (price < 0 && startdate > enddate){
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Price & Date!');
+        res.redirect('/tutor/event/create');
+
+    }
+    else if (price < 0 && starttime > endtime){
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Price & Time!');
+        res.redirect('/tutor/event/create');
+
+    }
+    else if ( starttime > endtime && startdate > enddate){
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Date and Time!');
+        res.redirect('/tutor/event/create');
+
+    }
+    else if (price < 0) {
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Price!');
+        res.redirect('/tutor/event/create');
+    }
+    else if (startdate > enddate) {
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Dates!');
+        res.redirect('/tutor/event/create');
+    }
+    
+    if (errorstatus == false) {
     Event.update(
         { title, description, startdate, enddate, starttime, endtime, people, status, price, userId },
         { where: { id: req.params.id } }
@@ -156,7 +241,7 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
             res.redirect('/tutor/event/main');
         })
         .catch(err => console.log(err));
-
+    }
 });
 
 router.get('/deleteEvent/:id', ensureAuthenticated, async function

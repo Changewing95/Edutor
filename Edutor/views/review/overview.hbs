@@ -29,31 +29,30 @@
             border: 1px solid #EFEFEF;
             padding: 15px;
             border-radius: 3px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .review-block-name {
-            font-size: 12px;
+            font-size: 13px;
             margin: 10px 0;
         }
 
         .review-block-date {
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .review-block-rate {
-            font-size: 13px;
+            font-size: 15px;
             margin-bottom: 15px;
         }
 
         .review-block-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-top: 10px;
         }
 
         .review-block-description {
-            font-size: 13px;
+            font-size: 15px;
         }
 
         .checked {
@@ -208,34 +207,62 @@
                 <div class="review-block">
                     <div class="row">
                         <div class="col-sm-3">
-                            {{!-- <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            --}}
-                            <div class="review-block-name"><a href="#">User name</a></div>
+                            <div class="review-block-name" style="text-transform: capitalize">User: {{username}}</div>
                             <div class="review-block-date">{{formatDate updatedAt 'DD MMM YYYY'}}</div>
+                            <div class="review-block-name" style="margin-top: 0px; padding: 0px">
+                                {{#ifCond sentiment_score '>' 0}}
+                                <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                    <span>😄</span>
+                                </p>
+                                {{/ifCond}}
+                                {{#ifCond sentiment_score '==' 0}}
+                                <p class="text-muted pt-5 pt-sm-3">Sentiment score: {{sentiment_score}}
+                                    <span>😐</span>
+                                </p>
+                                <a href="../../../student/review/displaycomplain/{{id}}">view complain here</a>
+
+                                {{/ifCond}}
+                                {{#ifCond sentiment_score '<' 0}} <p class="text-muted pt-5 pt-sm-3">Sentiment score:
+                                    {{sentiment_score}}
+                                    <span>😡</span>
+                                    </p>
+                                    <a href="../../../student/review/displaycomplain/{{id}}">view complain here</a>
+
+                                    {{/ifCond}}
+
+                            </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="review-block-rate">
-                                <p class="text-left"><span class="text-muted">{{rating}}.0</span></p>
-                                {{!--
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </button> --}}
+                            <div class="review-block-title row">
+                                <p><span
+                                        style="">Title:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{title}} </p>
                             </div>
-                            <div class="review-block-title">{{title}}</div>
-                            <div class="review-block-category">{{category}}</div>
-                            <div class="review-block-description">{{description}}</div>
+                            <div class="review-block-rate row">
+                                <div style="margin-right: 20px; margin-top: -2px;">
+                                    {{#times rating}}
+                                    <img src="/background/star.png" style="height: 20px; width: 20px;">
+                                    {{/times}}
+                                </div>
+                                <div>
+                                    <p class="text-left">{{rating}} / 5</p>
+                                </div>
+                            </div>
+                            <div class="review-block-category row">
+                                <p><span style="">Category:</span>&nbsp;&nbsp;&nbsp;&nbsp; <span
+                                        style="text-transform: capitalize">{{category}}</span>
+                                </p>
+                            </div>
+                            <div class="review=block-description row" style="opacity: 0;">&nbsp;</div>
+                            <div class="review=block-description row" style="opacity: 0;">&nbsp;</div>
+
+                            <div class="review-block-description row">
+                                <p style="">Description:</p>
+                            </div>
+                            <div class="review-block-description row">
+                                {{description}}
+
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <img src="{{image}}">
