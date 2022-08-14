@@ -431,7 +431,7 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
     // if not successful
     if (body.success !== undefined && !body.success) {
         flashMessage(res, 'error', 'Please click recaptcha!');
-        res.redirect('/student/review/create');
+        res.redirect(`/student/review/create/${req.params.prodType}/${req.params.prodname}`);
     }
     // if successful
     if (body.success) {
