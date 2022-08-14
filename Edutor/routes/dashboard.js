@@ -35,7 +35,6 @@ const { Console } = require('console');
 
 
 
-
 router.get('/overview', ensureAuthenticated, async (req, res) => {
     let studentCount = await User.count({
         where: { roles: "student" }
@@ -43,18 +42,13 @@ router.get('/overview', ensureAuthenticated, async (req, res) => {
     let tutorCount = await User.count({
         where: { roles: "tutor" }
     })
-    const totalAmount = await Order.findAll({
-        attributes: [
-            'totalPrice',
-            [sequelize.fn('sum', sequelize.col('totalPrice')), 'total_amount'],
-        ],
-        raw: true
-    });
-    // let getCountry = await User.findOne({where: {}})
-    console.log(totalAmount[0]['total_amount'])
-    // console.log(totalAmount[0]['dataValues']['total_amount'])
+    let totalAmount = await Order.sum('totalPrice');
 
-    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, netAmount: totalAmount[0]['total_amount'] });
+    // });
+    // let getCountry = await User.findOne({where: {}})
+    // console.log(totalAmount[0]['total_amount'])
+    // console.log(totalAmount[0]['dataValues']['total_amount'])
+    res.render('dashboard/overview', { layout: 'main2', currentpage: { overview: true }, studentCount: studentCount, tutorCount: tutorCount, totalAmount: totalAmount });
 });
 
 
@@ -170,10 +164,10 @@ router.get('/statisticForOrders', async (req, res) => {
     let b = {}
     Records.forEach(object => {
         // console.log(object['dataValues']['date_col_formed']);
-        b[object['dataValues']['date_col_formed']] = (b[object['dataValues']['date_col_formed']] || 0) + 1;
+        b[object['dataValues']['date_col_formed']] = (b[object['dataValues']['date_col_formed']] || 0) + 3;
 
     })    // return res.json(result)
-    return res.json({b})
+    return res.json({ b })
 
 
     // const todaysRecord = await Order.findAll({
@@ -198,25 +192,25 @@ router.get('/statisticForOrders', async (req, res) => {
 
     // Order.findAll({
     //     group: [sequelize.fn('createdAt', 'day', sequelize.col('createdAt'))]
-    //   }).then((object) => {
+    // }).then((object) => {
     //     console.log(object);
-    //   })
+    // })
 
-    // // Order.findAll({
-    // //     raw: true,
-    // //     distinct: true
-    // //     // where: { userId: req.user.id },
-    // // })
-    // //     .then((orders) => {
-    // //         console.log(Object.keys(orders).length);
-    // //         // pass object to consultation.hbs
-    // //         res.json(orders.map((order) => {
-    // //             var createAt = order['createdAt']
-    // //             console.log( moment(createAt).format('MM/DD/YYYY'))
-    // //             // return { country: country.country, count: country.count, country_length: country.length }
-    // //         }))
-    // //     })
-    // //     .catch(err => console.log(err));
+    // Order.findAll({
+    //     raw: true,
+    //     distinct: true
+    //     // where: { userId: req.user.id },
+    // })
+    //     .then((orders) => {
+    //         console.log(Object.keys(orders).length);
+    //         // pass object to consultation.hbs
+    //         res.json(orders.map((order) => {
+    //             var createAt = order['createdAt']
+    //             console.log(moment(createAt).format('MM/DD/YYYY'))
+    //             // return { country: country.country, count: country.count, country_length: country.length }
+    //         }))
+    //     })
+    //     .catch(err => console.log(err));
 
 });
 

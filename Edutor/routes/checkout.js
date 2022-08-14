@@ -5,6 +5,8 @@ const OrderItems = require('../models/OrderItems');
 const User = require('../models/User');
 const Tutorial = require('../models/Tutorial');
 const Cart = require('../models/Cart');
+const ensureAuthenticated = require('../helpers/checkAuthentication');
+
 // for raw sql
 const db = require('../config/DBConfig');
 const { QueryTypes } = require('sequelize');
@@ -17,7 +19,7 @@ paypal.configure({
 });
 
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     Order.findAll({
         limit: 1,
         order: [['createdAt', 'DESC']]
@@ -46,7 +48,7 @@ router.post('/place_order', async (req, res) => {
     //Order creation
     var country = req.body.country;
     var paym = req.body.paym;
-    var totalPrice = req.body.total;
+    var totalPrice = req.body.cartTotal;
     var userId = req.user.id;
     var products_ids = "";
     var oid = req.body.oid;
@@ -61,7 +63,7 @@ router.post('/place_order', async (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:5000/checkout/orderSuccessful",
+            "return_url": "http://localhost:5001/checkout/orderSuccessful",
             "cancel_url": "http://localhost:3000/checkout/cancel"
         },
         "transactions": [{
@@ -124,7 +126,7 @@ router.post('/place_order', async (req, res) => {
 
 });
 
-router.get('/orderSuccessful', async (req, res) => {
+router.get('/orderSuccessful', ensureAuthenticated, async (req, res) => {
 
 
     Cart.destroy({

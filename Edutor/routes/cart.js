@@ -4,7 +4,8 @@ const Cart = require('../models/Cart');
 const User = require('../models/User');
 const Consultation = require('../models/Booking');
 const Event = require('../models/Event');
-// const User = require('../models/User');
+const ensureAuthenticated = require('../helpers/checkAuthentication');
+
 
 function isProductinCart(cart, id) {
     for (let i = 0; i < cart.length; i++) {
@@ -33,7 +34,7 @@ function cartCount(cart, req) {
 }
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', ensureAuthenticated, async (req, res, next) => {
     // req.session.destroy()
     let cartitems = await Cart.findAll({
         where: { student_ID: req.user.id },

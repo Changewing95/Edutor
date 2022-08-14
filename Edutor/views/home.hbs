@@ -34,6 +34,8 @@
 					<i class="fa fa-arrow-right"></i>
 				</a>
 			</div>
+			{{#if user}}
+
 			<div class="col-12">
 				<div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 
@@ -82,7 +84,7 @@
 
 							</div>
 						</div>
-						<div class="carousel-item">
+						{{!-- <div class="carousel-item">
 							<div class="row">
 
 								<div class="col-md-4 mb-3">
@@ -165,10 +167,13 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> --}}
 					</div>
 				</div>
 			</div>
+			{{#else}}
+			{{/else}}
+			{{/if}}
 		</div>
 	</div>
 </section>
