@@ -12,6 +12,14 @@ const bcrypt = require('bcryptjs');
 passportConfig.localStrategy(passport);
 // const stream = require('/public/js/stream');
 const { spawn } = require("child_process");
+
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+	'mode': 'sandbox', //sandbox or live
+	'client_id': 'Ac2L9Q9HueXYEJNoj6uZrHa3yD6ldXMMXcgPhSHaqXA8b4C55ZD_lJFL-Fw-SG-b8o45BAoNJ9gS6JYW',
+	'client-secret': 'ELpPMYtPjVI3TVURsq2bBAKv2WcYxd5WkvilsXmCrw4r9sPWKx390ZrTFQFdVX0K7U7DIKkhV7HH41Xy'
+
+})
 const app = express();
 app.use(express.static(__dirname + '/public'));
 var http = require('http').Server(app);
@@ -231,7 +239,7 @@ const stream = require('./public/js/stream');
 io.on('connection', stream);
 
 
-const port = 5000;
+const port = 5001;
 
 // Starts the server and listen to port
 // app.listen(port, () => {

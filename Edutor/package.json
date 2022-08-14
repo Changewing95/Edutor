@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "@paypal/checkout-server-sdk": "^1.0.3",
     "address": "^1.2.0",
     "apos-to-lex-form": "^1.0.5",
     "average-rating": "^2.0.2",

@@ -47,8 +47,6 @@
                                 <ul>
                                     <li>
                                         <form action="/cart/addtoCart" method="POST">
-
-
                                             <input type="hidden" name="id" value="{{id}}">
                                             <input type="hidden" name="title" value="{{title}}">
                                             <input type="hidden" name="price" value="{{price}}">
@@ -57,8 +55,8 @@
                                             <input type="hidden" name="image" value="{{tutorialImageURL}}">
                                             <input type="hidden" name="product_item" value="{{video}}">
                                             <input type="hidden" name="productType" value="course">
-                                            <button type="submit" class="btn btn-primary"><i
-                                                    class="fa fa-shopping-cart"></i></button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-shopping-cart"></i></button>
                                         </form>
                                     </li>
 
@@ -364,8 +362,6 @@
     }
 
 
-    UpdateRecommendation()
-    setInterval(UpdateRecommendation, 10000)
 
 
 </script>

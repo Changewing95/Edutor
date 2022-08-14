@@ -16,8 +16,8 @@ const { QueryTypes } = require('sequelize');
 
 router.get('/', async (req, res) => {
 	const title = "Edutor"
-	let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
-	res.render('home', { title: title, product })
+	// let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
+	res.render('home', { title: title })
 });
 
 
@@ -35,7 +35,6 @@ router.get('/watching-video/:id', ensureAuthenticated, async (req, res) => {
 		.then((tutorialToWatch) => {
 			res.render('student/watching_video', { tutorialToWatch })
 		})
-
 });
 
 

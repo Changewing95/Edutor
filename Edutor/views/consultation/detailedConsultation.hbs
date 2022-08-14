@@ -4,7 +4,15 @@
     <style>
         .consultationURL {}
     </style>
-</head>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/singleTutorial.css">
+        <style>
+            .consultationURL {}
+        </style>
+    </head>
 
 <body>
     <div class="container">
@@ -58,12 +66,24 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-3" style=" position: absolute; bottom: 30px; left: 10px">
+                <a href="/student/consultation/listConsultations" class="btn btn-primary" style="width:170px">Back</a>
+            </div>
             <div class="hstack gap-1 d-flex justify-content-end" style="padding: 30px">
                 <div class="col-sm-3">
-                    <a href="#" class="btn btn-primary" style="width:170px">Buy Now</a>
-                </div>
-                <div class="col-sm-3">
-                    <a href="#" class="btn btn-primary" style="width:170px">Add to cart</a>
+                    <form action="/cart/addtoCart" method="POST">
+                        <input type="hidden" name="id" value={{consultation.id}}>
+                        <input type="hidden" name="title" value="{{consultation.title}}">
+                        <input type="hidden" name="price" value={{consultation.price}}>
+                        <input type="hidden" name="author" value="ruri test">
+                        <input type="hidden" name="tutorid" value={{consultation.userId}}>
+                        <input type="hidden" name="image" value={{consultation.consultationURL}}>
+                        <input type="hidden" name="product_item"
+                            value="Please go to your Dashboard->Consultation menu for more into">
+                        <input type="hidden" name="productType" value="Consultation Session">
+
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
+                    </form>
                 </div>
             </div>
         </div>

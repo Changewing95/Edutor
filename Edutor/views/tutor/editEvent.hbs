@@ -72,7 +72,13 @@
 
                     <div class="input-box mb-3">
                         <span class="details">Price</span>
-                        <input type="number" class="form-control" name="price" step="0.05" value='{{event.price}}' required>
+                        <input type="number" class="form-control" name="price" step="0.05" value='{{event.price}}'
+                            required>
+                    </div>
+
+                    <div class="input-box mb-3">
+                        <span class="details">Zoom Link</span>
+                        <input type="text" class="form-control" name="zoomlink">
                     </div>
 
                 </div>
@@ -86,7 +92,7 @@
 </body>
 
 <script>
-    
+
     $('#datepicker').datepicker({
         format: "dd/mm/yyyy",
         value: moment().format('DD/MM/YYYY'),
@@ -99,37 +105,36 @@
         minDate: new Date(moment().add(-1, 'days')),
         maxDate: '+1Y',
     });
-    
+
     function fileValidation() {
-            var fileInput =
-                document.getElementById('posterUpload');
-             
-            var filePath = fileInput.value;
-         
-            // Allowing file type
-            var allowedExtensions =
-                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-             
-            if (!allowedExtensions.exec(filePath)) {
-                alert('Invalid file type!'); 
-                fileInput.value = '';
+        var fileInput =
+            document.getElementById('posterUpload');
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type!');
+            fileInput.value = '';
+        }
+        else {
+
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '"/>';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
             }
-            else
-            {
-             
-                // Image preview
-                if (fileInput.files && fileInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(
-                            'imagePreview').innerHTML =
-                            '<img src="' + e.target.result
-                            + '"/>';
-                    };
-                     
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-    }
+        }
     }
 </script>
 
