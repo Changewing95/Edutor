@@ -57,11 +57,13 @@
                     </div>
                 </div>
                 <div class="hstack gap-1 d-flex justify-content-end" style="padding: 50px">
-                    <div class="col-sm-3">
-                        <a href="/student/event/main" class="btn btn-primary " style="width:130px">Back</a>
-                    </div>
 
                     <div class="col-sm-3">
+                        <a href="/student/event/main" class="btn btn-primary"
+                            style="width:170px;margin-top:-50%">Back</a>
+                    </div>
+
+                    <div class="col-sm-3" style="margin-left: 40%;margin-top:-6%;">
                         <form action="/cart/addtoCart" method="POST">
                             <input type="hidden" name="id" value={{event.id}}>
                             <input type="hidden" name="title" value="{{event.title}}">
@@ -71,8 +73,7 @@
                             <input type="hidden" name="image" value={{event.eventURL}}>
                             <input type="hidden" name="product_item" value="{{event.zoomlink}}">
                             <input type="hidden" name="productType" value="event">
-                            <button type="submit" class="btn btn-primary" style="margin-left: 530%;"><i
-                                    class="fa fa-shopping-cart"></i></button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
                         </form>
                     </div>
                 </div>

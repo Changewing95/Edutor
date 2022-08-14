@@ -8,20 +8,21 @@
         {{!-- {{#each tutorials}} --}}
         <div class="title">{{tutorials.title}}</div>
         <div class="content">
-            
+
             {{!-- <div>
-                {{!-- <img class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg"> 
+                {{!-- <img class="view" src="https://i.ibb.co/L8Nrb7p/1.jpg">
                 <img src="/uploads/{{tutorials.userId}}/{{tutorials.tutorialImageURL}}" class="view" style="">
             </div> --}}
             <div>
 
-                {{!-- <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}"> --}}
+                {{!-- <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value={{ tutorials.video}}">
+                --}}
                 <video width="820" height="640" controls>
-                    <source src="http://localhost:5000/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
+                    <source src="http://localhost:5001/tutor/tutorial/get-video/{{tutorials.video}}" type="video/mp4">
                 </video>
             </div>
 
-            
+
             <div>
                 <h4>Author</h4>
                 {{!-- Will display None because dunno display which tutorial info so need to retroeve according to
