@@ -335,6 +335,8 @@ router.get('/student/yourorders', (req, res) => {
     OrderItems.findAll({
         where: {
             cust_id: req.user.id,
+            status: "ok"
+
         },
         order: [['id', 'DESC']]
     })
