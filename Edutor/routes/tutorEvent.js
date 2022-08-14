@@ -20,7 +20,7 @@ router.get('/main', ensureAuthenticated, (req, res) => {
     })
         .then((event) => {
             // pass object to listVideos.handlebar
-            res.render('tutor/event', { event });
+            res.render('tutor/tutorEvent', { event });
         })
         .catch(err => console.log(err));
 });
@@ -100,6 +100,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
             let status = req.body.status;
             let price = req.body.price;
             let userId = req.user.id;
+            let zoomlink = req.body.zoomlink;
 
 
 
@@ -147,7 +148,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 
             if (errorstatus == false) {
                 Event.create(
-                    { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price, userId }
+                    { title, eventURL: eventlink, description, startdate, enddate, starttime, endtime, people, status, price, userId, zoomlink}
                 )
                     .then((event) => {
                         console.log(event.toJSON());
@@ -194,45 +195,52 @@ router.post('/editEvent/:id', ensureAuthenticated, (req, res) => {
     let status = req.body.status;
     let price = req.body.price;
     let userId = req.user.id;
+    let zoomlink = req.body.zoomlink;
     let errorstatus = false;
     if (price < 0 && startdate > enddate && starttime > endtime) {
         errorstatus = true;
-        flashMessage(res, 'error', 'Multiple Invalid Inputs!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Multiple Invalid Inputs! Failed to update!');
+        res.redirect('/tutor/event/main');
 
     }
     else if (price < 0 && startdate > enddate){
         errorstatus = true;
-        flashMessage(res, 'error', 'Invalid Price & Date!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Invalid Price & Date! Failed to update!');
+        res.redirect('/tutor/event/main');
 
     }
     else if (price < 0 && starttime > endtime){
         errorstatus = true;
-        flashMessage(res, 'error', 'Invalid Price & Time!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Invalid Price & Time! Failed to update!');
+        res.redirect('/tutor/event/main');
 
     }
     else if ( starttime > endtime && startdate > enddate){
         errorstatus = true;
-        flashMessage(res, 'error', 'Invalid Date and Time!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Invalid Date and Time! Failed to update!');
+        res.redirect('/tutor/event/main');
 
     }
     else if (price < 0) {
         errorstatus = true;
-        flashMessage(res, 'error', 'Invalid Price!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Invalid Price! Failed to update!');
+        res.redirect('/tutor/event/main');
     }
     else if (startdate > enddate) {
         errorstatus = true;
-        flashMessage(res, 'error', 'Invalid Dates!');
-        res.redirect('/tutor/event/create');
+        flashMessage(res, 'error', 'Invalid Dates! Failed to update!');
+        res.redirect('/tutor/event/main');
+    } 
+    else if (starttime > endtime){
+        errorstatus = true;
+        flashMessage(res, 'error', 'Invalid Time! Failed to update!');
+        res.redirect('/tutor/event/main');
     }
+
     
     if (errorstatus == false) {
     Event.update(
-        { title, description, startdate, enddate, starttime, endtime, people, status, price, userId },
+        { title, description, startdate, enddate, starttime, endtime, people, status, price, userId,zoomlink },
         { where: { id: req.params.id } }
 
     )
