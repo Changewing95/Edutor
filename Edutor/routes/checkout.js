@@ -46,7 +46,7 @@ router.post('/place_order', async (req, res) => {
     //Order creation
     var country = req.body.country;
     var paym = req.body.paym;
-    var totalPrice = req.body.cartTotal;
+    var totalPrice = req.body.total;
     var userId = req.user.id;
     var products_ids = "";
     var oid = req.body.oid;
