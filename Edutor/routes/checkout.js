@@ -61,7 +61,7 @@ router.post('/place_order', async (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:5000/checkout/orderSuccessful",
+            "return_url": "http://localhost:5001/checkout/orderSuccessful",
             "cancel_url": "http://localhost:3000/checkout/cancel"
         },
         "transactions": [{
@@ -97,7 +97,7 @@ router.post('/place_order', async (req, res) => {
                 var customer_id = req.user.id;
                 var status = "ok";
                 OrderItems.create(
-                    { cust_id: customer_id, tutor_name: cartItem.author, tutor_id: cartItem.tutor_ID, prod_name: cartItem.product_name, prodType: cartItem.product_type, qty: qty, status: status, price: cartItem.price, item_detail: cartItem.product_item, order_id: oid }
+                    { cust_id: customer_id, tutor_name: cartItem.author, prod_id: cartItem.product_ID, tutor_id: cartItem.tutor_ID, prod_name: cartItem.product_name, prodType: cartItem.product_type, qty: qty, status: status, price: cartItem.price, item_detail: cartItem.product_item, order_id: oid }
                 )
             }
             // res.redirect('/checkout/orderSuccessful');
