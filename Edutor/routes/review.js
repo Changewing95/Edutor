@@ -296,7 +296,7 @@ router.get('/:tutorid', ensureAuthenticated, async (req, res) => {
         where: { tutor_id: req.params.tutorid },
         attributes: [
             'id', 'title', 'category', 'image', 'rating', 'description', 'username', 'sentiment_score', 'createdAt'],
-        order: [['rating', 'DESC'],['title', 'ASC']],
+        order: [['rating', 'DESC'], ['title', 'ASC']],
         // where: { tutor_id: req.user.id },
         raw: true
     })
@@ -458,11 +458,8 @@ router.post('/create/:prodType/:prodname', ensureAuthenticated, async (req, res)
                             .then((result) => {
                                 console.log(result[0] + ' leftReview set to true');
                                 // console.log(review.toJSON());
-                                if (sentiment_score > 0) {
+                                if (sentiment_score >= 0) {
                                     res.redirect('/student/review/main');
-                                }
-                                else if (sentiment_score == 0) {
-                                    res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
                                 }
                                 else {
                                     res.redirect(`/student/review/${review.id}/${category}/${product_id}/followup`);
