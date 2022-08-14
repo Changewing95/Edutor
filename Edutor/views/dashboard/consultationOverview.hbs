@@ -70,62 +70,74 @@
 <div class="container-fluid dashboard">
     <div class="container mt-5" style="margin-left:-10%">
         <h1 style="font-weight: 700; font-size: 20px; text-transform: uppercase;">consultations</h1>
-        <div id="example1" style="margin-left: -7px;width:120%;padding-top:3%;padding-bottom:3%;padding-right:3%;">
-            <table>
-                <tr>
-                    <td style="width: 30%;">
-                        <h6 style="font-size: 13px;">Title </h6>
-                        <hr>
-                    </td>
-                    <td style="width: 20%;">
-                        <h6 style="font-size: 13px;">Date</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 11%;">
-                        <h6 style="font-size: 13px;">Time</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 13%;">
-                        <h6 style="font-size: 13px;">Price</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 15%;">
-                        <h6 style="font-size: 13px;">Link</h6>
-                        <hr>
-                    </td>
-                </tr>
-                {{#if consultations}}
-                {{#each consultations}}
-                <tr>
-                    <td style="width: 35%;">
-                        <h6 style="font-size: 13px;">{{title}}</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 20%;">
-                        <h6 style="font-size: 13px;">{{formatDate date 'DD MMM YYYY'}}</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 20%;">
-                        <h6 style="font-size: 13px">{{formatDate start_time 'HH:mm'}} to {{formatDate
-                            end_time 'HH:mm'}}</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 15%;">
-                        <h6 style="font-size: 13px;">{{price}}</h6>
-                        <hr>
-                    </td>
-                    <td style="width: 20%;">
-                        <a href="/vidroom/{{id}}" style="width:170px; font-size: 15px; margin-top: 50px">Enter
-                            Call
-                            Room</a>
-                        <hr style="margin-top:7%;">
+        <div id="example1" style="margin-left: -7px;width:120%;">
+            <div class="table table-borderless table-responsive">
 
-                    </td>
-                </tr>
-                {{/each}}
-                {{/if}}
+                <table class="table">
+                    <tr>
+                        <td>
+                            <h6 style="font-size: 13px;">Title </h6>
+                            <hr>
 
-            </table>
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">Date</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">Time</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">Price</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">Link</h6>
+                            <hr>
+
+                        </td>
+                    </tr>
+                    {{#if consultations}}
+                    {{#each consultations}}
+                    <tr>
+                        <td>
+                            <h6 style="font-size: 13px;">{{title}}</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">{{formatDate date 'DD MMM YYYY'}}</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px">{{formatDate start_time 'HH:mm'}} to {{formatDate
+                                end_time 'HH:mm'}}</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6 style="font-size: 13px;">{{price}}</h6>
+                            <hr>
+
+                        </td>
+                        <td>
+                            <h6><a href="/vidroom/{{id}}" style="width:170px; font-size: 15px;">Enter
+                                Call
+                                Room</a></h6>
+                            <hr>
+
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{/if}}
+
+                </table>
+            </div>
         </div>
 
     </div>
