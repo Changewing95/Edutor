@@ -7,8 +7,8 @@
     }
 </style>
 
-<nav style="background-color: {{#if_eq  user.roles "admin"}} #F39A14; {{else if_eq user.roles "tutor"}} #1E63CB; {{else}} #5CBF8F; {{/if_eq}}"
-    class="mb-4 navbar navbar-expand-lg navbar-dark">
+<nav style="background-color: {{#if_eq  user.roles " admin"}} #F39A14; {{else if_eq user.roles "tutor" }} #1E63CB;
+    {{else}} #5CBF8F; {{/if_eq}}" class="mb-4 navbar navbar-expand-lg navbar-dark">
     <b><a class="navbar-brand font-bold" href="/" style="font-size:30px;">Edutor</a></b>
 
     {{#if_equal user.roles "tutor"}}
@@ -16,19 +16,21 @@
         Tutorials<span class="sr-only">(current)</span></a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/tutor/consultation/main">Consultation slots</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/tutor/event/main">Events</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
+        href="/tutor/event/main">Events</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/tutor/review/listReview">View Review</a>
 
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/vouchers/">Discount
-        Vouchers</a>
+    {{!-- <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/vouchers/">Discount
+        Vouchers</a> --}}
 
     {{else}}
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/tutorial/main">All Tutorials</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/consultation/listConsultations">Book Tutors</a>
-    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/student/event/main">Book Events</a>
+    <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont" href="/student/event/main">Book
+        Events</a>
     <a class="nav-item nav-link" style="color: white; font-weight: 200;" id="smallfont"
         href="/student/review/main">Review</a>
 

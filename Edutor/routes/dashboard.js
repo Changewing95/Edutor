@@ -14,6 +14,7 @@ const Op = require('sequelize').Op;
 const moment = require('moment');
 // const app = express();
 const { pipeline } = require('stream');
+const Tutorial = require('../models/Tutorial')
 
 
 // // for video conference
@@ -336,6 +337,14 @@ router.get('/student/yourorders', (req, res) => {
     })
         .then((orderitems) => {
             res.render('dashboard/student/yourorders', { orderitems });
+        })
+        .catch(err => console.log(err));
+});
+
+router.get('/student/watching-video/:id', (req, res) => {
+    Tutorial.findByPk(req.params.id)
+        .then((tutorialToWatch) => {
+            res.render('student/watching_video', { tutorialToWatch });
         })
         .catch(err => console.log(err));
 });

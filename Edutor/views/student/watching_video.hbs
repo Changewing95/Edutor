@@ -1,8 +1,13 @@
-{{#if tutorialToWatch}}
+<body>
+    {{#if tutorialToWatch}}
 
+    <h4 style="margin-top:5%;margin-bottom:3%;margin-left:-4.5%;color:black;"> Now playing: {{tutorialToWatch.title}}
+    </h4>
 
-<video width="820" height="640" controls>
-    <source src="http://localhost:5001/student/tutorial/get-video/{{tutorialToWatch.userId}}/{{tutorialToWatch.video}}"
-        type="video/mp4">
-</video>
-{{/if}}
+    <video width="1240" height="680" style="margin-left:-6%" controls>
+        <source
+            src="http://localhost:5000/student/tutorial/get-video/{{tutorialToWatch.userId}}/{{tutorialToWatch.video}}"
+            type="video/mp4">
+    </video>
+    {{/if}}
+</body>

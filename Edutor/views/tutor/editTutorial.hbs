@@ -82,14 +82,14 @@
 
                         </div>
                         {{!-- <div id="videoPreview">
-                            <video src="http://5001/tutor/tutorial/get-video/{{tutorials.video}}">
+                            <video src="http://5000/tutor/tutorial/get-video/{{tutorials.video}}">
                         </div> --}}
 
 
 
                         <input id="tutorialImageURL" type="hidden" name="tutorialVideoURL" value="{{ tutorials.video}}">
                         <video width="320" height="240" controls />
-                        <source id="preview-video1" src="http://5001/tutor/tutorial/get-video/{{tutorials.video}}"
+                        <source id="preview-video1" src="http://5000/tutor/tutorial/get-video/{{tutorials.video}}"
                             type="video/mp4">
                         </video>
                     </div>
@@ -173,7 +173,7 @@
     uploadButton.addEventListener('click', (e) => {
         const form = document.querySelector('#my-form');
         const formData = new FormData(form);
-        fetch('http://5001/tutor/tutorial/upload-video', {
+        fetch('http://5000/tutor/tutorial/upload-video', {
             method: 'POST',
             body: formData,
         });

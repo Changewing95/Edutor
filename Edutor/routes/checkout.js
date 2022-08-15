@@ -63,7 +63,7 @@ router.post('/place_order', async (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:5001/checkout/orderSuccessful",
+            "return_url": "http://localhost:5000/checkout/orderSuccessful",
             "cancel_url": "http://localhost:3000/checkout/cart"
         },
         "transactions": [{

@@ -9,10 +9,7 @@ const User = require('../models/User')
 const Procyon = require('procyon')
 const { Op } = require("sequelize");
 
-//for raw sql
-const db = require('../config/DBConfig');
-const { QueryTypes } = require('sequelize');
-const { NIL } = require('uuid');
+
 
 
 router.get('/', async (req, res) => {
@@ -26,13 +23,11 @@ router.get('/', async (req, res) => {
 	//   })
 	//   console.log(ListOfTut)
 	// renders views/index.handlebars, passing title as an object
-	// if (req.user.id != undefined) {
-	// 	let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
-	// 	res.render('home', { title: title, product })
-	// } else {
-	res.render('home', { title: title })
 
-	// }
+	// let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.video=orderItems.item_detail WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
+	// res.render('home', { title: title, product })
+
+	res.render('home', { title: title })
 });
 
 
