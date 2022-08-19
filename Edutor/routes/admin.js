@@ -9,7 +9,6 @@ const { response } = require('express');
 
 // Admin Account Credentials
 // Email : edutorow@gmail.com
-// Password: +]k!h"`uQnY]
 
 
 
