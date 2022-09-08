@@ -28,15 +28,28 @@ router.get('/main', ensureAuthenticated, async (req, res) => {
     //         res.render('tutor/studentTutorial', { tutorials});
     //     })
     //     .catch(err => console.log(err));
-    let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.id=orderItems.prod_id WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
-    let productNotBought = await db.query(`SELECT * FROM tutorials LEFT JOIN orderItems ON tutorials.id=orderItems.prod_id`, { type: QueryTypes.SELECT });
-    // console.log(product);
-    productNotBought.forEach(product => {
-        console.log(product)
-    });
 
-    console.log("not bought" + productNotBought);
-    res.render('tutor/studentTutorial', { product: product, productNotBought: productNotBought })
+    Tutorial.findAll({
+        // where: { userId: req.user.id },
+        raw: true
+    })
+        .then((tutorials) => {
+            // pass object to listVideos.handlebar
+            res.render('tutor/tutorial', { tutorials });
+        })
+        .catch(err => console.log(err));
+
+
+    // let product = await db.query(`SELECT * FROM tutorials INNER JOIN orderItems ON tutorials.id=orderItems.prod_id WHERE orderItems.cust_id = '${req.user.id}'`, { type: QueryTypes.SELECT });
+    // let productNotBought = await db.query(`SELECT * FROM tutorials LEFT JOIN orderItems ON tutorials.id=orderItems.prod_id`, { type: QueryTypes.SELECT });
+    // // console.log(product);
+    // productNotBought.forEach(product => {
+    //     console.log(product)
+    // });
+
+    // console.log("not bought" + productNotBought);
+    // // res.render('tutor/studentTutorial', { product: product, productNotBought: productNotBought })
+    // res.render('tutor/studentTutorial', { productNotBought: productNotBought })
 });
 
 
